@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,7 +18,11 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun configureBottomNavigation() {
-        vp_bottom_main_act_frag_pager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
+
+        // 뷰페이저 스와이프 막기 위해서, customviewpager사용
+        val customViewPager =findViewById(R.id.vp_bottom_main_act_frag_pager) as MainFragmentViewPager
+        customViewPager.setPagingEnabled(false)
+        customViewPager.adapter=MyFragmentStatePagerAdapter(supportFragmentManager,4)
 
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
