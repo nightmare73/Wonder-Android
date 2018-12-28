@@ -39,23 +39,22 @@
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
 
-        <TextView android:layout_width="268dp"
-                  android:layout_height="44dp"
-                  android:layout_marginTop="19dp"
-                  android:background="#5effffff"
-                  android:textSize="14dp"
-                  android:text="로그인"
-                  android:gravity="center"
-        />
     </LinearLayout>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    >
+
+    </RelativeLayout>
 
     <TextView
             android:id="@+id/btn_join_join"
             android:layout_width="match_parent"
-            android:layout_height="59dp"
-            android:background="#000000"
-            android:text="계정이없으신가요? 회원가입"
-            android:textSize="18sp"
+            android:layout_height="55dp"
+
+            android:background="#ffa326"
+            android:text="로그인"
+            android:textSize="20sp"
             android:gravity="center"
             android:textColor="#ffffff"
             android:layout_alignParentBottom="true"/>

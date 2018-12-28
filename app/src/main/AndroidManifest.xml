@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
+        <activity android:name=".OrderProcess.OrderActivity">
+        </activity>
+        <activity android:name=".OrderProcess.OrderList">
+        </activity>
     </application>
 
 </manifest>

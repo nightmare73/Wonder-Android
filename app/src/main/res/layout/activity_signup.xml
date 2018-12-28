@@ -18,13 +18,17 @@
                 android:layout_height="59dp"
                 android:src="@drawable/ic_launcher_background"
                 android:layout_gravity="center_horizontal"/>
+
+
+
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:textColor="#ffffff"
+                android:textColor="#909090"
                 android:gravity="center_horizontal"
-                android:text="친구들의 사진과 동영상을 보려면\n가입하세요."
+                android:text="브링에 오신 것을 환영합니다"
                 android:layout_marginTop="7dp"
                 android:layout_gravity="center_horizontal"
         />
@@ -35,10 +39,14 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="22dp"
-                android:textColorHint="#ffffff"
-                android:hint="이메일"
+                android:textColorHint="#909090"
+                android:hint="아이디"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+                android:background="#000000"></View>
 
         <EditText
                 android:id="@+id/et_pw_join"
@@ -46,10 +54,15 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="19dp"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#909090"
                 android:hint="비밀번호"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
+
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="#000000"></View>
 
         <EditText
                 android:id="@+id/et_name_join"
@@ -57,10 +70,14 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="19dp"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#909090"
                 android:hint="사용자이름"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="#000000"></View>
 
         <EditText
                 android:id="@+id/et_part_join"
@@ -68,21 +85,26 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="19dp"
-                android:textColorHint="#ffffff"
-                android:hint="파트"
+                android:textColorHint="#909090"
+                android:hint="닉네임"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="#000000"></View>
+
     </LinearLayout>
 
     <TextView
             android:id="@+id/btn_join_join"
             android:layout_width="match_parent"
             android:layout_height="59dp"
-            android:background="#5effffff"
+            android:background="#e2e2e2"
             android:text="@string/signup"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="#909090"
             android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
