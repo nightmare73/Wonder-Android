@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
+
+        val token = FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+        toast(token.toString())
     }
 
 

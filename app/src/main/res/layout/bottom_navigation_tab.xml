@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/selector_bottom_navi_main_icon" />
+            android:src="@drawable/home_icon_on" />
     </RelativeLayout>
 
     <RelativeLayout
