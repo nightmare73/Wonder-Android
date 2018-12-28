@@ -26,6 +26,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".LoginProcess.LoginActivity">
+        </activity>
+        <activity android:name=".LoginProcess.SignupActivity">
+        </activity>
+        <activity android:name=".OrderProcess.OrderActivity">
+        </activity>
+        <activity android:name=".OrderProcess.OrderList">
+        </activity>
     </application>
 
 </manifest>
