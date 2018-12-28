@@ -13,6 +13,7 @@
             android:value="238345100979e74d743629c451b3d561"/>
 
     <application
+            android:name=".Network.ApplicationController"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
