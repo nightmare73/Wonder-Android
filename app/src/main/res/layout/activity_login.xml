@@ -21,9 +21,8 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="22dp"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#000000"
                 android:hint="아이디"
-                android:text="아이디"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
 
@@ -33,17 +32,17 @@
                 android:layout_height="44dp"
                 android:background="#5effffff"
                 android:layout_marginTop="19dp"
-                android:textColorHint="#ffffff"
+                android:textColorHint="#000000"
                 android:hint="비밀번호"
-                android:text="비밀번호"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
 
     </LinearLayout>
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
-                    >
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom">
 
     </RelativeLayout>
 

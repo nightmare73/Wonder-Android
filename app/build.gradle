@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -45,6 +46,7 @@ dependencies {
 
     // firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
-
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
 }
+

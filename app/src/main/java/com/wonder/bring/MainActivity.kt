@@ -4,12 +4,22 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.NetworkService
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
+
+
+    // 통신이 들어가는 곳은 다 써주자.
+    val networkService : NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
+
 
     // backpressed변수
     var backPressedTime: Long = 0
