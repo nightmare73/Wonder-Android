@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/selector_bottom_navi_map_icon" />
+            android:src="@drawable/selector_bottom_navi_my_page_icon" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/selector_bottom_navi_my_page_icon" />
+            android:src="@drawable/selector_bottom_navi_cart_icon" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/selector_bottom_navi_my_page_icon" />
+                android:src="@drawable/selector_bottom_navi_orderlist_icon" />
     </RelativeLayout>
 
 </LinearLayout>

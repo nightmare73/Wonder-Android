@@ -17,5 +17,4 @@ interface NetworkService {
     ) : Call<PostLogInResponse>
 
 
-
 }

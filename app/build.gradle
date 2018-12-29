@@ -49,4 +49,3 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
 }
-
