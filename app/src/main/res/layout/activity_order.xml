@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:context=".OrderProcess.OrderActivity">
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_alignParentStart="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentTop="true"
+                  android:layout_marginTop="33dp"
+                  android:layout_marginLeft="144dp"
+                  android:layout_marginRight="143dp">
+
+        <TextView android:layout_width="73dp"
+                  android:layout_height="22dp"
+                  android:text="@string/order"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:orientation="horizontal"
+
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true"
+            >
+        <Button
+                android:text="변경하기"
+                android:layout_width="135dp"
+                android:layout_height="42dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="32dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/button"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="32dp"/>
+        <Button
+                android:text="결제하기"
+                android:layout_width="135dp"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="30dp"
+                android:layout_alignTop="@+id/button"
+                android:id="@+id/button2" android:layout_marginRight="30dp" android:layout_marginTop="0dp"/>
+    </LinearLayout>
+
+
+</RelativeLayout>
