@@ -26,9 +26,7 @@ import java.security.NoSuchAlgorithmException
 class HomeFragment : Fragment() {
 
     private val PERMISSIONS_ACCESS_FINE_LOCATION_REQUEST_CODE: Int = 1000
-
     private lateinit var mapView: MapView
-
     private lateinit var mapViewContainer: ViewGroup
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,6 +56,7 @@ class HomeFragment : Fragment() {
         //여기는 프래그먼트니까 context가 없다.
         //context를 얻어오기 위해서 activity를 사용
         Log.v("Malibin hash", getKeyHash(activity!!.applicationContext))
+
     }
 
     //해쉬키 받아오기
@@ -85,11 +84,7 @@ class HomeFragment : Fragment() {
 
     private fun requestGpsPermission() {
         //이전에 이미 권한 메세지에 대해 OK 했는지 검사
-        if (ActivityCompat.checkSelfPermission(
-                context!!,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ActivityCompat.checkSelfPermission(context!!, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Log.v("Malibin Debug", "권한 확인햇음")
             //이전에 권한을 요청한적이 없다면
             //권한을 요청하는 메세지 띄운다
@@ -146,10 +141,12 @@ class HomeFragment : Fragment() {
         ) {
         }
 
-        var lm: LocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var location: Location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
 
-        Log.v("Malibin GPS", location.latitude.toString() + ", " + location.longitude.toString())
+
+        val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+
+        Log.v("Malibin GPS", location!!.latitude.toString() + ", " + location.longitude.toString())
     }
 
 
