@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- User Permissions -->
 
+
     <!-- Daum Map API Key -->
     <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -20,14 +21,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".LoginProcess.LoginActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginProcess.LoginActivity">
         </activity>
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
@@ -35,7 +36,8 @@
         </activity>
         <activity android:name=".OrderProcess.OrderList">
         </activity>
-
+        <activity android:name=".StoreActivity">
+        </activity>
     </application>
 
 </manifest>

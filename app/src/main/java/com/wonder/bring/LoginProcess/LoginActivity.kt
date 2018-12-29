@@ -32,9 +32,10 @@ class LoginActivity : AppCompatActivity() {
 
         setOnBtnClickListner()
 
-
+        // 자동로그인 로직
         if(SharedPreferenceController.getAuthorization(this).isNotEmpty()){
             startActivity<MainActivity>()
+            finish()
         }
 
     }
@@ -45,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // 로그인 통신 로직
     private fun getLoginResponse(){
         if(et_id_join.text.toString().isNotEmpty()&&et_pw_join1.text.toString().isNotEmpty()){
             //edittext있는 값 받기

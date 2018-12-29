@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StoreActivity"
+        android:layout_marginTop="24dp">
+
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="#e2e2e2">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+        android:text="매장 사진 위치 \n 아직 디자인 픽스 x"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>
