@@ -2,6 +2,7 @@ package com.wonder.bring.LoginProcess
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -40,18 +41,38 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+
+
+
     private fun setOnBtnClickListner(){
-        btn_join_join.setOnClickListener {
+
+        tv_login_act_login.setOnClickListener {
+
+            //id, pw가 채워졌는지 안채워져쓴ㄴ지 확인하는 로직하나 함수를 만들어서
+
+
             getLoginResponse()
+
+
+            }
+
+        tv_login_act_movetosignup.setOnClickListener {
+            startActivity<SignupActivity>()
         }
+
+//        iv_Login_act_movetoback.setOnClickListener {
+//            startActivity<MainActivity>()
+//        }
+
+
     }
 
     // 로그인 통신 로직
     private fun getLoginResponse(){
-        if(et_id_join.text.toString().isNotEmpty()&&et_pw_join1.text.toString().isNotEmpty()){
+        if(et_login_act_id.text.toString().isNotEmpty()&&et_login_act_pw.text.toString().isNotEmpty()){
             //edittext있는 값 받기
-            val input_email : String=et_id_join.text.toString()
-            val input_pw : String= et_pw_join1.text.toString()
+            val input_email : String=et_login_act_id.text.toString()
+            val input_pw : String= et_login_act_pw.text.toString()
 
             //json형식의 객체 만들기
             var jsonObject= JSONObject()
