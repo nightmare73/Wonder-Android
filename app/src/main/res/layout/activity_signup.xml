@@ -17,7 +17,6 @@
 
         <ImageView android:layout_width="match_parent"
                    android:id="@+id/iv_Login_act_movetoback"
-                   android:src="@drawable/left-chevron"
                    android:layout_height="match_parent"/>
     </LinearLayout>
 

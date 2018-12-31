@@ -38,6 +38,7 @@
         <activity android:name=".OrderProcess.OrderList">
         </activity>
         <activity android:name=".StoreActivity">
+
         </activity>
     </application>
 

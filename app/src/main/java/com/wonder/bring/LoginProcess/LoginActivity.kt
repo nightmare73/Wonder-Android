@@ -3,7 +3,10 @@ package com.wonder.bring.LoginProcess
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.wonder.bring.MainActivity
@@ -22,6 +25,9 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
+    var id : String = ""
+    var password : String = ""
+
     // 통신을 위한 변수
     val networkService : NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -39,30 +45,52 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
+
+        et_login_act_pw.addTextChangedListener(object : TextWatcher{
+
+            override fun afterTextChanged(p0: Editable?) {
+                id = et_login_act_id.text.toString()
+                password = et_login_act_pw.text.toString()
+
+                if(id.length > 0 && password.length > 0)
+                    btn_login_act_login.isSelected =true
+                else
+                    btn_login_act_login.isSelected = false
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+
     }
-
-
 
 
     private fun setOnBtnClickListner(){
 
-        tv_login_act_login.setOnClickListener {
+        // 로그인
+        btn_login_act_login.setOnClickListener {
 
-            //id, pw가 채워졌는지 안채워져쓴ㄴ지 확인하는 로직하나 함수를 만들어서
-
-
-            getLoginResponse()
-
-
+            if(id.length > 0 && password.length > 0) {
+                getLoginResponse()
+            } else {
+                Toast.makeText(applicationContext,"정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
+        }
 
+        // 회원가입으로 이동
         tv_login_act_movetosignup.setOnClickListener {
             startActivity<SignupActivity>()
         }
 
-//        iv_Login_act_movetoback.setOnClickListener {
-//            startActivity<MainActivity>()
-//        }
+        // 뒤로가기
+        btn_login_act_back.setOnClickListener {
+            finish()
+        }
 
 
     }
