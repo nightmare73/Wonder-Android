@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".MainFragment.HomeFragment"
@@ -10,8 +10,35 @@
 
     <RelativeLayout
             android:id="@+id/mv_home_fragment_map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintEnd_toEndOf="parent"
+    >
+        <Button
+                android:text="트랙킹모드"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:layout_marginEnd="32dp"
+                android:layout_alignParentBottom="true" android:id="@+id/btn_goto_myposition"
+                android:layout_marginBottom="32dp"
+                android:layout_marginRight="32dp"/>
+        <Button
+                android:text="내 gps 핀찍기"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:layout_marginEnd="33dp"
+                android:id="@+id/btn_test_my_gps"
+                android:layout_marginRight="33dp" android:layout_above="@+id/btn_goto_myposition"
+                android:layout_marginBottom="35dp"/>
+        <Button
+                android:text="핀삭제"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:layout_marginEnd="40dp"
+                android:id="@+id/btn_delete_pin"
+                android:layout_marginRight="40dp" android:layout_above="@+id/btn_test_my_gps"
+                android:layout_marginBottom="29dp"/>
     </RelativeLayout>
 
 
