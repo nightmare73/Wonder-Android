@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StoreFragment.StoreInfoFragment"
+        android:layout_marginTop="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="39dp"
+        android:layout_marginTop="26dp"
+        android:orientation="vertical">
+
+
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/store_info_frag_text_info"
+          android:textColor="@color/textcolor"
+          android:textSize="18sp"/>
+
+        <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="30dp">
+
+            <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/store_info_frag_text_info_time"
+              android:textSize="15sp"
+              android:textColor="@color/textcolor"/>
+
+            <TextView
+              android:id="@+id/tv_store_info_frag_time"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="평일, 토요일, 15:00~16:00"
+              android:textColor="#909090"
+              android:textSize="15sp"
+              android:layout_marginLeft="58dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_info_frag_text_info_holiday"
+                    android:textSize="15sp"
+                    android:textColor="@color/textcolor"/>
+
+            <TextView
+                    android:id="@+id/tv_store_info_frag_hoilday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매주 일요일"
+                    android:textColor="#909090"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="75dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_info_frag_text_info_tel"
+                    android:textSize="15sp"
+                    android:textColor="@color/textcolor"/>
+
+            <TextView
+                    android:id="@+id/tv_store_info_frag_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02-243-2224"
+                    android:textColor="#909090"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="58dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

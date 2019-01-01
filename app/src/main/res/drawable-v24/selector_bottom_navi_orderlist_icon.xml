@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_selected="true" android:drawable="@drawable/list_icon_on"/>
+    <item android:state_selected="true" android:drawable="@drawable/lsit_icon_on"/>
     <item android:state_selected="false" android:drawable="@drawable/lsit_icon_off"/>
 
 </selector>

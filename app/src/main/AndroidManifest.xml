@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginProcess.LoginActivity">
+
         </activity>
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
@@ -37,6 +38,7 @@
         <activity android:name=".OrderProcess.OrderList">
         </activity>
         <activity android:name=".StoreActivity">
+
         </activity>
     </application>
 
