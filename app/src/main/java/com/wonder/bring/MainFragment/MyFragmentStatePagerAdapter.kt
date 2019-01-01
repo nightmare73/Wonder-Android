@@ -1,7 +1,9 @@
 package com.wonder.bring.MainFragment
 
+import android.app.Activity
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import com.wonder.bring.db.SharedPreferenceController
 
 
 /**
@@ -12,15 +14,17 @@ import android.support.v4.app.FragmentManager
 class MyFragmentStatePagerAdapter(fm: FragmentManager, // Count number of tabs
                                   private val tabCount: Int) : android.support.v4.app.FragmentStatePagerAdapter(fm) {
 
+
     override fun getItem(position: Int): Fragment? {
         // Returning the current tabs
+
 
         when (position) {           // 자바로 치면, switch문법
 
             0 -> return HomeFragment()
-            1 -> return MypageFragment()
+            1 -> return OrderhistoryFragment()
             2 -> return CartFragment()
-            3 -> return OrderhistoryFragment()
+            3 -> return MypageFragment()
             else -> return null
 
         }
@@ -29,3 +33,5 @@ class MyFragmentStatePagerAdapter(fm: FragmentManager, // Count number of tabs
 
     override fun getCount(): Int =tabCount
 }
+
+

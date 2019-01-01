@@ -1,16 +1,20 @@
 package com.wonder.bring
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.FragmentTransaction
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import com.wonder.bring.LoginProcess.SignupActivity
+import com.wonder.bring.StoreFragment.StoreInfoFragment
+import com.wonder.bring.StoreFragment.StoreMenuFragment
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_store.*
+import org.jetbrains.anko.startActivity
 
-class StoreActivity : AppCompatActivity() {
-
-    private var pg_btn: Button? = null
-    private var photo_btn: Button? = null
-
+class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     private val FRAGMENT1 = 1
     private val FRAGMENT2 = 2
@@ -19,62 +23,52 @@ class StoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store)
 
-//        pg_btn = view.findViewById(R.id.fm_pg_btn) as Button
-//        photo_btn = view.findViewById(R.id.fm_photo_btn) as Button
-//
-//        mypick_fragment = view.findViewById(R.id.mypick_fragment) as FrameLayout
-//
-//        callFragment(FRAGMENT1)
-//
-//
-//        pg_btn!!.setOnClickListener(this)
-//        photo_btn!!.setOnClickListener(this)
-//
-//
-//        return view
+
+        callFragment(FRAGMENT1)
+        btn_store_act_menu!!.setOnClickListener(this)
+        btn_store_act_info.setOnClickListener(this)
+
     }
 
-    fun onClick(v: View) {
-//        when (v.id) {
-//            R.id.fm_pg_btn ->
-//
-//                callFragment(FRAGMENT1)
-//            R.id.fm_photo_btn -> {
-//                photo_btn!!.setTextColor(Color.parseColor("#ffffff"))
-//                pg_btn!!.setTextColor(Color.parseColor("#A5A5A5"))
-//                photo_btn!!.setBackgroundColor(Color.parseColor("#000000"))
-//                pg_btn!!.setBackgroundColor(Color.parseColor("#e9e9e9"))
-//                callFragment(FRAGMENT2)
-//            }
-//        }
+
+        override fun onClick(v: View) {
+            when (v.id) {
+            R.id.btn_store_act_menu ->{
+                tv_store_act_menu!!.setTextColor(Color.parseColor("#000000"))
+                tv_store_act_info!!.setTextColor(Color.parseColor("#909090"))
+                iv_store_act_menu.visibility=View.VISIBLE
+                iv_store_act_info.visibility=View.INVISIBLE
+                callFragment(FRAGMENT1)
+            }
+
+
+            R.id.btn_store_act_info -> {
+                tv_store_act_info!!.setTextColor(Color.parseColor("#000000"))
+                tv_store_act_menu!!.setTextColor(Color.parseColor("#909090"))
+                iv_store_act_info.visibility=View.VISIBLE
+                iv_store_act_menu.visibility=View.INVISIBLE
+                callFragment(FRAGMENT2)
+            }
+        }
     }
+
 
 
     private fun callFragment(frament_no: Int) {
 
-        // 프래그먼트 사용을 위해
-        val transaction = fragmentManager.beginTransaction()
-
         when (frament_no) {
-            1 -> {
-                // '프래그먼트1' 호출
-//                pg_btn!!.setTextColor(Color.parseColor("#ffffff"))
-//                photo_btn!!.setTextColor(Color.parseColor("#A5A5A5"))
-//                pg_btn!!.setBackgroundColor(Color.parseColor("#000000"))
-//                photo_btn!!.setBackgroundColor(Color.parseColor("#e9e9e9"))
-//                val mypick_pg_fragment = MyPickPhotographerFragment()
-//                transaction.replace(R.id.mypick_fragment, mypick_pg_fragment)
-//                transaction.commit()
+            1 -> { // '프래그먼트1' 호출
+                val store_menu_fragment : StoreMenuFragment= StoreMenuFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.fl_store_act_framelayout,store_menu_fragment).commit()
             }
 
-            2 -> {
-//                // '프래그먼트2' 호출
-//                val mypick_photo_fragment = MyPickPhotoFragment()
-//                transaction.replace(R.id.mypick_fragment, mypick_photo_fragment)
-//                transaction.commit()
+            2 -> { // '프래그먼트2' 호출
+                val store_info_fragment : StoreInfoFragment = StoreInfoFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.fl_store_act_framelayout, store_info_fragment).commit()
             }
         }
 
     }
+
 
 }

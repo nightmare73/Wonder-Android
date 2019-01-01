@@ -19,7 +19,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/btn_bottom_navi_map_tab"
+        android:id="@+id/btn_bottom_navi_orderlist_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -27,11 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/selector_bottom_navi_my_page_icon" />
+            android:src="@drawable/selector_bottom_navi_orderlist_icon" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/btn_bottom_navi_my_page_tab"
+        android:id="@+id/btn_bottom_navi_cart_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-            android:id="@+id/btn_bottom_navi_cart_tab"
+            android:id="@+id/btn_bottom_navi_my_page_tab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/selector_bottom_navi_orderlist_icon" />
+                android:src="@drawable/selector_bottom_navi_my_page_icon" />
     </RelativeLayout>
 
 </LinearLayout>
