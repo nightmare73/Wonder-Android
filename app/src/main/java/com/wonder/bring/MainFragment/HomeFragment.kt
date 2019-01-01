@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
@@ -18,26 +19,56 @@ import com.kakao.util.maps.helper.Utility
 
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.fragment_home.*
-import net.daum.mf.map.api.MapView
+import net.daum.mf.map.api.*
+import org.jetbrains.anko.support.v4.toast
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 
 class HomeFragment : Fragment() {
+    //이떄의 gps는 내가 한양대잇을때의 값을 가져왔음
+    private var userLatitude: Double = 37.55818269968138
+    private var userLongitude: Double = 127.04231960631296
+    private var userGpsAccuracy: Float = 0.0f
 
     private val PERMISSIONS_ACCESS_FINE_LOCATION_REQUEST_CODE: Int = 1000
+
     private lateinit var mapView: MapView
     private lateinit var mapViewContainer: ViewGroup
 
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requestGpsPermission()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         mapInit()
-        requestGpsPermission()
+        btn_goto_myposition.setOnClickListener {
+            goToUserPosition()
+        }
+
+        btn_test_my_gps.setOnClickListener {
+            setPinMyGps()
+        }
+
+        btn_delete_pin.setOnClickListener {
+            mapView.removeAllPOIItems()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
     }
 
     private fun mapInit() {
@@ -46,6 +77,7 @@ class HomeFragment : Fragment() {
         mapView = MapView(activity)
         //맵뷰에 내 네이티브키 등록
         mapView.setDaumMapApiKey("238345100979e74d743629c451b3d561")
+
 
         //맵뷰를 담을 view가져오기
         mapViewContainer = mv_home_fragment_map
@@ -84,7 +116,11 @@ class HomeFragment : Fragment() {
 
     private fun requestGpsPermission() {
         //이전에 이미 권한 메세지에 대해 OK 했는지 검사
-        if (ActivityCompat.checkSelfPermission(context!!, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                context!!,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             Log.v("Malibin Debug", "권한 확인햇음")
             //이전에 권한을 요청한적이 없다면
             //권한을 요청하는 메세지 띄운다
@@ -141,13 +177,81 @@ class HomeFragment : Fragment() {
         ) {
         }
 
-
-
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
 
-        Log.v("Malibin GPS", location!!.latitude.toString() + ", " + location.longitude.toString())
+        // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
+        lm.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,   //등록할 위치제공자
+            100,                   //통지사이의 최소 시간간격 (miliSecond)
+            1f,                 //통지사이의 최소 변경거리 (m)
+            mLocationListener
+        )
+
+        userLatitude = location!!.latitude
+        userLongitude = location!!.longitude
+        userGpsAccuracy = location!!.accuracy
+
+        Log.v(
+            "Malibin GPS",
+            location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+        )
+
     }
 
+    private fun goToUserPosition() {
+        var userPosition: CameraPosition =
+            CameraPosition(MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude), 2f)//머가 문제일까? 터지넹
+        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
+
+        //mapView.animateCamera(CameraUpdateFactory.newCameraPosition(userPosition))//머가 문제지 터지는게
+        //mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint)) //이건 잘 되긴하는데 정확하지가 않은듯??
+
+        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
+        toast("goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
+        Log.v(
+            "Malibin GPS",
+            "goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy
+        )
+    }
+
+    private fun setPinMyGps() {
+        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
+        var poiItem: MapPOIItem = MapPOIItem()
+        poiItem.itemName = "내 시스템 GPS 위치"
+        poiItem.mapPoint = userMapPoint
+        poiItem.markerType = MapPOIItem.MarkerType.YellowPin
+        mapView.addPOIItem(poiItem)
+
+        mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint))
+        Log.v(
+            "Malibin GPS",
+            "setPinMyGps called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy
+        )
+        toast("setPinMyGps called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
+    }
+
+
+    private var mLocationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location?) {
+            //위치값이 갱신되면 이 이벤트 발생
+            userLatitude = location!!.latitude
+            userLongitude = location!!.longitude
+            userGpsAccuracy = location!!.accuracy
+            Log.v(
+                "Malibin GPS",
+                "mLocationListener called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy
+            )
+        }
+
+        override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
+        }
+
+        override fun onProviderEnabled(p0: String?) {
+        }
+
+        override fun onProviderDisabled(p0: String?) {
+        }
+    }
 
 }
