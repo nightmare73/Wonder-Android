@@ -1,7 +1,7 @@
 package com.wonder.bring.db
 
 import android.content.Context
-
+import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 
 
 object SharedPreferenceController{
@@ -21,6 +21,7 @@ object SharedPreferenceController{
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         return pref.getString(myAuth, "")
     }
+
 
 
     fun clearSPC(context: Context){

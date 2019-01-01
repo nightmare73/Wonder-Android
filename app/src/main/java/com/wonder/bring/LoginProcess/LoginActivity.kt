@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.widget.Toast
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -29,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
     var input_id : String = ""
     var input_pw : String = ""
 
+
     // 통신을 위한 변수
     val networkService : NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -40,11 +42,11 @@ class LoginActivity : AppCompatActivity() {
 
         setOnBtnClickListner()
 
-        // 자동로그인 로직
-        if(SharedPreferenceController.getAuthorization(this).isNotEmpty()){
-            startActivity<MainActivity>()
-            finish()
-        }
+//        // 자동로그인 로직
+//        if(SharedPreferenceController.getAuthorization(this).isNotEmpty()){
+//            startActivity<MainActivity>()
+//            finish()
+//        }
 
 
         // edittext입력 시, 로그인버튼 색깔 변하게 하기
@@ -115,14 +117,24 @@ class LoginActivity : AppCompatActivity() {
             val postLoginResponse : Call<PostLogInResponse> = networkService.postLoginResponse("application/json",gsonObject)
             postLoginResponse.enqueue(object : Callback<PostLogInResponse> {
                 override fun onResponse(call: Call<PostLogInResponse>, response: Response<PostLogInResponse>) {
+                    var body = response!!.body()
 
-                    val token =response.body()!!.data.token
+                    if(response!!.isSuccessful){  // 1. 로그인 성공
 
-                    // 그 token값을 SharedPreference에 저장.
-                    SharedPreferenceController.setAuthorization(this@LoginActivity,token)
-                    // 로그인 했으니까 home으로 이동
-                    startActivity<MainActivity>()
-                    finish()
+                        if(body!!.message.equals("로그인 성공")) {
+                            val token = body!!.data.token
+
+                            // 그 token값을 SharedPreference에 저장.
+                            SharedPreferenceController.setAuthorization(this@LoginActivity, token)
+                            // 로그인 했으니까 그 전화면으로 이동
+                            //todo: finisih만 하면 되는건가? 전화면으로 돌아가야 하니까
+                            startActivity<MainActivity>()
+                            finish()
+                        }else{// 2. 로그인 실패( 아이디 또는 비밀번호 디비랑 맞지 않을때)
+                            toast("아이디 또는 비밀번호가 잘못되었습니다.").setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+                        }
+                    }
+
                 }
 
                 override fun onFailure(call: Call<PostLogInResponse>, t: Throwable) { // 통신 실패

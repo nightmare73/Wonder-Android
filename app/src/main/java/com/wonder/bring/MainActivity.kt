@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import com.google.firebase.messaging.FirebaseMessaging
+import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
+import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
+
+
+
     }
 
 
@@ -45,13 +51,18 @@ class MainActivity : AppCompatActivity() {
 
         tl_bottom_main_act_bottom_menu.getTabAt(0)!!.customView =
                 bottomNaviLayout.findViewById(R.id.btn_bottom_navi_main_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_map_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_orderlist_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
+
+
+
+
     }
+
 
     override fun onBackPressed() {
         var temp: Long = System.currentTimeMillis()
