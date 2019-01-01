@@ -1,5 +1,6 @@
 package com.wonder.bring.LoginProcess
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -25,8 +26,8 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    var id : String = ""
-    var password : String = ""
+    var input_id : String = ""
+    var input_pw : String = ""
 
     // 통신을 위한 변수
     val networkService : NetworkService by lazy {
@@ -46,16 +47,17 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+        // edittext입력 시, 로그인버튼 색깔 변하게 하기
         et_login_act_pw.addTextChangedListener(object : TextWatcher{
 
             override fun afterTextChanged(p0: Editable?) {
-                id = et_login_act_id.text.toString()
-                password = et_login_act_pw.text.toString()
+                input_id = et_login_act_id.text.toString()
+                input_pw = et_login_act_pw.text.toString()
 
-                if(id.length > 0 && password.length > 0)
-                    btn_login_act_login.isSelected =true
+                if(input_id.length > 0 && input_pw.length > 0)
+                    btn_login_act_login.isSelected=true
                 else
-                    btn_login_act_login.isSelected = false
+                    btn_login_act_login.isSelected=false
 
             }
 
@@ -75,11 +77,11 @@ class LoginActivity : AppCompatActivity() {
         // 로그인
         btn_login_act_login.setOnClickListener {
 
-            if(id.length > 0 && password.length > 0) {
+            if(input_id.length > 0 && input_pw.length > 0)
                 getLoginResponse()
-            } else {
-                Toast.makeText(applicationContext,"정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
-            }
+            else
+                toast("정보를 모두 입력해주세요")
+
         }
 
         // 회원가입으로 이동
@@ -97,21 +99,17 @@ class LoginActivity : AppCompatActivity() {
 
     // 로그인 통신 로직
     private fun getLoginResponse(){
-        if(et_login_act_id.text.toString().isNotEmpty()&&et_login_act_pw.text.toString().isNotEmpty()){
-            //edittext있는 값 받기
-            val input_email : String=et_login_act_id.text.toString()
-            val input_pw : String= et_login_act_pw.text.toString()
+        if(input_id.isNotEmpty()&&input_pw.isNotEmpty()){
 
             //json형식의 객체 만들기
             var jsonObject= JSONObject()
-            jsonObject.put("id",input_email)
+            jsonObject.put("id",input_id)
             jsonObject.put("password",input_pw)
-
 
             //Gson라이브러리의 json parser를 통해 json으로!
             val gsonObject = JsonParser().parse(jsonObject.toString()) as JsonObject
 
-            Log.d("gsonObject",gsonObject.toString())
+            Log.d("GsonObject",gsonObject.toString())
 
             //통신 시작
             val postLoginResponse : Call<PostLogInResponse> = networkService.postLoginResponse("application/json",gsonObject)
@@ -128,7 +126,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<PostLogInResponse>, t: Throwable) { // 통신 실패
-                    Log.d("Sign Up Fail",t.toString())
+                    Log.d("서버연결 실패",t.toString())
 
                 }
             })

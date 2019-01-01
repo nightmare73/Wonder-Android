@@ -6,28 +6,28 @@
         android:layout_width="match_parent"
         tools:context=".LoginProcess.LoginActivity"
         android:layout_height="match_parent"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="25dp">
 
 
    <RelativeLayout
+     android:id="@+id/ll_login_act_title_bar"
      android:layout_width="match_parent"
      android:layout_height="46.5dp"
-     android:id="@+id/ll_login_act_title_bar"
      android:paddingLeft="19.5dp">
 
+
        <ImageView
+         android:id="@+id/btn_login_act_back"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:id="@+id/btn_login_act_back"
          android:src="@drawable/leftchevron"
          android:layout_centerVertical="true"/>
-
 
       <TextView
          android:layout_width="wrap_content"
          android:id="@+id/tv_login_act_title"
          android:layout_centerInParent="true"
-         android:text="로그인"
+         android:text="@string/login_act_text_login_title_bar"
          android:textSize="20sp"
          android:textColor="#707070"
          android:layout_height="wrap_content"/>
@@ -36,85 +36,107 @@
 
 
     <View
+      android:id="@+id/v_login_act_underline"
       android:layout_width="match_parent"
       android:layout_height="0.3dp"
       android:background="#afafaf"
-      android:layout_alignBottom="@+id/ll_login_act_title_bar">
+      android:layout_below="@+id/ll_login_act_title_bar">
     </View>
 
+    <LinearLayout
+      android:id="@+id/ll_login_act_logo"
+      android:layout_width="match_parent"
+      android:layout_height="106dp"
+      android:gravity="center"
+      android:layout_marginTop="25.5dp"
+      android:layout_below="@+id/v_login_act_underline">
+
+        <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/logo"/>
+
+    </LinearLayout>
 
     <LinearLayout
-       android:layout_width="wrap_content"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:orientation="vertical"
-       android:layout_centerInParent="true">
-
-
-        <EditText
-                android:id="@+id/et_login_act_id"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
-                android:background="@drawable/login_edit_border_off"
-                android:layout_marginTop="22dp"
-                android:textColorHint="#909090"
-                android:hint="아이디"
-                android:textSize="14sp"
-                android:paddingLeft="17dp"/>
-
-        <EditText
-                android:id="@+id/et_login_act_pw"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
-                android:background="@drawable/login_edit_border_off"
-                android:layout_marginTop="15dp"
-                android:textColorHint="#909090"
-                android:hint="비밀번호"
-                android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+       android:layout_below="@+id/ll_login_act_logo"
+       android:layout_marginTop="24dp">
 
         <RelativeLayout
-            android:layout_marginTop="42dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/et_login_act_pw">
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:paddingLeft="29dp"
+          android:paddingRight="29dp">
+
+            <EditText
+               android:id="@+id/et_login_act_id"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@drawable/login_edit_border_off"
+               android:textColorHint="#909090"
+               android:hint="@string/login_act_edit_id"
+               android:textSize="14sp"
+               android:paddingLeft="28dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:paddingLeft="29dp"
+                android:paddingRight="29dp"
+                android:layout_marginTop="15dp">
+
+
+            <EditText
+                    android:id="@+id/et_login_act_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/login_edit_border_off"
+                    android:textColorHint="#909090"
+                    android:hint="@string/login_act_edit_pw"
+                    android:textSize="14sp"
+                    android:paddingLeft="28dp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:layout_marginTop="42dp"
+                android:layout_width="match_parent"
+                android:layout_height="17dp"
+                android:paddingLeft="134dp"
+                android:paddingRight="30dp">
 
             <TextView
-               android:layout_width="wrap_content"
-               android:id="@+id/tv_login_act_"
-               android:layout_toLeftOf="@id/tv_login_act_movetosignup"
-               android:text="@string/login_act_text_guide_signup"
-               android:layout_height="wrap_content"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/tv_login_act_movetosignup"
+                    android:text="@string/login_act_text_guide_signup"/>
 
             <TextView
-               android:layout_width="wrap_content"
-               android:layout_alignParentRight="true"
-               android:id="@+id/tv_login_act_movetosignup"
-               android:text="@string/login_act_btn_signup"
-               android:layout_height="wrap_content"/>
+                    android:id="@+id/tv_login_act_movetosignup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/login_act_btn_signup"/>
+
         </RelativeLayout>
 
 
     </LinearLayout>
 
 
-   <RelativeLayout
-      android:id="@+id/btn_login_act_login"
-      android:layout_width="match_parent"
-      android:layout_height="55dp"
-      android:background="@color/colorAccent"
-      android:gravity="center"
-      android:layout_alignParentBottom="true">
-
-       <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="로그인"
-        android:textSize="20sp"
-        android:textColor="#ffffff"
-        android:layout_alignParentBottom="true"/>
-
-
-   </RelativeLayout>
+    <ImageButton
+       android:id="@+id/btn_login_act_login"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:src="@drawable/selector_btn_login"
+       android:background="@color/transparent"
+       android:layout_alignParentBottom="true"/>
 
 
 
