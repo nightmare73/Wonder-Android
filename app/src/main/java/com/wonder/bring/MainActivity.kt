@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
-
     // backpressed변수
     var backPressedTime: Long = 0
 
@@ -31,11 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
-
-
-
     }
-
 
     // 탭바 추가 함수
     private fun configureBottomNavigation() {
@@ -57,9 +52,6 @@ class MainActivity : AppCompatActivity() {
                     bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
             tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
                     bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
-
-
-
 
     }
 
