@@ -29,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginProcess.LoginActivity">
-
         </activity>
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
@@ -38,7 +37,10 @@
         <activity android:name=".OrderProcess.OrderList">
         </activity>
         <activity android:name=".StoreActivity">
-
+        </activity>
+        <activity android:name=".LoginProcess.Nickname_Activity">
+        </activity>
+        <activity android:name=".LoginProcess.AgreementActivity">
         </activity>
     </application>
 
