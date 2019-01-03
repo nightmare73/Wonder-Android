@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
 
+        customViewPager.offscreenPageLimit=4
+
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
         val bottomNaviLayout: View = this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)

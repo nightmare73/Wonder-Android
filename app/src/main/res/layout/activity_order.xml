@@ -24,7 +24,7 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/navbar_go_to_cart"
+                android:src="@drawable/navbar_go_to_cart_gray"
                 android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
@@ -134,15 +134,10 @@
 
         <Spinner
                 android:id="@+id/spinner_order_act_size"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="9dp"
-                android:textAlignment="center"
-                android:entries="@array/spinner_menu_size">
-
-
+                android:layout_width="wrap_content"
+                android:background="@drawable/spinner_background"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true">
         </Spinner>
 
     </RelativeLayout>
@@ -205,13 +200,15 @@
             android:layout_marginTop="51dp">
 
         <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_order_act_move_to_cart"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/into_cart"
                 android:layout_weight="1"/>
 
         <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/btn_order_act_move_to_order"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/order_now"
                 android:layout_weight="1"/>
