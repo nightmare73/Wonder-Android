@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginProcess.Nickname_Activity">
+        tools:context=".LoginProcess.NicknameActivity">
     <LinearLayout android:layout_width="22dp"
 
                   android:orientation="vertical"
@@ -85,6 +85,18 @@
                 android:layout_marginRight="15dp"
                 android:layout_alignBottom="@+id/et_nickname_act_nickname"
                 />
+
+        <TextView android:layout_width="match_parent"
+                  android:lineSpacingExtra="2sp"
+                  android:textColor="#006fff"
+                  android:id="@+id/tv_nickname_act_canusenickname"
+                  android:paddingLeft="10dp"
+                  android:text="사용 할 수 있는 닉네임 입니다"
+                  android:layout_below="@id/et_nickname_act_nickname"
+                  android:layout_height="match_parent"
+                  android:layout_marginLeft="10dp"
+                  android:layout_alignLeft="@+id/et_nickname_act_nickname"
+                  android:visibility="gone"/>
     </RelativeLayout>
 
     <ImageButton

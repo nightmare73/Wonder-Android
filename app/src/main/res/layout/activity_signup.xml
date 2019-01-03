@@ -44,7 +44,7 @@
                   android:textSize="20dp"
                   android:layout_gravity="center_vertical"
                   android:textColor="#707070"
-                  android:layout_height="match_parent"/>
+                  android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -94,12 +94,21 @@
                     android:src="@drawable/check_duplicate_off"
                     android:layout_alignParentRight="true"
             />
+
+            <TextView android:layout_width="wrap_content"
+                      android:lineSpacingExtra="2sp"
+                      android:textColor="#006fff"
+                      android:id="@+id/tv_signup_act_canuseid"
+                      android:paddingLeft="10dp"
+                      android:text="사용 할 수 있는 아이디 입니다"
+                      android:layout_below="@id/et_signup_act_id"
+                      android:layout_height="wrap_content" android:visibility="gone"/>
         </RelativeLayout>
 
 
 
         <EditText
-                android:id="@+id/et_pw_join"
+                android:id="@+id/et_signup_act_pw1"
                 android:layout_width="268dp"
                 android:layout_height="44dp"
                 android:background="@drawable/login_edit_border_off"
@@ -110,7 +119,7 @@
                 android:paddingLeft="17dp"/>
 
         <EditText
-                android:id="@+id/et_name_join"
+                android:id="@+id/et_signup_act_pw2"
                 android:layout_width="268dp"
                 android:layout_height="44dp"
                 android:background="@drawable/login_edit_border_off"
@@ -118,6 +127,15 @@
                 android:hint="비밀번호확인"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
+
+        <TextView android:layout_width="wrap_content"
+                  android:lineSpacingExtra="2sp"
+                  android:textColor="#006fff"
+                  android:id="@+id/tv_signup_act_canusepw"
+                  android:paddingLeft="10dp"
+                  android:text="비밀번호가 일치합니다"
+                  android:layout_below="@id/et_signup_act_id"
+                  android:layout_height="wrap_content" android:visibility="gone"/>
 
     </LinearLayout>
 
