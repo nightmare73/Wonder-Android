@@ -9,20 +9,31 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityCompat.requestPermissions
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import com.kakao.util.maps.helper.Utility
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.DaumService
+import com.wonder.bring.Network.Get.GetDaumAdressResponseData
+import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
+import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import net.daum.mf.map.api.*
 import org.jetbrains.anko.support.v4.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -40,10 +51,17 @@ class HomeFragment : Fragment() {
 
     private var poiItem: MapPOIItem = MapPOIItem()
 
+    // 보미 서버 통신
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
+    // 다음 서버 통신
+    val daumService: DaumService by lazy {
+        ApplicationController.instance.daumService
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //checkGpsEnabled()
 
         //키자마자 내 위치 갱신
         //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
@@ -55,14 +73,13 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
 
 
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         mapInit()
-
+        searchbarInit()
 
         btn_test_my_gps.setOnClickListener {
             setPinMyGps()
@@ -86,11 +103,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
     private fun mapInit() {
 
         //맵뷰 초기화
@@ -108,6 +120,69 @@ class HomeFragment : Fragment() {
         //여기는 프래그먼트니까 context가 없다.
         //context를 얻어오기 위해서 activity를 사용
         Log.v("Malibin hash", getKeyHash(activity!!.applicationContext))
+
+    }
+
+    private fun searchbarInit() {
+
+        var userInput: String
+
+
+        et_home_fragment_searchbar.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    userInput = textView.text.toString()
+                    toast(userInput)
+
+//                    daumService.getDaumAdressRequest(
+//                        "KakaoAK ab0af3bcabe549eb390aa05e734417f5",
+//                        userInput, 1, 10
+//                    ).enqueue(object : Callback<GetDaumAdressResponseData> {
+//                        override fun onFailure(call: Call<GetDaumAdressResponseData>, t: Throwable) {
+//                            toast("검색에 실패하였습니다.")
+//                        }
+//
+//                        override fun onResponse(
+//                            call: Call<GetDaumAdressResponseData>,
+//                            response: Response<GetDaumAdressResponseData>
+//                        ) {
+//                            Log.v("Malibin Debug : ","Daum Address Request = "+response.body().toString())
+//                        }
+//
+//                    })
+
+                    daumService.getDaumKeywordAdressRequest("KakaoAK ab0af3bcabe549eb390aa05e734417f5",
+                        userInput, 1, 10
+                    ).enqueue(object : Callback<GetDaumKeywordAddressResponseData>{
+                        override fun onFailure(call: Call<GetDaumKeywordAddressResponseData>, t: Throwable) {
+                            toast("검색에 실패하였습니다.")
+                        }
+
+                        override fun onResponse(
+                            call: Call<GetDaumKeywordAddressResponseData>,
+                            response: Response<GetDaumKeywordAddressResponseData>
+                        ) {
+                            Log.v("Malibin Debug : ","Daum Keyword Address Request = "+response.body().toString())
+                            var string:String=""
+                            for(result in response.body()!!.documents){
+                                var temp:String = result.place_name + " = " + result.address_name +"\n"
+                                string += temp
+                            }
+                            toast(string).duration= Toast.LENGTH_LONG
+                            Log.v("Malibin Debug : ","Daum Keyword Address Request = $string")
+                        }
+
+                    })
+
+                    true
+                }
+
+                else -> false
+            }
+
+
+        }
 
     }
 
@@ -131,27 +206,6 @@ class HomeFragment : Fragment() {
             }
         }
         return null
-    }
-
-
-    private fun checkGpsEnabled() {
-
-        //var provider : String = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED)
-
-
-
-
-
-//아래코드를 실행시키면 위치기능이 꺼져있을때는 키는 화면으로 가기는하는데 켜져있을때 앱을 키면 터짐 ㅋㅋ 시발 좆같네진짜 ㅋㅋ
-//        val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-//        if (!lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            var intent : Intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-//            intent.addCategory(Intent.CATEGORY_DEFAULT)
-//            startActivity(intent)
-//        } else {
-//            requestGpsPermission()
-//        }
-
     }
 
     private fun requestGpsPermission() {
@@ -201,16 +255,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMyGPS() {
-        Log.v("Malibin Debug","getMyGPS() 호출됨")
+        Log.v("Malibin Debug", "getMyGPS() 호출됨")
 
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        Log.v("Malibin Debug","getMyGPS() location manager 객체 생성 통과")
+        Log.v("Malibin Debug", "getMyGPS() location manager 객체 생성 통과")
 
         val isGPSEnabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
         val isNetworkEnabled = lm!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
         //GPS가 켜져잇는지 안켜져있는지 확인
-        if(isGPSEnabled || isNetworkEnabled){
+        if (isGPSEnabled || isNetworkEnabled) {
             //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
             if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(
@@ -220,25 +274,24 @@ class HomeFragment : Fragment() {
                 != PackageManager.PERMISSION_GRANTED
             ) {
             }
-            Log.v("Malibin Debug","getMyGPS() 아무의미없는 코드 통과")
-
+            Log.v("Malibin Debug", "getMyGPS() 아무의미없는 코드 통과")
 
 
             //getLastKnownLocation에 좌표가 없는 경우를 생각해서 포문을 돌린다
             var providers: List<String> = lm!!.getProviders(true)
-            var location : Location? = null
-            for(provider in providers){
+            var location: Location? = null
+            for (provider in providers) {
                 var l = lm.getLastKnownLocation(provider)
-                if(l==null){
+                if (l == null) {
                     continue
                 }
-                if(location == null || l.getAccuracy() < location.getAccuracy()){
+                if (location == null || l.getAccuracy() < location.getAccuracy()) {
                     location = l
                 }
             }
 
             //val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as? Location
-            Log.v("Malibin Debug","getMyGPS() location 객체 생성 통과")
+            Log.v("Malibin Debug", "getMyGPS() location 객체 생성 통과")
 
             // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
             lm.requestLocationUpdates(
@@ -253,7 +306,7 @@ class HomeFragment : Fragment() {
                 1f,                    // 통지사이의 최소 변경거리 (m)
                 mLocationListener
             )
-            Log.v("Malibin Debug","getMyGPS() lm에 리스너 등록 통과")
+            Log.v("Malibin Debug", "getMyGPS() lm에 리스너 등록 통과")
 
             userLatitude = location!!.latitude
             userLongitude = location!!.longitude
@@ -263,31 +316,12 @@ class HomeFragment : Fragment() {
                 "Malibin GPS",
                 location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
             )
-
-
-
         }
         //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
         else {
             toast("GPS를 체크해주세요")
         }
 
-
-
-
-
-
-
-    }
-
-    private fun goToUserPosition() {
-        //그냥 트래킹모드 켜는 함수 여기서 나오는 좌표는 트래킹모드에서 뽑아오는 좌표가아니라 내 시스템에서 뽑아온 좌표임.
-        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-        toast("goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
-        Log.v(
-            "Malibin GPS",
-            "goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy
-        )
     }
 
     private fun setPinMyGps() {
