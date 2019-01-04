@@ -15,6 +15,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import com.kakao.util.maps.helper.Utility
 
 import com.wonder.bring.R
@@ -36,15 +38,21 @@ class HomeFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var mapViewContainer: ViewGroup
 
+    private var poiItem: MapPOIItem = MapPOIItem()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //checkGpsEnabled()
+
         requestGpsPermission()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
+
+
 
     }
 
@@ -62,6 +70,18 @@ class HomeFragment : Fragment() {
 
         btn_delete_pin.setOnClickListener {
             mapView.removeAllPOIItems()
+        }
+
+        btn_comon.setOnClickListener {
+
+
+            cl_home_fragment_summary.visibility = View.VISIBLE
+        }
+
+        btn_getout.setOnClickListener {
+
+
+            cl_home_fragment_summary.visibility = View.GONE
         }
 
     }
@@ -114,6 +134,26 @@ class HomeFragment : Fragment() {
     }
 
 
+    private fun checkGpsEnabled() {
+
+        //var provider : String = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED)
+
+
+
+
+
+//아래코드를 실행시키면 위치기능이 꺼져있을때는 키는 화면으로 가기는하는데 켜져있을때 앱을 키면 터짐 ㅋㅋ 시발 좆같네진짜 ㅋㅋ
+//        val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+//        if (!lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            var intent : Intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//            intent.addCategory(Intent.CATEGORY_DEFAULT)
+//            startActivity(intent)
+//        } else {
+//            requestGpsPermission()
+//        }
+
+    }
+
     private fun requestGpsPermission() {
         //이전에 이미 권한 메세지에 대해 OK 했는지 검사
         if (ActivityCompat.checkSelfPermission(
@@ -161,52 +201,87 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMyGPS() {
-
-        //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
-        if (Build.VERSION.SDK_INT >= 23 &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-        }
+        Log.v("Malibin Debug","getMyGPS() 호출됨")
 
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+        Log.v("Malibin Debug","getMyGPS() location manager 객체 생성 통과")
 
-        // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
-        lm.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,   //등록할 위치제공자
-            100,                   //통지사이의 최소 시간간격 (miliSecond)
-            1f,                 //통지사이의 최소 변경거리 (m)
-            mLocationListener
-        )
+        val isGPSEnabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnabled = lm!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        userLatitude = location!!.latitude
-        userLongitude = location!!.longitude
-        userGpsAccuracy = location!!.accuracy
+        //GPS가 켜져잇는지 안켜져있는지 확인
+        if(isGPSEnabled || isNetworkEnabled){
+            //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
+            if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(
+                    activity!!.applicationContext,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+            }
+            Log.v("Malibin Debug","getMyGPS() 아무의미없는 코드 통과")
 
-        Log.v(
-            "Malibin GPS",
-            location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
-        )
+
+
+            //getLastKnownLocation에 좌표가 없는 경우를 생각해서 포문을 돌린다
+            var providers: List<String> = lm!!.getProviders(true)
+            var location : Location? = null
+            for(provider in providers){
+                var l = lm.getLastKnownLocation(provider)
+                if(l==null){
+                    continue
+                }
+                if(location == null || l.getAccuracy() < location.getAccuracy()){
+                    location = l
+                }
+            }
+
+            //val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as? Location
+            Log.v("Malibin Debug","getMyGPS() location 객체 생성 통과")
+
+            // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
+            lm.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,   //등록할 위치제공자
+                100,                   //통지사이의 최소 시간간격 (miliSecond)
+                1f,                 //통지사이의 최소 변경거리 (m)
+                mLocationListener
+            )
+            lm.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,  // 등록할 위치제공자
+                100,                      // 통지사이의 최소 시간간격 (miliSecond)
+                1f,                    // 통지사이의 최소 변경거리 (m)
+                mLocationListener
+            )
+            Log.v("Malibin Debug","getMyGPS() lm에 리스너 등록 통과")
+
+            userLatitude = location!!.latitude
+            userLongitude = location!!.longitude
+            userGpsAccuracy = location!!.accuracy
+
+            Log.v(
+                "Malibin GPS",
+                location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+            )
+
+
+
+        }
+        //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
+        else {
+            toast("GPS를 체크해주세요")
+        }
+
+
+
+
+
+
 
     }
 
     private fun goToUserPosition() {
-        var userPosition: CameraPosition =
-            CameraPosition(MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude), 2f)//머가 문제일까? 터지넹
-        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
-
-        //mapView.animateCamera(CameraUpdateFactory.newCameraPosition(userPosition))//머가 문제지 터지는게
-        //mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint)) //이건 잘 되긴하는데 정확하지가 않은듯??
-
+        //그냥 트래킹모드 켜는 함수 여기서 나오는 좌표는 트래킹모드에서 뽑아오는 좌표가아니라 내 시스템에서 뽑아온 좌표임.
         mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
         toast("goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
         Log.v(
@@ -217,12 +292,17 @@ class HomeFragment : Fragment() {
 
     private fun setPinMyGps() {
         var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
-        var poiItem: MapPOIItem = MapPOIItem()
+
+        poiItem.customImageResourceId = R.drawable.pin_icon
         poiItem.itemName = "내 시스템 GPS 위치"
         poiItem.mapPoint = userMapPoint
-        poiItem.markerType = MapPOIItem.MarkerType.YellowPin
+        poiItem.markerType = MapPOIItem.MarkerType.CustomImage
+
         mapView.addPOIItem(poiItem)
 
+//        var btn: Button =  poiItem.customImageResourceId
+
+        //원하는 좌표로
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint))
         Log.v(
             "Malibin GPS",
