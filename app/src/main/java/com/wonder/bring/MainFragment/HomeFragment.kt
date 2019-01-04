@@ -45,6 +45,8 @@ class HomeFragment : Fragment() {
 
         //checkGpsEnabled()
 
+        //키자마자 내 위치 갱신
+        //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
         requestGpsPermission()
 
     }
@@ -60,9 +62,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         mapInit()
-        btn_goto_myposition.setOnClickListener {
-            goToUserPosition()
-        }
+
 
         btn_test_my_gps.setOnClickListener {
             setPinMyGps()
