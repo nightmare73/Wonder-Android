@@ -10,8 +10,6 @@ data class GetMenuListResponse (
 
 data class MenuData(
     val sotreIdx : Int,
-    val name : String,
-    val address : String,
     val bgPhotoUrl: String,
     val menuList : ArrayList<MenuListData>
 

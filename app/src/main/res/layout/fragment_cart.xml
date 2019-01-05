@@ -41,8 +41,7 @@
            android:id="@+id/btn_cart_frag_checkbox"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:background="@color/transparent"
-           android:src="@drawable/selector_checkbox_cart"/>
+           android:checked="false"/>
 
         <TextView
            android:layout_width="wrap_content"

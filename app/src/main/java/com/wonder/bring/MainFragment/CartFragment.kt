@@ -25,7 +25,6 @@ class CartFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view=inflater.inflate(R.layout.fragment_cart, container, false)
 
-
         // 로그인 여부 파악 : case1) 로그인 앙대어 있으면
         if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
 
@@ -34,7 +33,7 @@ class CartFragment : Fragment(){
                 startActivity<LoginActivity>()
             }
 
-        //로그인 여부파악 : case2) 로그인 되어있는 경우
+            //로그인 여부파악 : case2) 로그인 되어있는 경우
         }else{
 
             // todo: if( 장바구니에 아무것도 없다면) :

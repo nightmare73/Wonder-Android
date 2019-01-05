@@ -1,10 +1,12 @@
 package com.wonder.bring.StoreProcess
 
 import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.ApplicationController
@@ -15,12 +17,19 @@ import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.graphics.drawable.Drawable
+import android.widget.ImageView
+
 
 class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     private val FRAGMENT1 = 1
     private val FRAGMENT2 = 2
+
+    private var mLastClickTime: Long = 0  // 연속 클릭을 막기 위한 변수
+
     lateinit var requestManager : RequestManager
+    private val TAG = StoreActivity::class.java!!.getSimpleName()
 
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -30,13 +39,15 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store)
-
+        requestManager = Glide.with(this)
 
         callFragment(FRAGMENT1)
         btn_store_act_menu!!.setOnClickListener(this)
         btn_store_act_info.setOnClickListener(this)
 
 
+        // todo: 앞에 홈에서 매장 이름, 매장 주소 가지고 와서 집어넣어야 함.
+        getResponse()
 
     }
 
@@ -80,7 +91,7 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun getResponse(v : View) {
+    private fun getResponse() {
         val getMenuListResponse = networkService.getMenuListResponse("application/json", 10)
 
         getMenuListResponse.enqueue(object : Callback<GetMenuListResponse> {
@@ -89,24 +100,14 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
                 if (response.isSuccessful) {
 
                     var body = response!!.body()
-                    toast("메뉴 리스트 조회 성공")
 
                     if (body!!.message.equals("메뉴 리스트 조회 성공")) {
+                        Log.d(TAG,"MenuList Success")
+                        // 이미지 로드
+                        requestManager.load(body!!.data.bgPhotoUrl).into(iv_store_act_store_bgphoto)
 
-                        var store_name = body!!.data.name
-                        var store_address = body!!.data.address
-
-                        tv_store_act_store_name.text = store_name
-                        tv_store_act_store_address.text = store_address
-
-
-                        requestManager.load(body!!.data.bgPhotoUrl)
-
-                    } else {
-                    toast("메뉴 리스트 조회 실패")
-                    }
-
-
+                    } else
+                        Log.d(TAG,"MenuList Fail")
                 }
 
             }
@@ -114,8 +115,6 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
             override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
                 Log.e("Menu list fail", t.toString())
             }
-
-
         })
     }
 

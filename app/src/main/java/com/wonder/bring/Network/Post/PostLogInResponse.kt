@@ -1,4 +1,4 @@
-package com.wonder.bring.Post
+package com.wonder.bring.Network.Post
 
 data class PostLogInResponse(
     val status : Int,

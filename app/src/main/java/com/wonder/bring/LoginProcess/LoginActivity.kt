@@ -1,20 +1,20 @@
 package com.wonder.bring.LoginProcess
 
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
-import android.widget.Toast
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.wonder.bring.Firebase.FireBaseMessagingService
 import com.wonder.bring.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
-import com.wonder.bring.Post.PostLogInResponse
+import com.wonder.bring.Network.Post.PostLogInResponse
 import com.wonder.bring.R
 import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_login.*
@@ -39,6 +39,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+
+
 
         setOnBtnClickListner()
 
@@ -94,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
     // 로그인 통신 로직
     private fun getLoginResponse(){
         if(input_id.isNotEmpty()&&input_pw.isNotEmpty()){
+
 
             //json형식의 객체 만들기
             var jsonObject= JSONObject()

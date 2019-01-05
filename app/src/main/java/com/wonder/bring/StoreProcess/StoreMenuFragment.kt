@@ -23,9 +23,9 @@ import retrofit2.Response
 
 class StoreMenuFragment : Fragment() {
 
+    private val TAG = StoreMenuFragment::class.java!!.getSimpleName()
 
     lateinit var menuRecyclerViewAdapter: MenuRecyclerViewAdapter
-    lateinit var requestManager : RequestManager
 
 
     val listDataList : ArrayList<MenuListData> by lazy {

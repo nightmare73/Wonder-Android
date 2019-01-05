@@ -27,11 +27,7 @@ class OrderActivity : AppCompatActivity() {
 
         // 장바구니로 이동
         btn_order_act_move_to_cart.setOnClickListener {
-            toast("장바구니로 이동")
-
-
-            val moveToCartDialog : GoToCartDialog =
-                GoToCartDialog(this)
+            val moveToCartDialog : GoToCartDialog = GoToCartDialog(this)
             moveToCartDialog.show()
 
         }
@@ -40,6 +36,19 @@ class OrderActivity : AppCompatActivity() {
         btn_order_act_move_to_order.setOnClickListener {
 
         }
+
+        // minus 버튼
+        btn_order_act_minor_icon.setOnClickListener {
+//             toast(tv_order_act_menu_quantity.text.toString())
+
+        }
+
+        //plus 버튼
+        btn_order_act_plus_icon.setOnClickListener {
+//            val menu_quantity=Integer.parseInt(tv_order_act_menu_quantity.toString())
+
+        }
+
 
 
     }
@@ -51,7 +60,6 @@ class OrderActivity : AppCompatActivity() {
         val adpter=ArrayAdapter.createFromResource(this,R.array.spinner_menu_size,R.layout.item_spinner_menu_size)
         adpter.setDropDownViewResource(R.layout.item_spinner_menu_size_dropdown)
         spnMenuSize.setAdapter(adpter)
-
 
         spnMenuSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {

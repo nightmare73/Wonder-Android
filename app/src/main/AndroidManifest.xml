@@ -13,6 +13,13 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="238345100979e74d743629c451b3d561"/>
 
+    <!--<meta-data-->
+            <!--android:name="com.google.firebase.messaging.default_notification_icon"-->
+            <!--android:resource="@drawable/ic_stat_ic_notification" />-->
+    <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
     <application
             android:name=".Network.ApplicationController"
             android:allowBackup="true"
@@ -22,28 +29,34 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-        </activity>
-
-        <activity android:name=".LoginProcess.LoginActivity">
-        </activity>
-        <activity android:name=".LoginProcess.SignupActivity">
-        </activity>
-        <activity android:name=".OrderProcess.OrderActivity">
-        </activity>
-
-        <activity android:name=".StoreProcess.StoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".LoginProcess.LoginActivity">
+        </activity>
+        <activity android:name=".LoginProcess.SignupActivity">
+        </activity>
+        <activity android:name=".OrderProcess.OrderActivity">
+        </activity>
+        <activity android:name=".StoreProcess.StoreActivity">
+        </activity>
         <activity android:name=".LoginProcess.NicknameActivity">
         </activity>
         <activity android:name=".LoginProcess.AgreementActivity">
         </activity>
         <activity android:name=".LoginProcess.SplashActivity">
+
         </activity>
+
+        <service android:name=".Firebase.FireBaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

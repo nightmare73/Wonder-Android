@@ -29,13 +29,10 @@ class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<Menu
         holder.menu_price.text=listDataList[position].price.toString()+"원"
 
         holder.whole_btn.setOnClickListener {
-//            ctx.startActivity<OrderActivity>("b_id" to(dataList[position].b_id))
-            //todo: orderActivity로 넘어가야 해
-            Toast.makeText(ctx,"posotion"+position,Toast.LENGTH_SHORT).show()
+            ctx.startActivity<OrderActivity>("menuIdx" to(listDataList[position].menuIdx))
         }
 
         val requestOptions = RequestOptions()
-
         Glide.with(ctx)
             .setDefaultRequestOptions(requestOptions)
             .load(listDataList[position].photoUrl)

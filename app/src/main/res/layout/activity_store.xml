@@ -10,34 +10,48 @@
         android:orientation="vertical">
 
 
-    <LinearLayout
-            android:id="@+id/ll_store_act_store_bgphoto"
+    <RelativeLayout
+            android:id="@+id/rl_store_act_store_info"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:background="@drawable/cafe_image_big"
-            android:orientation="vertical">
+            android:layout_height="240dp">
+
+        <ImageView
+           android:id="@+id/iv_store_act_store_bgphoto"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:src="@drawable/cafe_image_big"
+           android:scaleType="fitXY"/>
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/black"
+          android:alpha="0.45"></View>
+
 
         <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="22dp"
-           android:layout_marginTop="12dp"
-           android:paddingLeft="17dp"
-           android:paddingRight="25.8dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="17dp"
+                android:paddingRight="25.8dp">
 
             <ImageView
-              android:id="@+id/btn_store_act_back"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/leftchevron_white"/>
+                    android:id="@+id/btn_store_act_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/leftchevron_white"/>
 
             <ImageView
-              android:id="@+id/btn_store_act_cart"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:src="@drawable/navbar_go_to_cart"
-              android:layout_alignParentRight="true"/>
+                    android:id="@+id/btn_store_act_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/navbar_go_to_cart"
+                    android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
+
+
 
         <TextView
           android:id="@+id/tv_store_act_store_name"
@@ -53,13 +67,14 @@
           android:id="@+id/tv_store_act_store_address"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="~~카페주소~~"
           android:textSize="13sp"
           android:textColor="#ffffff"
+          android:text="카페주소"
           android:layout_marginTop="6dp"
-          android:layout_marginLeft="39dp"/>
+          android:layout_marginLeft="39dp"
+         android:layout_below="@+id/tv_store_act_store_name"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout
