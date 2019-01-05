@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="275dp"
         android:orientation="vertical"
         android:padding="30dp"
-        android:layout_marginTop="30dp"
-
-        android:background="@drawable/big_popup_background">
+        android:layout_marginTop="30dp">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -37,7 +35,7 @@
     </RelativeLayout>
 
     <Button
-            android:id="@+id/btn_move_to_cart_dialog_cart"
+            android:id="@+id/btn_go_to_cart_dialog_cart"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginTop="29dp"
@@ -45,7 +43,7 @@
             android:layout_gravity="center"/>
 
     <Button
-            android:id="@+id/btn_move_to_cart_dialog_close"
+            android:id="@+id/btn_go_to_cart_dialog_close"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginTop="4dp"

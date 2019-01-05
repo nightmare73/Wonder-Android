@@ -1,23 +1,35 @@
-package com.wonder.bring
+package com.wonder.bring.StoreProcess
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
-import com.wonder.bring.LoginProcess.SignupActivity
-import com.wonder.bring.StoreFragment.StoreInfoFragment
-import com.wonder.bring.StoreFragment.StoreMenuFragment
-import kotlinx.android.synthetic.main.activity_login.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.wonder.bring.Get.GetMenuListResponse
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.NetworkService
+import com.wonder.bring.R
+import com.wonder.bring.data.MenuListData
 import kotlinx.android.synthetic.main.activity_store.*
-import org.jetbrains.anko.startActivity
+import kotlinx.android.synthetic.main.activity_store.view.*
+import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     private val FRAGMENT1 = 1
     private val FRAGMENT2 = 2
+    lateinit var requestManager : RequestManager
+
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +39,8 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
         callFragment(FRAGMENT1)
         btn_store_act_menu!!.setOnClickListener(this)
         btn_store_act_info.setOnClickListener(this)
+
+
 
     }
 
@@ -70,5 +84,43 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun getResponse(v : View) {
+        val getMenuListResponse = networkService.getMenuListResponse("application/json", 10)
+
+        getMenuListResponse.enqueue(object : Callback<GetMenuListResponse> {
+
+            override fun onResponse(call: Call<GetMenuListResponse>, response: Response<GetMenuListResponse>) {
+                if (response.isSuccessful) {
+
+                    var body = response!!.body()
+                    toast("메뉴 리스트 조회 성공")
+
+                    if (body!!.message.equals("메뉴 리스트 조회 성공")) {
+
+                        var store_name = body!!.data.name
+                        var store_address = body!!.data.address
+
+                        tv_store_act_store_name.text = store_name
+                        tv_store_act_store_address.text = store_address
+
+
+                        requestManager.load(body!!.data.bgPhotoUrl)
+
+                    } else {
+                    toast("메뉴 리스트 조회 실패")
+                    }
+
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
+                Log.e("Menu list fail", t.toString())
+            }
+
+
+        })
+    }
 
 }

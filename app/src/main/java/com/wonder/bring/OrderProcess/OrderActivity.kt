@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.wonder.bring.GoToCartDialog
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_order.*
 import org.jetbrains.anko.toast
@@ -31,7 +30,8 @@ class OrderActivity : AppCompatActivity() {
             toast("장바구니로 이동")
 
 
-            val moveToCartDialog : GoToCartDialog = GoToCartDialog(this)
+            val moveToCartDialog : GoToCartDialog =
+                GoToCartDialog(this)
             moveToCartDialog.show()
 
         }

@@ -29,6 +29,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_cart_frag_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="33dp"
@@ -37,6 +38,7 @@
     android:layout_marginTop="33.5dp">
 
         <CheckBox
+           android:id="@+id/btn_cart_frag_checkbox"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:background="@color/transparent"
@@ -53,6 +55,20 @@
 
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+       android:id="@+id/rv_cart_frag_list"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/ll_cart_frag_check"
+       android:layout_marginTop="33dp"
+       android:layout_marginLeft="30dp"
+       android:layout_marginRight="30dp">
+
+
+
+    </android.support.v7.widget.RecyclerView>
+
 
     <View
       android:layout_width="match_parent"
