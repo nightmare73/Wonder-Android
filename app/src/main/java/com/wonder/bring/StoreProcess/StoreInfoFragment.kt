@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.wonder.bring.Get.GetMenuListResponse
-import com.wonder.bring.Get.GetStoreInfoResponse
+import com.wonder.bring.Network.Get.GetStoreInfoResponse
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
-import com.wonder.bring.data.MenuListData
 import kotlinx.android.synthetic.main.fragment_store_info.*
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

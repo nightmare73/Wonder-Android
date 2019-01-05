@@ -22,15 +22,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
         </activity>
-        <activity android:name=".LoginProcess.LoginActivity">
 
+        <activity android:name=".LoginProcess.LoginActivity">
         </activity>
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
         <activity android:name=".OrderProcess.OrderActivity">
-
         </activity>
 
         <activity android:name=".StoreProcess.StoreActivity">
@@ -39,6 +37,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".LoginProcess.NicknameActivity">
+        </activity>
+        <activity android:name=".LoginProcess.AgreementActivity">
+        </activity>
+        <activity android:name=".LoginProcess.SplashActivity">
         </activity>
     </application>
 

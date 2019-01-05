@@ -1,6 +1,4 @@
-package com.wonder.bring.Get
-
-import com.wonder.bring.data.MenuListData
+package com.wonder.bring.Network.Get
 
 data class GetStoreInfoResponse (
     val status : Int,

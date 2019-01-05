@@ -7,17 +7,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.wonder.bring.Adapter.MenuRecyclerViewAdapter
-import com.wonder.bring.Get.GetMenuListResponse
+import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import com.wonder.bring.data.MenuListData
 import kotlinx.android.synthetic.main.fragment_store_menu.*
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

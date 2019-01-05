@@ -1,11 +1,11 @@
-package com.wonder.bring.Get
+package com.wonder.bring.Network.Get
 
 import com.wonder.bring.data.MenuListData
 
 data class GetMenuListResponse (
     val status : Int,
     val message : String,
-    val data :  MenuData
+    val data : MenuData
 )
 
 data class MenuData(

@@ -5,16 +5,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.Get.GetMenuListResponse
+import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
-import com.wonder.bring.data.MenuListData
 import kotlinx.android.synthetic.main.activity_store.*
-import kotlinx.android.synthetic.main.activity_store.view.*
-import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import retrofit2.Callback
