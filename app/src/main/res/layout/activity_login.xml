@@ -15,6 +15,10 @@
      android:layout_height="46.5dp"
      android:paddingLeft="19.5dp">
 
+       <View android:layout_width="match_parent"
+             android:layout_height="0.3dp"
+             android:background="#afafaf"></View>
+
 
        <ImageView
          android:id="@+id/btn_login_act_back"
@@ -52,9 +56,9 @@
       android:layout_below="@+id/v_login_act_underline">
 
         <ImageView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:src="@drawable/logo"/>
+                android:layout_width="95dp"
+                android:layout_height="90.6dp"
+                android:src="@drawable/logo"/>
 
     </LinearLayout>
 

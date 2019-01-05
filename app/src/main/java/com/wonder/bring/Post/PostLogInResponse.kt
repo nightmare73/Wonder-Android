@@ -9,5 +9,3 @@ data class PostLogInResponse(
 data class LoginData(
     val token : String
 )
-
-
