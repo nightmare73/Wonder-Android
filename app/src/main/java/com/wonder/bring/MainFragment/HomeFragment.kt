@@ -25,6 +25,7 @@ import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.DaumService
 import com.wonder.bring.Network.Get.GetDaumAdressResponseData
 import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
+import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
@@ -49,6 +50,7 @@ class HomeFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var mapViewContainer: ViewGroup
 
+    private var poiItemsAroundMyLocation: ArrayList<MapPOIItem> = ArrayList()
     private var poiItem: MapPOIItem = MapPOIItem()
 
     // 보미 서버 통신
@@ -65,7 +67,7 @@ class HomeFragment : Fragment() {
 
         //키자마자 내 위치 갱신
         //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
-        requestGpsPermission()
+
 
     }
 
@@ -80,6 +82,8 @@ class HomeFragment : Fragment() {
 
         mapInit()
         searchbarInit()
+        buttonInit()
+        requestGpsPermission()
 
         btn_test_my_gps.setOnClickListener {
             setPinMyGps()
@@ -116,6 +120,33 @@ class HomeFragment : Fragment() {
         //view에 맵뷰 담기
         mapViewContainer.addView(mapView)
 
+        mapView.setPOIItemEventListener(object: MapView.POIItemEventListener{
+            override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onCalloutBalloonOfPOIItemTouched(
+                p0: MapView?,
+                p1: MapPOIItem?,
+                p2: MapPOIItem.CalloutBalloonButtonType?
+            ) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            //핀이 눌렷을 때 이벤트 처리
+            override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                // 여기서 MapPOIItem 눌린놈 식별할수잇는 id 값을 전역변수에 저장해놓고 이게 다시 호추될때마다 핀을 바꿔줘야겠다
+            }
+
+
+        })
+
+
         //해쉬키 알아오는 로그캣
         //여기는 프래그먼트니까 context가 없다.
         //context를 얻어오기 위해서 activity를 사용
@@ -127,34 +158,17 @@ class HomeFragment : Fragment() {
 
         var userInput: String
 
-
         et_home_fragment_searchbar.setOnEditorActionListener { textView, actionId, keyEvent ->
 
             when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     userInput = textView.text.toString()
-                    toast(userInput)
 
-//                    daumService.getDaumAdressRequest(
-//                        "KakaoAK ab0af3bcabe549eb390aa05e734417f5",
-//                        userInput, 1, 10
-//                    ).enqueue(object : Callback<GetDaumAdressResponseData> {
-//                        override fun onFailure(call: Call<GetDaumAdressResponseData>, t: Throwable) {
-//                            toast("검색에 실패하였습니다.")
-//                        }
-//
-//                        override fun onResponse(
-//                            call: Call<GetDaumAdressResponseData>,
-//                            response: Response<GetDaumAdressResponseData>
-//                        ) {
-//                            Log.v("Malibin Debug : ","Daum Address Request = "+response.body().toString())
-//                        }
-//
-//                    })
-
-                    daumService.getDaumKeywordAdressRequest("KakaoAK ab0af3bcabe549eb390aa05e734417f5",
+                    //DAUM REST API 주소 키워드 검색 코드
+                    daumService.getDaumKeywordAdressRequest(
+                        "KakaoAK ab0af3bcabe549eb390aa05e734417f5",
                         userInput, 1, 10
-                    ).enqueue(object : Callback<GetDaumKeywordAddressResponseData>{
+                    ).enqueue(object : Callback<GetDaumKeywordAddressResponseData> {
                         override fun onFailure(call: Call<GetDaumKeywordAddressResponseData>, t: Throwable) {
                             toast("검색에 실패하였습니다.")
                         }
@@ -163,14 +177,14 @@ class HomeFragment : Fragment() {
                             call: Call<GetDaumKeywordAddressResponseData>,
                             response: Response<GetDaumKeywordAddressResponseData>
                         ) {
-                            Log.v("Malibin Debug : ","Daum Keyword Address Request = "+response.body().toString())
-                            var string:String=""
-                            for(result in response.body()!!.documents){
-                                var temp:String = result.place_name + " = " + result.address_name +"\n"
+                            Log.v("Malibin Debug : ", "Daum Keyword Address Request = " + response.body().toString())
+                            var string: String = ""
+                            for (result in response.body()!!.documents) {
+                                var temp: String = result.place_name + " = " + result.address_name + "\n"
                                 string += temp
                             }
-                            toast(string).duration= Toast.LENGTH_LONG
-                            Log.v("Malibin Debug : ","Daum Keyword Address Request = $string")
+                            toast(string).duration = Toast.LENGTH_LONG
+                            Log.v("Malibin Debug : ", "Daum Keyword Address Request = $string")
                         }
 
                     })
@@ -184,6 +198,17 @@ class HomeFragment : Fragment() {
 
         }
 
+    }
+
+    private fun buttonInit() {
+        //내위치
+        btn_home_fragment_search_mylocation.setOnClickListener {
+
+            setMapviewWithStoreLocation()
+
+            toast(String.format("%.6f", userLatitude) + ", " + String.format("%.6f", userLongitude))
+
+        }
     }
 
     //해쉬키 받아오기
@@ -324,10 +349,76 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun getPoiItemsAroundMyLocation() {
+
+        networkService.getStoreLocationAroundUserRequest(
+            "application/json",
+            //String.format("%.6f", userLatitude),
+            // String.format("%.6f", userLongitude)
+            "37.495426", "127.038843"//테스트용 좌표 브링카페
+        ).enqueue(object : Callback<GetStoreLocationAroundUserResponseData> {
+            override fun onFailure(call: Call<GetStoreLocationAroundUserResponseData>, t: Throwable) {
+                toast("주변 매장 위치를 불러오는데 실패하였습니다.")
+            }
+
+            override fun onResponse(
+                call: Call<GetStoreLocationAroundUserResponseData>,
+                response: Response<GetStoreLocationAroundUserResponseData>
+            ) {
+                Log.v("Malibin Debug","getPoiItemsAroundMyLocation() 서버통신 성공 데이터는 \n"+response.body().toString())
+                if (response.body()!!.data != null) {
+                    for (data in response.body()!!.data)
+                    {
+                        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(data.latitude, data.longitude)
+                        var tempMapPOIItem = MapPOIItem()
+                        tempMapPOIItem.customImageResourceId = R.drawable.pin_icon
+                        tempMapPOIItem.markerType = MapPOIItem.MarkerType.CustomImage
+                        tempMapPOIItem.mapPoint = userMapPoint
+                        tempMapPOIItem.userObject = data
+                        tempMapPOIItem.itemName = data.storeIdx.toString()
+
+                        poiItemsAroundMyLocation.add(tempMapPOIItem)
+                    }
+                }
+                Log.v("Malibin Debug","getPoiItemsAroundMyLocation() onResponse 함수 끝 ")
+            }
+        })
+    }
+
+    private fun setMapviewWithStoreLocation(){
+
+        getPoiItemsAroundMyLocation()
+
+        //if(poiItemsAroundMyLocation.size < 0)
+
+
+        if(poiItemsAroundMyLocation.size > 0) {
+            Log.v("Malibin Debug","storeData가 1개 이상이여서 동작")
+            for (data in poiItemsAroundMyLocation) {
+                Log.v("Malibin Debug", data.toString())
+            }
+
+            for (data in poiItemsAroundMyLocation) {
+                mapView.addPOIItem(data)
+                Log.v("Malibin Debug", data.toString())
+            }
+            mapView.moveCamera(CameraUpdateFactory.newMapPoint(poiItemsAroundMyLocation[0].mapPoint))
+
+        }
+        else{
+            toast("좌표 아이템이 존재하지않음.")
+            Log.v("Malibin Debug","storeData 가 0개임")
+        }
+
+    }
+
+
     private fun setPinMyGps() {
         var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
 
+        //커스텀 핀 등록
         poiItem.customImageResourceId = R.drawable.pin_icon
+
         poiItem.itemName = "내 시스템 GPS 위치"
         poiItem.mapPoint = userMapPoint
         poiItem.markerType = MapPOIItem.MarkerType.CustomImage

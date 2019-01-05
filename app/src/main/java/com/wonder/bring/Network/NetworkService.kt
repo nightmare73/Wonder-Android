@@ -1,6 +1,7 @@
 package com.wonder.bring.Network
 
 import com.google.gson.JsonObject
+import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
 import com.wonder.bring.Post.PostLogInResponse
 import retrofit2.Call
 import okhttp3.MultipartBody
@@ -12,9 +13,15 @@ interface NetworkService {
     // 로그인
     @POST("/login")
     fun postLoginResponse(
-        @Header("Content-Type") content_type:String,
+        @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
-    ) : Call<PostLogInResponse>
+    ): Call<PostLogInResponse>
 
+    @GET("/maps")
+    fun getStoreLocationAroundUserRequest(
+        @Header("Content-Type") content_type: String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String
+    ): Call<GetStoreLocationAroundUserResponseData>
 
 }
