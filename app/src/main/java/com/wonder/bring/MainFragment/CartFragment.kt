@@ -1,5 +1,6 @@
 package com.wonder.bring.MainFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +32,7 @@ class CartFragment : Fragment(){
             view=inflater.inflate(R.layout.fragment_login_no,container,false)
             view.btn_login_no_frag_goto_login.setOnClickListener {
                 startActivity<LoginActivity>()
+                activity!!.overridePendingTransition(R.anim.slide_in_up,0)
             }
 
             //로그인 여부파악 : case2) 로그인 되어있는 경우
@@ -48,7 +50,5 @@ class CartFragment : Fragment(){
 
         return view
     }
-
-
 
 }

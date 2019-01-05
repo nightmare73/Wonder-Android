@@ -30,6 +30,7 @@ class OrderActivity : AppCompatActivity() {
             val moveToCartDialog : GoToCartDialog = GoToCartDialog(this)
             moveToCartDialog.show()
 
+
         }
 
         // 바로 주문하기

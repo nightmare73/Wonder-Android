@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
+
+
     }
 
     // 탭바 추가 함수

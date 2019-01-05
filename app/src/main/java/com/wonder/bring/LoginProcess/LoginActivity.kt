@@ -1,5 +1,6 @@
 package com.wonder.bring.LoginProcess
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -30,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     var input_id : String = ""
     var input_pw : String = ""
 
+    // backpressed변수
+    var backPressedTime: Long = 0
 
     // 통신을 위한 변수
     val networkService : NetworkService by lazy {
@@ -89,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         // 뒤로가기
         btn_login_act_back.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.slide_in_down,0)
         }
 
 
@@ -122,10 +126,15 @@ class LoginActivity : AppCompatActivity() {
 
                             // 그 token값을 SharedPreference에 저장.
                             SharedPreferenceController.setAuthorization(this@LoginActivity, token)
+
+                            // todo : 이부분 어찌 인텐트 전환해줘야 할지 다시 한번 생각할 필요 있음.
+                            // todo: main -> Login -> 다시 main으로 가는데 아예 새롭게 main을 호출해줘야해
                             // 로그인 했으니까 그 전화면으로 이동
-                            //todo: finisih만 하면 되는건가? 전화면으로 돌아가야 하니까
-                            startActivity<MainActivity>()
+                            val intent : Intent= Intent(this@LoginActivity,MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
                             finish()
+
                         }else{// 2. 로그인 실패( 아이디 또는 비밀번호 디비랑 맞지 않을때)
                             toast("아이디 또는 비밀번호가 잘못되었습니다.").setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                         }
@@ -139,5 +148,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    override fun onBackPressed() {
+            super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_down,0)
     }
 }
