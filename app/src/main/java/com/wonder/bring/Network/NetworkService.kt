@@ -1,11 +1,16 @@
 package com.wonder.bring.Network
 
 import com.google.gson.JsonObject
+
+import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
+
+
 import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.Get.GetStoreInfoResponse
 import com.wonder.bring.Network.Get.GetCheckDuplicateIdResponseData
 import com.wonder.bring.Network.Get.GetCheckDuplicateNickResponseData
 import com.wonder.bring.Network.Post.PostLogInResponse
+
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,9 +19,17 @@ interface NetworkService {
     // 로그인
     @POST("/login")
     fun postLoginResponse(
-        @Header("Content-Type") content_type:String,
+        @Header("Content-Type") content_type: String,
         @Body() body: JsonObject
-    ) : Call<PostLogInResponse>
+    ): Call<PostLogInResponse>
+
+
+    @GET("/maps")
+    fun getStoreLocationAroundUserRequest(
+        @Header("Content-Type") content_type: String,
+        @Query("latitude") latitude: String,
+        @Query("longitude") longitude: String
+    ): Call<GetStoreLocationAroundUserResponseData>
 
     @GET("/users/check")
     fun getCheckDuplicateIdRequest(
@@ -46,6 +59,7 @@ interface NetworkService {
         @Header("Content-Type") content_type : String,
         @Path("storeIdx") store_idx : Int
     ) : Call<GetStoreInfoResponse>
+
 
 
 }
