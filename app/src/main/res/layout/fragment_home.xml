@@ -34,23 +34,24 @@
             android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toTopOf="@+id/cl_home_fragment_summary"/>
     <Button
-            android:text="다시꺼져랏"
-            android:layout_width="wrap_content"
+            android:text="마루180"
+            android:layout_width="51dp"
             android:layout_height="wrap_content" android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true" android:id="@+id/btn_getout"
-            android:layout_marginBottom="24dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_comon" android:layout_marginStart="104dp"
-            app:layout_constraintStart_toStartOf="@+id/mv_home_fragment_map" android:layout_marginLeft="104dp"/>
+            android:layout_alignParentBottom="true" android:id="@+id/btn_maru"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
-            android:text="튀어나와랏"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true" android:id="@+id/btn_comon"
-            android:layout_marginEnd="56dp"
-            app:layout_constraintEnd_toStartOf="@+id/btn_test_my_gps" android:layout_marginRight="56dp"
-            app:layout_constraintBottom_toTopOf="@+id/cl_home_fragment_summary" android:layout_marginBottom="60dp"/>
+            android:text="경희대"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true" android:id="@+id/btn_univ"
+            android:layout_toEndOf="@+id/btn_maru"
+            android:layout_toRightOf="@+id/btn_maru"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/btn_maru"
+            android:layout_marginStart="8dp" android:layout_marginLeft="8dp"/>
     <android.support.constraint.ConstraintLayout
             android:layout_width="288dp"
             android:layout_height="48dp" android:layout_alignParentStart="true"
@@ -101,7 +102,7 @@
             android:layout_height="270dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent" android:visibility="gone"
             app:layout_constraintHorizontal_bias="0.0" android:background="@color/colorWhite"
             android:animateLayoutChanges="true"
             android:elevation="6dp">
