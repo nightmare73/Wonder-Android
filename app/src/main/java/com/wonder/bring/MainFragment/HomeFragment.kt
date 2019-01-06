@@ -67,9 +67,12 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         //키자마자 내 위치 갱신
         //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
 
+
+        requestGpsPermission()
 
     }
 
@@ -255,6 +258,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     //앱에서 고유한 해쉬키가 있는듯 하다. 이 해쉬키를 다음 API 사이트에 등록을 안하면
     //지도에 다음 로고만 나오는 기현상이 발생한다.
     //뭐 이 함수는 한 번 쓰고 나면 필요가 없어지니 삭제하는 편도 나쁘지 않다.
+
     private fun getKeyHash(ctx: Context): String? {
         var packageInfo: PackageInfo? = Utility.getPackageInfo(ctx, PackageManager.GET_SIGNATURES)
 

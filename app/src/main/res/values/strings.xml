@@ -9,16 +9,18 @@
     <string name="login_act_text_guide_message">아이디와 비밀번호 입력 후 로그인해주세요</string>
     <string name="login_act_edit_id">아이디</string>
     <string name="login_act_edit_pw">비밀번호</string>
-    <string name="login_act_text_guide_signup">계정이 없으신가요?  >  </string>
+    <string name="login_act_text_guide_signup">계정이 없으신가요? ></string>
     <string name="login_act_btn_signup">회원가입</string>
     <string name="login_act_text_login">로그인 하기</string>
-
 
 
     <string name="order">"주문하기"</string>
     <string name="signup">"회원가입"</string>
     <string name="orderlist">"주문내역"</string>
     <string name="next">"다음"</string>
+
+
+
 
 
     <!--가게 액티비티-->
@@ -32,5 +34,12 @@
 
     <string name="store_menu_frag_text_menu_name">메뉴 이름</string>
     <string name="store_menu_frag_text_menu_price">메뉴 가격</string>
+
+
+    <string-array name="spinner_menu_size">
+        <item>regular</item>
+        <item>small</item>
+        <item>large</item>
+    </string-array>
 
 </resources>
