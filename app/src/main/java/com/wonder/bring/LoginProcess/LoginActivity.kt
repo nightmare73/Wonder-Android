@@ -1,20 +1,21 @@
 package com.wonder.bring.LoginProcess
 
-import android.graphics.Color
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
-import android.widget.Toast
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.wonder.bring.Firebase.FireBaseMessagingService
 import com.wonder.bring.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
-import com.wonder.bring.Post.PostLogInResponse
+import com.wonder.bring.Network.Post.PostLogInResponse
 import com.wonder.bring.R
 import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_login.*
@@ -30,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     var input_id : String = ""
     var input_pw : String = ""
 
+    // backpressed변수
+    var backPressedTime: Long = 0
 
     // 통신을 위한 변수
     val networkService : NetworkService by lazy {
@@ -40,16 +43,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
+
+
         setOnBtnClickListner()
 
-//        // 자동로그인 로직
-//        if(SharedPreferenceController.getAuthorization(this).isNotEmpty()){
-//            startActivity<MainActivity>()
-//            finish()
-//        }
-
-
-        // edittext입력 시, 로그인버튼 색깔 변하게 하기
+        // edittext입력 시, 로그인버튼 색깔 변하게 하기   Q. 색이 안변했을땐 아예 클릭이 안되게 변경해야할듯, 그리고 로그인이 회색일땐 넘어가지 않도록.
         et_login_act_pw.addTextChangedListener(object : TextWatcher{
 
             override fun afterTextChanged(p0: Editable?) {
@@ -69,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
-
 
     }
 
@@ -94,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         // 뒤로가기
         btn_login_act_back.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.slide_in_down,0)
         }
 
 
@@ -102,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
     // 로그인 통신 로직
     private fun getLoginResponse(){
         if(input_id.isNotEmpty()&&input_pw.isNotEmpty()){
+
 
             //json형식의 객체 만들기
             var jsonObject= JSONObject()
@@ -126,10 +126,15 @@ class LoginActivity : AppCompatActivity() {
 
                             // 그 token값을 SharedPreference에 저장.
                             SharedPreferenceController.setAuthorization(this@LoginActivity, token)
+
+                            // todo : 이부분 어찌 인텐트 전환해줘야 할지 다시 한번 생각할 필요 있음.
+                            // todo: main -> Login -> 다시 main으로 가는데 아예 새롭게 main을 호출해줘야해
                             // 로그인 했으니까 그 전화면으로 이동
-                            //todo: finisih만 하면 되는건가? 전화면으로 돌아가야 하니까
-                            startActivity<MainActivity>()
+                            val intent : Intent= Intent(this@LoginActivity,MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
                             finish()
+
                         }else{// 2. 로그인 실패( 아이디 또는 비밀번호 디비랑 맞지 않을때)
                             toast("아이디 또는 비밀번호가 잘못되었습니다.").setGravity(Gravity.CENTER_VERTICAL, 0, 0)
                         }
@@ -143,5 +148,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    override fun onBackPressed() {
+            super.onBackPressed()
+        overridePendingTransition(R.anim.slide_in_down,0)
     }
 }

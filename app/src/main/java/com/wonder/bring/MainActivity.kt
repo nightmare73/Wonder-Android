@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
-import com.google.firebase.messaging.FirebaseMessaging
 import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
-
     // backpressed변수
     var backPressedTime: Long = 0
 
@@ -33,9 +31,7 @@ class MainActivity : AppCompatActivity() {
         configureBottomNavigation()
 
 
-
     }
-
 
     // 탭바 추가 함수
     private fun configureBottomNavigation() {
@@ -44,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         val customViewPager = findViewById(R.id.vp_bottom_main_act_frag_pager) as MainFragmentViewPager
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
+
+        customViewPager.offscreenPageLimit=4
 
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
@@ -57,9 +55,6 @@ class MainActivity : AppCompatActivity() {
                     bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
             tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
                     bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
-
-
-
 
     }
 
