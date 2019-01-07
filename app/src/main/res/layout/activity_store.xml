@@ -88,20 +88,24 @@
            android:layout_weight="1"
            android:gravity="center">
 
-            <TextView
-               android:id="@+id/tv_store_act_menu"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="@string/store_act_text_menu"
-               android:textSize="19sp"
-               android:textColor="#000000"/>
-
-            <ImageView
-               android:id="@+id/iv_store_act_menu"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/tab_underbar"
-               android:layout_alignBottom="@+id/tv_store_act_menu"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tv_store_act_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/store_act_text_menu"
+                        android:textSize="19sp"
+                        android:textColor="#000000"/>
+                <ImageView
+                        android:id="@+id/iv_store_act_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tab_underbar"
+                        android:layout_alignBottom="@+id/tv_store_act_menu"/>
+            </LinearLayout>
 
 
         </RelativeLayout>
@@ -113,21 +117,25 @@
               android:layout_weight="1"
               android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_store_act_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/store_act_text_info"
-                android:textSize="19sp"
-                android:textColor="#909090"/>
-
-            <ImageView
-               android:id="@+id/iv_store_act_info"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/tab_underbar"
-               android:layout_alignBottom="@+id/tv_store_act_info"
-               android:visibility="invisible"/>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/tv_store_act_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/store_act_text_info"
+                        android:textSize="19sp"
+                        android:textColor="#909090"/>
+                <ImageView
+                        android:id="@+id/iv_store_act_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/tab_underbar"
+                        android:layout_alignBottom="@+id/tv_store_act_info"
+                        android:visibility="invisible"/>
+            </LinearLayout>
 
         </RelativeLayout>
 

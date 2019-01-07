@@ -29,11 +29,13 @@ import com.wonder.bring.Network.Get.OtherDataClasses.StoreSummary
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
+import com.wonder.bring.StoreProcess.StoreActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import net.daum.android.map.MapViewTouchEventListener
 import net.daum.mf.map.api.*
 import org.jetbrains.anko.MAXDPI
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -160,7 +162,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                     call: Call<GetSelectedStoreSummaryResponseData>,
                     response: Response<GetSelectedStoreSummaryResponseData>
                 ) {
-                    Log.v("Malibin Debug","서버에서 온 매장 서머리 데이터 : "+response.body()!!.toString())
+                    Log.v("Malibin Debug", "서버에서 온 매장 서머리 데이터 : " + response.body()!!.toString())
                     cl_home_fragment_summary.visibility = View.VISIBLE
                     cl_home_fragment_summary.tv_home_fragment_store_name.text = response.body()!!.data.name
                     cl_home_fragment_summary.tv_home_fragment_etc_info.text =
@@ -168,10 +170,20 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                     cl_home_fragment_summary.tv_home_fragment_store_address.text = response.body()!!.data.address
                     cl_home_fragment_summary.tv_home_fragment_store_phone_number.text = response.body()!!.data.number
 
-                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[0]).into(cl_home_fragment_summary.iv_home_fragment_menu1)
-                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[1]).into(cl_home_fragment_summary.iv_home_fragment_menu2)
-                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[2]).into(cl_home_fragment_summary.iv_home_fragment_menu3)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[0])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu1)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[1])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu2)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[2])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu3)
 
+                    cl_home_fragment_summary.btn_home_fragment_store_detail.setOnClickListener {
+                        startActivity<StoreActivity>(
+                            "storeIdx" to userObject.storeIdx,
+                            "storeName" to response.body()!!.data.name,
+                            "storeAdress" to response.body()!!.data.address
+                        )
+                    }
                 }
 
 
