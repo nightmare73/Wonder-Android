@@ -22,10 +22,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-
         </activity>
         <activity android:name=".LoginProcess.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -45,6 +43,8 @@
         <activity android:name=".LoginProcess.AgreementActivity">
         </activity>
         <activity android:name=".LoginProcess.SplashActivity">
+        </activity>
+        <activity android:name=".MypageActivity">
         </activity>
     </application>
 
