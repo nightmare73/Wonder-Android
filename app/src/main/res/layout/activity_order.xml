@@ -19,13 +19,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/leftchevron"
-                android:layout_alignParentLeft="true"/>
+                android:layout_alignParentLeft="true" android:id="@+id/btn_order_act_back"/>
 
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navbar_go_to_cart_gray"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true" android:id="@+id/btn_order_act_gocart"/>
 
     </RelativeLayout>
 

@@ -35,11 +35,6 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var requestManager: RequestManager
     private val TAG = StoreActivity::class.java!!.getSimpleName()
 
-    val networkService: NetworkService by lazy {
-        ApplicationController.instance.networkService
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store)

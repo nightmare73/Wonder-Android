@@ -55,11 +55,19 @@ interface NetworkService {
         @Path("storeIdx") store_idx: Int
     ): Call<GetStoreInfoResponse>
 
-
+    //선택한 매장 조회
     @GET("/maps/stores/{storeIdx}")
     fun getSelectedStoreSummaryRequest(
         @Header("Content-Type") content_type: String,
-        @Path("storeIdx") store_idx: Int
+        @Path("storeIdx") storeIdx: Int
     ): Call<GetSelectedStoreSummaryResponseData>
+
+    //메뉴 상세 정보 조회
+    @GET("/stores/{storeIdx}/menu/{menuIdx}")
+    fun getMenuDetailsRequest(
+        @Header("Content-Type") content_type: String,
+        @Path("storeIdx") storeIdx: Int,
+        @Path("menuIdx") menuIdx: Int
+    ): Call<GetMenuDetailsResponseData>
 
 }

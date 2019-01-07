@@ -80,6 +80,7 @@ class StoreMenuFragment : Fragment() {
                             val position = menuRecyclerViewAdapter.itemCount
                             menuRecyclerViewAdapter.listDataList.addAll(temp)
                             menuRecyclerViewAdapter.notifyItemInserted(position)
+                            menuRecyclerViewAdapter.storeIdx = storeIdx
                         }
                     }
                 }

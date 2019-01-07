@@ -60,7 +60,6 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     private lateinit var mapView: MapView
     private lateinit var mapViewContainer: ViewGroup
 
-    //private var poiItemsAroundMyLocation: ArrayList<MapPOIItem> = ArrayList()
     private var poiItem: MapPOIItem = MapPOIItem()
 
     // 보미 서버 통신
@@ -75,12 +74,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         //키자마자 내 위치 갱신
         //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
-
-
-        requestGpsPermission()
 
     }
 
