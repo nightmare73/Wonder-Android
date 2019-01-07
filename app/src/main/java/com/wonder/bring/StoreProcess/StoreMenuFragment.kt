@@ -16,6 +16,7 @@ import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import com.wonder.bring.data.MenuListData
 import kotlinx.android.synthetic.main.fragment_store_menu.*
+import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,10 +26,12 @@ class StoreMenuFragment : Fragment() {
 
     private val TAG = StoreMenuFragment::class.java!!.getSimpleName()
 
+    private var storeIdx = -1
+
     lateinit var menuRecyclerViewAdapter: MenuRecyclerViewAdapter
 
 
-    val listDataList : ArrayList<MenuListData> by lazy {
+    val listDataList: ArrayList<MenuListData> by lazy {
         ArrayList<MenuListData>()
     }
 
@@ -37,11 +40,12 @@ class StoreMenuFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view=inflater.inflate(R.layout.fragment_store_menu, container, false)
+        var view = inflater.inflate(R.layout.fragment_store_menu, container, false)
 
+        storeIdx = arguments!!.getInt("storeIdx")
+        Log.v("Malibin Debug", "StoreMenuFragmenty에 넘어온 storeIdx값 : " + storeIdx)
 
         getResponse()
 
@@ -54,39 +58,47 @@ class StoreMenuFragment : Fragment() {
     }
 
 
+    private fun getResponse() {
 
-    private fun getResponse(){
-        //todo: 앞에 지도에서 서버에서 stor_idx줄것이다 .. 그게 이 액티비티로 값을 전달시켜서 다시 해야함 // 일단은 임의의 값인 10으로 넣고 진행함
+        //storeIdx -1을 서버에 보내면 (서버에 없는 인덱스값을 보내면) 서버 터진대 여기서 막아주자
+        if (storeIdx == -1) {
+            toast("서버에서 매장 정보를 불러오지 못했습니다.")
+        } else {
 
-        val getMenuListResponse = networkService.getMenuListResponse("application/json",10)
-        getMenuListResponse.enqueue(object : Callback<GetMenuListResponse>{
+            val getMenuListResponse = networkService.getMenuListResponse("application/json", storeIdx)
+            getMenuListResponse.enqueue(object : Callback<GetMenuListResponse> {
 
-            override fun onResponse(call: Call<GetMenuListResponse>, response: Response<GetMenuListResponse>) {
-                if (response.isSuccessful){
+                override fun onResponse(call: Call<GetMenuListResponse>, response: Response<GetMenuListResponse>) {
+                    if (response.isSuccessful) {
 
-                    var temp : ArrayList<MenuListData> = response.body()!!.data.menuList
+                        if(activity is StoreActivity)
+                            (activity as StoreActivity).changeBackgroundImage(response.body()!!.data.bgPhotoUrl)
 
-                    if (temp.size > 0){
-                        val position = menuRecyclerViewAdapter.itemCount
-                        menuRecyclerViewAdapter.listDataList.addAll(temp)
-                        menuRecyclerViewAdapter.notifyItemInserted(position)
+                        var temp: ArrayList<MenuListData> = response.body()!!.data.menuList
 
+                        if (temp.size > 0) {
+                            val position = menuRecyclerViewAdapter.itemCount
+                            menuRecyclerViewAdapter.listDataList.addAll(temp)
+                            menuRecyclerViewAdapter.notifyItemInserted(position)
+                            menuRecyclerViewAdapter.storeIdx = storeIdx
+                            //storeIdx를 어뎁터에 집어넣는다. 이 recyclerView는 애초에 한 가게의 메뉴로만 구성되기때문에
+                            //나아가서는 이 프래그먼트자체가 한 가게의 정보를 보여주는것이기 때문에 문제가 없다. 다른 가게로 들어가면
+                            //이게 아예 파기되고 새로생성되는것이기 때문.
+                        }
                     }
                 }
 
-            }
-
-            override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
-                Log.e("Menu list fail", t.toString())
-            }
-
-
-        })
+                override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
+                    toast("서버에서 매장 정보를 불러오지 못했습니다.")
+                    Log.e("Menu list fail", t.toString())
+                }
+            })
+        }
     }
 
-    private fun setRecyclerView(){
+    private fun setRecyclerView() {
 
-        menuRecyclerViewAdapter = MenuRecyclerViewAdapter(activity!!,listDataList)
+        menuRecyclerViewAdapter = MenuRecyclerViewAdapter(activity!!, listDataList)
         rv_store_menu_frag_menu_list.adapter = menuRecyclerViewAdapter
         rv_store_menu_frag_menu_list.layoutManager = LinearLayoutManager(activity)
 
