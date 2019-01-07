@@ -7,11 +7,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.bumptech.glide.Glide
+import com.wonder.bring.BringTypeDialog
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_order.*
-import org.jetbrains.anko.toast
 
 class OrderActivity : AppCompatActivity() {
 
@@ -50,14 +51,16 @@ class OrderActivity : AppCompatActivity() {
     }
 
     private fun viewInit() {
-        //networkService.getMenuDetailsRequest("application/json",)
+        Glide.with(this).load(photoUrl).into(iv_order_act_menu_image)
+        tv_order_act_menu_name.text = menuName
+
     }
 
     private fun setOnBtnClickListner() {
 
         // 장바구니로 이동
         btn_order_act_move_to_cart.setOnClickListener {
-            val moveToCartDialog: GoToCartDialog = GoToCartDialog(this)
+            val moveToCartDialog = BringTypeDialog(this, BringTypeDialog.CART_TYPE)
             moveToCartDialog.show()
         }
 

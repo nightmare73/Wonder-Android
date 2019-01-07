@@ -81,6 +81,9 @@ class StoreMenuFragment : Fragment() {
                             menuRecyclerViewAdapter.listDataList.addAll(temp)
                             menuRecyclerViewAdapter.notifyItemInserted(position)
                             menuRecyclerViewAdapter.storeIdx = storeIdx
+                            //storeIdx를 어뎁터에 집어넣는다. 이 recyclerView는 애초에 한 가게의 메뉴로만 구성되기때문에
+                            //나아가서는 이 프래그먼트자체가 한 가게의 정보를 보여주는것이기 때문에 문제가 없다. 다른 가게로 들어가면
+                            //이게 아예 파기되고 새로생성되는것이기 때문.
                         }
                     }
                 }
