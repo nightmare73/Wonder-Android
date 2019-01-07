@@ -17,17 +17,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.kakao.util.maps.helper.Utility
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.DaumService
 import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
+import com.wonder.bring.Network.Get.GetSelectedStoreSummaryResponseData
 import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
+import com.wonder.bring.Network.Get.OtherDataClasses.StoreLocation
+import com.wonder.bring.Network.Get.OtherDataClasses.StoreSummary
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import net.daum.android.map.MapViewTouchEventListener
 import net.daum.mf.map.api.*
+import org.jetbrains.anko.MAXDPI
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +42,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 
-class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener{
+class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener {
 
 
     private var DEBUG_MODE: Boolean = false
@@ -132,10 +138,47 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     }
 
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
-        cl_home_fragment_summary.visibility = View.VISIBLE
 
-        Log.v("Malibin Debug", p1!!.userObject.toString())
+
+        //이거 한번 더 누르면 터져버림 ㅋㅋ;;
+//        var tempMapPOIItem = MapPOIItem()
+//        tempMapPOIItem.customImageResourceId = R.drawable.pin_icon_clicked
+//        tempMapPOIItem.markerType = MapPOIItem.MarkerType.CustomImage
+//        tempMapPOIItem.mapPoint = p1!!.mapPoint
+//        tempMapPOIItem.itemName = ""
+//        tempMapPOIItem.isShowCalloutBalloonOnTouch = false
+//        mapView.addPOIItem(tempMapPOIItem)
+
+        var userObject: StoreLocation = p1!!.userObject as StoreLocation
+        networkService.getSelectedStoreSummaryRequest("application/json", userObject.storeIdx)
+            .enqueue(object : Callback<GetSelectedStoreSummaryResponseData> {
+                override fun onFailure(call: Call<GetSelectedStoreSummaryResponseData>, t: Throwable) {
+                    toast("서버에서 매장 정보를 불러오지 못하였습니다.")
+                }
+
+                override fun onResponse(
+                    call: Call<GetSelectedStoreSummaryResponseData>,
+                    response: Response<GetSelectedStoreSummaryResponseData>
+                ) {
+                    Log.v("Malibin Debug","서버에서 온 매장 서머리 데이터 : "+response.body()!!.toString())
+                    cl_home_fragment_summary.visibility = View.VISIBLE
+                    cl_home_fragment_summary.tv_home_fragment_store_name.text = response.body()!!.data.name
+                    cl_home_fragment_summary.tv_home_fragment_etc_info.text =
+                            (response.body()!!.data.address + "   " + userObject.distance + "m")
+                    cl_home_fragment_summary.tv_home_fragment_store_address.text = response.body()!!.data.address
+                    cl_home_fragment_summary.tv_home_fragment_store_phone_number.text = response.body()!!.data.number
+
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[0]).into(cl_home_fragment_summary.iv_home_fragment_menu1)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[1]).into(cl_home_fragment_summary.iv_home_fragment_menu2)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[2]).into(cl_home_fragment_summary.iv_home_fragment_menu3)
+
+                }
+
+
+            })
+
     }
+
 
     //--------------------------------------------------------------------------------------------------------------------
 
@@ -171,6 +214,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
     //----------------------------------------------------------------------------------------------------------------------
 
+
     private fun mapInit() {
 
         //맵뷰 초기화
@@ -183,6 +227,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
         mapViewContainer = mv_home_fragment_map
         //view에 맵뷰 담기
         mapViewContainer.addView(mapView)
+        //내위치 화면에 표시
+        //mapView.setShowCurrentLocationMarker(true)
 
         //이벤트 리스너 등록
         //여기안에다가 그냥 바로 인터페이스 정의해서 넣어줬더니 클릭리스너가 안먹힌다.
@@ -378,12 +424,12 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             Log.v("Malibin Debug", "getMyGPS() lm에 리스너 등록 통과")
 
             userLatitude = location!!.latitude
-            userLongitude = location!!.longitude
-            userGpsAccuracy = location!!.accuracy
+            userLongitude = location.longitude
+            userGpsAccuracy = location.accuracy
 
             Log.v(
                 "Malibin GPS",
-                location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+                location.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
             )
         }
         //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
@@ -396,6 +442,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     private fun setPoiItemsAroundMyLocation(inputLatitude: Double, inputLongitude: Double) {
 
         var poiItemsAroundMyLocation: ArrayList<MapPOIItem> = ArrayList()
+        val tmp = MapPOIItem()
 
         networkService.getStoreLocationAroundUserRequest(
             "application/json",
@@ -427,11 +474,11 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                         poiItemsAroundMyLocation.add(tempMapPOIItem)
                     }
                     //서버에서 받은 데이터를 가지고 전역변수 POIItem들을 초기화 시켰으니 그 객체들을 가지고 지도에 뿌린다.
-                    setMapviewWithStoreLocation(poiItemsAroundMyLocation)
+
                 }
+                setMapviewWithStoreLocation(poiItemsAroundMyLocation)
 
-
-                toast("서버에서 가져온 데이터의 수 : " + response.body().toString())
+                toast("서버에서 가져온 데이터 : " + response.body().toString())
                 Log.v("Malibin Debug", "setPoiItemsAroundMyLocation() onResponse 함수 끝 ")
             }
         })
@@ -456,6 +503,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             }
 
         } else {
+            setCameraPosition(userLatitude, userLongitude)
             toast("내 주변 매장이 존재하지 않습니다.")
             Log.v("Malibin Debug", "storeData 가 0개임")
         }

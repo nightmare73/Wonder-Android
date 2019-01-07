@@ -94,28 +94,28 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
     private fun getResponse() {
         val getMenuListResponse = networkService.getMenuListResponse("application/json", 10)
 
-        getMenuListResponse.enqueue(object : Callback<GetMenuListResponse> {
-
-            override fun onResponse(call: Call<GetMenuListResponse>, response: Response<GetMenuListResponse>) {
-                if (response.isSuccessful) {
-
-                    var body = response!!.body()
-
-                    if (body!!.message.equals("메뉴 리스트 조회 성공")) {
-                        Log.d(TAG,"MenuList Success")
-                        // 이미지 로드
-                        requestManager.load(body!!.data.bgPhotoUrl).into(iv_store_act_store_bgphoto)
-
-                    } else
-                        Log.d(TAG,"MenuList Fail")
-                }
-
-            }
-
-            override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
-                Log.e("Menu list fail", t.toString())
-            }
-        })
+//        getMenuListResponse.enqueue(object : Callback<GetMenuListResponse> {
+//
+//            override fun onResponse(call: Call<GetMenuListResponse>, response: Response<GetMenuListResponse>) {
+//                if (response.isSuccessful) {
+//
+//                    var body = response!!.body()
+//
+//                    if (body!!.message.equals("메뉴 리스트 조회 성공")) {
+//                        Log.d(TAG,"MenuList Success")
+//                        // 이미지 로드
+//                        requestManager.load(body!!.data.bgPhotoUrl).into(iv_store_act_store_bgphoto)
+//
+//                    } else
+//                        Log.d(TAG,"MenuList Fail")
+//                }
+//
+//            }
+//
+//            override fun onFailure(call: Call<GetMenuListResponse>, t: Throwable) {
+//                Log.e("Menu list fail", t.toString())
+//            }
+//        })
     }
 
 }
