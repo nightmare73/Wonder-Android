@@ -32,4 +32,11 @@
     <string name="store_menu_frag_text_menu_name">메뉴 이름</string>
     <string name="store_menu_frag_text_menu_price">메뉴 가격</string>
 
+
+    <string-array name="spinner_menu_size">
+        <item>small</item>
+        <item>regular</item>
+        <item>large</item>
+    </string-array>
+
 </resources>

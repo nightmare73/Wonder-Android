@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="colorPrimary">#FA7268</color>
-<color name="colorPrimaryDark">#e2e2e2</color>
-<color name="colorAccent">#e2e2e2</color>
+    <color name="colorPrimary">#FA7268</color>
+    <color name="colorPrimaryDark">#e2e2e2</color>
+    <color name="colorAccent">#FA7268</color>
 
 
+    <color name="transparent">#00000000</color>
+    <color name="textcolor">#000000</color>
+    <color name="edittextcolor">#000000</color>
 
-<color name="transparent">#00000000</color>
-<color name="textcolor">#000000</color>
-<color name="edittextcolor">#000000</color>
-<color name="balck">#000000 </color>
-    <color name="warm_gray">#909090</color>
+    <color name="colorWhite">#ffffff</color>
     <color name="mypage_nickname">#383838</color>
+
+
+    <color name="warm_gray">#909090</color>
+    <color name="white">#e2e2e2</color>
+    <color name="warm_grey_two">#707070</color>
+    <color name="red">#ff0000</color>
+    <color name="bright_blue">#006fff</color>
+    <color name="black">#000000</color>
+    <color name="white_two">#ffffff</color>
+    <color name="salmon">#FA7268</color>
 
 </resources>

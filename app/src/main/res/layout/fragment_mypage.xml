@@ -6,11 +6,26 @@
              tools:context=".MainFragment.MypageFragment"
                 android:layout_marginTop="24dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+            android:id="@+id/rl_cart_frag_title_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="fragment_mypage"
-            android:gravity="center"/>
+            android:layout_height="46dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="마이페이지"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"/>
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:background="#afafaf"
+                android:layout_alignParentBottom="true"></View>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

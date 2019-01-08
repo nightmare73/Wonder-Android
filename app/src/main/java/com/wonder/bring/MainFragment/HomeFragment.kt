@@ -15,18 +15,40 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.kakao.util.maps.helper.Utility
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.DaumService
+import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
+import com.wonder.bring.Network.Get.GetSelectedStoreSummaryResponseData
+import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
+import com.wonder.bring.Network.Get.OtherDataClasses.StoreLocation
+import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
+import com.wonder.bring.StoreProcess.StoreActivity
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import net.daum.mf.map.api.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import kotlin.Exception
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener {
+
+    private var isProviederOn: Boolean = false
+    private var DEBUG_MODE: Boolean = false
+
     //이떄의 gps는 내가 한양대잇을때의 값을 가져왔음
+    //37.558182 127.042319
     private var userLatitude: Double = 37.55818269968138
     private var userLongitude: Double = 127.04231960631296
     private var userGpsAccuracy: Float = 0.0f
@@ -36,15 +58,28 @@ class HomeFragment : Fragment() {
     private lateinit var mapView: MapView
     private lateinit var mapViewContainer: ViewGroup
 
+    private var poiItem: MapPOIItem = MapPOIItem()
+
+    // 보미 서버 통신
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
+    // 다음 서버 통신
+    val daumService: DaumService by lazy {
+        ApplicationController.instance.daumService
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestGpsPermission()
+        //키자마자 내 위치 갱신
+        //키자마자 GPS가 안켜져있었다면 내위치가 갱신이 안됨. 다른 버튼을 눌러서 내 위치를 잡아주거나 해야함
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
+
 
     }
 
@@ -52,9 +87,9 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         mapInit()
-        btn_goto_myposition.setOnClickListener {
-            goToUserPosition()
-        }
+        searchbarInit()
+        buttonInit()
+        requestGpsPermission()
 
         btn_test_my_gps.setOnClickListener {
             setPinMyGps()
@@ -64,12 +99,126 @@ class HomeFragment : Fragment() {
             mapView.removeAllPOIItems()
         }
 
+
+        //"37.495426", "127.038843"//테스트용 좌표 브링카페
+        btn_maru.setOnClickListener {
+            DEBUG_MODE = true
+            setPoiItemsAroundMyLocation(37.495426, 127.038843)
+        }
+
+        //37.596322, 127.052640 테스트용 경희대 근처 카페
+        btn_univ.setOnClickListener {
+            DEBUG_MODE = true
+            setPoiItemsAroundMyLocation(37.596322, 127.052640)
+        }
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    //----------------------상속받은 MapView.POIItemEventListener 인터페이스 구현코드----------------------------------------
+
+    override fun onCalloutBalloonOfPOIItemTouched(p0: MapView?, p1: MapPOIItem?) {
 
     }
+
+    override fun onCalloutBalloonOfPOIItemTouched(
+        p0: MapView?,
+        p1: MapPOIItem?,
+        p2: MapPOIItem.CalloutBalloonButtonType?
+    ) {
+
+    }
+
+    override fun onDraggablePOIItemMoved(p0: MapView?, p1: MapPOIItem?, p2: MapPoint?) {
+
+    }
+
+    override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
+
+
+        //이거 한번 더 누르면 터져버림 ㅋㅋ;;
+//        var tempMapPOIItem = MapPOIItem()
+//        tempMapPOIItem.customImageResourceId = R.drawable.pin_icon_clicked
+//        tempMapPOIItem.markerType = MapPOIItem.MarkerType.CustomImage
+//        tempMapPOIItem.mapPoint = p1!!.mapPoint
+//        tempMapPOIItem.itemName = ""
+//        tempMapPOIItem.isShowCalloutBalloonOnTouch = false
+//        mapView.addPOIItem(tempMapPOIItem)
+
+        var userObject: StoreLocation = p1!!.userObject as StoreLocation
+        networkService.getSelectedStoreSummaryRequest("application/json", userObject.storeIdx)
+            .enqueue(object : Callback<GetSelectedStoreSummaryResponseData> {
+                override fun onFailure(call: Call<GetSelectedStoreSummaryResponseData>, t: Throwable) {
+                    toast("서버에서 매장 정보를 불러오지 못하였습니다.")
+                }
+
+                override fun onResponse(
+                    call: Call<GetSelectedStoreSummaryResponseData>,
+                    response: Response<GetSelectedStoreSummaryResponseData>
+                ) {
+                    Log.v("Malibin Debug", "서버에서 온 매장 서머리 데이터 : " + response.body()!!.toString())
+                    cl_home_fragment_summary.visibility = View.VISIBLE
+                    cl_home_fragment_summary.tv_home_fragment_store_name.text = response.body()!!.data.name
+                    cl_home_fragment_summary.tv_home_fragment_etc_info.text =
+                            (response.body()!!.data.address + "   " + userObject.distance + "m")
+                    cl_home_fragment_summary.tv_home_fragment_store_address.text = response.body()!!.data.address
+                    cl_home_fragment_summary.tv_home_fragment_store_phone_number.text = response.body()!!.data.number
+
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[0])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu1)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[1])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu2)
+                    Glide.with(this@HomeFragment).load(response.body()!!.data.photoUrl[2])
+                        .into(cl_home_fragment_summary.iv_home_fragment_menu3)
+
+                    cl_home_fragment_summary.btn_home_fragment_store_detail.setOnClickListener {
+                        startActivity<StoreActivity>(
+                            "storeIdx" to userObject.storeIdx,
+                            "storeName" to response.body()!!.data.name,
+                            "storeAdress" to response.body()!!.data.address
+                        )
+                    }
+                }
+
+
+            })
+
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------------------
+
+    //----------------------상속받은 MapView.MapViewEventListener 인터페이스 구현코드----------------------------------------
+
+    override fun onMapViewDoubleTapped(p0: MapView?, p1: MapPoint?) {
+    }
+
+    override fun onMapViewInitialized(p0: MapView?) {
+    }
+
+    override fun onMapViewDragStarted(p0: MapView?, p1: MapPoint?) {
+    }
+
+    override fun onMapViewMoveFinished(p0: MapView?, p1: MapPoint?) {
+    }
+
+    override fun onMapViewCenterPointMoved(p0: MapView?, p1: MapPoint?) {
+    }
+
+    override fun onMapViewDragEnded(p0: MapView?, p1: MapPoint?) {
+    }
+
+    override fun onMapViewSingleTapped(p0: MapView?, p1: MapPoint?) {
+        cl_home_fragment_summary.visibility = View.GONE
+    }
+
+    override fun onMapViewZoomLevelChanged(p0: MapView?, p1: Int) {
+    }
+
+    override fun onMapViewLongPressed(p0: MapView?, p1: MapPoint?) {
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
+
 
     private fun mapInit() {
 
@@ -83,6 +232,16 @@ class HomeFragment : Fragment() {
         mapViewContainer = mv_home_fragment_map
         //view에 맵뷰 담기
         mapViewContainer.addView(mapView)
+        //내위치 화면에 표시
+        //mapView.setShowCurrentLocationMarker(true)
+
+        //이벤트 리스너 등록
+        //여기안에다가 그냥 바로 인터페이스 정의해서 넣어줬더니 클릭리스너가 안먹힌다.
+        //그래서 현재 클래스에 상속을 받아버리고 이 클래스를 집어넣었다.....ㅅㅂ
+        mapView.setPOIItemEventListener(this)
+
+        //얘도 마찬가지...^^;;;
+        mapView.setMapViewEventListener(this)
 
         //해쉬키 알아오는 로그캣
         //여기는 프래그먼트니까 context가 없다.
@@ -91,10 +250,71 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun searchbarInit() {
+
+        var userInput: String
+
+        et_home_fragment_searchbar.setOnEditorActionListener { textView, actionId, keyEvent ->
+
+            when (actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    userInput = textView.text.toString()
+
+                    //DAUM REST API 주소 키워드 검색 코드
+                    daumService.getDaumKeywordAdressRequest(
+                        "KakaoAK ab0af3bcabe549eb390aa05e734417f5",
+                        userInput, 1, 10
+                    ).enqueue(object : Callback<GetDaumKeywordAddressResponseData> {
+                        override fun onFailure(call: Call<GetDaumKeywordAddressResponseData>, t: Throwable) {
+                            toast("검색에 실패하였습니다.")
+                        }
+
+                        override fun onResponse(
+                            call: Call<GetDaumKeywordAddressResponseData>,
+                            response: Response<GetDaumKeywordAddressResponseData>
+                        ) {
+                            Log.v("Malibin Debug : ", "Daum Keyword Address Request = " + response.body().toString())
+                            var string: String = ""
+                            for (result in response.body()!!.documents) {
+                                var temp: String = result.place_name + " = " + result.address_name + "\n"
+                                string += temp
+                            }
+                            toast(string).duration = Toast.LENGTH_LONG
+                            Log.v("Malibin Debug : ", "Daum Keyword Address Request = $string")
+                        }
+
+                    })
+
+                    true
+                }
+
+                else -> false
+            }
+
+
+        }
+
+    }
+
+    private fun buttonInit() {
+        //내위치
+        btn_home_fragment_search_mylocation.setOnClickListener {
+
+            DEBUG_MODE = false
+            getMyGPS()
+
+            //GPS가 켜져잇을때만 동작시킨다. 만약 false인경우 버튼을 눌러도 아무런 동작을 하지않게 만듬.
+            if (isProviederOn) {
+                setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+            }
+        }
+    }
+
     //해쉬키 받아오기
     //앱에서 고유한 해쉬키가 있는듯 하다. 이 해쉬키를 다음 API 사이트에 등록을 안하면
     //지도에 다음 로고만 나오는 기현상이 발생한다.
     //뭐 이 함수는 한 번 쓰고 나면 필요가 없어지니 삭제하는 편도 나쁘지 않다.
+
     private fun getKeyHash(ctx: Context): String? {
         var packageInfo: PackageInfo? = Utility.getPackageInfo(ctx, PackageManager.GET_SIGNATURES)
 
@@ -112,7 +332,6 @@ class HomeFragment : Fragment() {
         }
         return null
     }
-
 
     private fun requestGpsPermission() {
         //이전에 이미 권한 메세지에 대해 OK 했는지 검사
@@ -161,68 +380,169 @@ class HomeFragment : Fragment() {
     }
 
     private fun getMyGPS() {
-
-        //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
-        if (Build.VERSION.SDK_INT >= 23 &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED &&
-            ContextCompat.checkSelfPermission(
-                activity!!.applicationContext,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-        }
+        Log.v("Malibin Debug", "getMyGPS() 호출됨")
 
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as Location
+        Log.v("Malibin Debug", "getMyGPS() location manager 객체 생성 통과")
 
-        // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
-        lm.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,   //등록할 위치제공자
-            100,                   //통지사이의 최소 시간간격 (miliSecond)
-            1f,                 //통지사이의 최소 변경거리 (m)
-            mLocationListener
-        )
+        val isGPSEnabled = lm!!.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-        userLatitude = location!!.latitude
-        userLongitude = location!!.longitude
-        userGpsAccuracy = location!!.accuracy
+        //GPS가 켜져잇는지 안켜져있는지 확인
+        if (isGPSEnabled || isNetworkEnabled) {
 
-        Log.v(
-            "Malibin GPS",
-            location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
-        )
+            isProviederOn = true
+            //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
+            if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(
+                    activity!!.applicationContext,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+            }
+            Log.v("Malibin Debug", "getMyGPS() 아무의미없는 코드 통과")
+
+            //getLastKnownLocation에 좌표가 없는 경우를 생각해서 포문을 돌린다
+            var providers: List<String> = lm.getProviders(true)
+            var location: Location? = null
+
+
+            for (provider in providers) {
+                var l = lm.getLastKnownLocation(provider)
+                if (l == null) {
+                    continue
+                }
+                if (location == null || l.getAccuracy() < location.getAccuracy()) {
+                    location = l
+                }
+            }
+
+
+            //val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as? Location
+            Log.v("Malibin Debug", "getMyGPS() location 객체 생성 통과")
+
+            // GPS 제공자의 정보가 바뀌면 콜백하도록 리스너 등록
+            lm.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,   //등록할 위치제공자
+                100,                   //통지사이의 최소 시간간격 (miliSecond)
+                1f,                 //통지사이의 최소 변경거리 (m)
+                mLocationListener
+            )
+            lm.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,  // 등록할 위치제공자
+                100,                      // 통지사이의 최소 시간간격 (miliSecond)
+                1f,                    // 통지사이의 최소 변경거리 (m)
+                mLocationListener
+            )
+            Log.v("Malibin Debug", "getMyGPS() lm에 리스너 등록 통과")
+
+            try {
+                userLatitude = location!!.latitude
+                userLongitude = location.longitude
+                userGpsAccuracy = location.accuracy
+                Log.v(
+                    "Malibin GPS",
+                    location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+                )
+            } catch (e: Exception) {
+                toast("GPS 신호가 잘 잡히는 곳으로 이동해 주세요.")
+                Log.v("Malibin GPS", "location이 널임;;;;")
+            }
+
+        }
+        //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
+        else {
+            isProviederOn = false
+            toast("GPS를 체크해주세요")
+        }
 
     }
 
-    private fun goToUserPosition() {
-        var userPosition: CameraPosition =
-            CameraPosition(MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude), 2f)//머가 문제일까? 터지넹
-        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
+    private fun setPoiItemsAroundMyLocation(inputLatitude: Double, inputLongitude: Double) {
 
-        //mapView.animateCamera(CameraUpdateFactory.newCameraPosition(userPosition))//머가 문제지 터지는게
-        //mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint)) //이건 잘 되긴하는데 정확하지가 않은듯??
+        var poiItemsAroundMyLocation: ArrayList<MapPOIItem> = ArrayList()
+        val tmp = MapPOIItem()
 
-        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading
-        toast("goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
-        Log.v(
-            "Malibin GPS",
-            "goToUserPosition called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy
-        )
+        networkService.getStoreLocationAroundUserRequest(
+            "application/json",
+            String.format("%.6f", inputLatitude),
+            String.format("%.6f", inputLongitude)
+        ).enqueue(object : Callback<GetStoreLocationAroundUserResponseData> {
+            override fun onFailure(call: Call<GetStoreLocationAroundUserResponseData>, t: Throwable) {
+                toast("서버에서 주변 매장 위치를 불러오는데 실패하였습니다.")
+            }
+
+            override fun onResponse(
+                call: Call<GetStoreLocationAroundUserResponseData>,
+                response: Response<GetStoreLocationAroundUserResponseData>
+            ) {
+                if (response.body()!!.data != null) {
+                    //마커마다 각각 설정 해주는 반복문
+                    for (data in response.body()!!.data) {
+                        var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(data.latitude, data.longitude)
+                        var tempMapPOIItem = MapPOIItem()
+                        tempMapPOIItem.customImageResourceId = R.drawable.pin_icon
+                        tempMapPOIItem.markerType = MapPOIItem.MarkerType.CustomImage
+
+                        tempMapPOIItem.isShowDisclosureButtonOnCalloutBalloon = false
+
+                        tempMapPOIItem.mapPoint = userMapPoint
+                        tempMapPOIItem.userObject = data
+                        tempMapPOIItem.itemName = data.storeName
+
+                        poiItemsAroundMyLocation.add(tempMapPOIItem)
+                    }
+                    //서버에서 받은 데이터를 가지고 전역변수 POIItem들을 초기화 시켰으니 그 객체들을 가지고 지도에 뿌린다.
+
+                }
+                setMapviewWithStoreLocation(poiItemsAroundMyLocation)
+
+                //toast("서버에서 가져온 데이터 : " + response.body().toString())
+                Log.v("Malibin Debug", "서버에서 가져온 데이터 : " + response.body().toString())
+                Log.v("Malibin Debug", "setPoiItemsAroundMyLocation() onResponse 함수 끝 ")
+            }
+        })
+    }
+
+    private fun setMapviewWithStoreLocation(poiItemsAroundMyLocation: ArrayList<MapPOIItem>) {
+        mapView.removeAllPOIItems()
+        //여기서 맵뷰에다가 직접 POIItem들을 다 집어넣고 (맵에 실제로 보여짐)
+        //그 위치로 카메라를 이동
+        if (poiItemsAroundMyLocation.size > 0) {
+            //내주변 매장 조회 데이터가 존재하면 동작
+
+            for (data in poiItemsAroundMyLocation) {
+                mapView.addPOIItem(data)
+            }
+
+            if (DEBUG_MODE) {
+                //사실 이 카메라가 내 현재 좌표가 되어야함.
+                mapView.moveCamera(CameraUpdateFactory.newMapPoint(poiItemsAroundMyLocation[0].mapPoint))
+            } else {
+                setCameraPosition(userLatitude, userLongitude)
+            }
+
+        } else {
+            setCameraPosition(userLatitude, userLongitude)
+            toast("내 주변 매장이 존재하지 않습니다.")
+            Log.v("Malibin Debug", "storeData 가 0개임")
+        }
     }
 
     private fun setPinMyGps() {
         var userMapPoint: MapPoint = MapPoint.mapPointWithGeoCoord(userLatitude, userLongitude)
-        var poiItem: MapPOIItem = MapPOIItem()
+
+        //커스텀 핀 등록
+        poiItem.customImageResourceId = R.drawable.pin_icon
+
         poiItem.itemName = "내 시스템 GPS 위치"
         poiItem.mapPoint = userMapPoint
-        poiItem.markerType = MapPOIItem.MarkerType.YellowPin
+        poiItem.markerType = MapPOIItem.MarkerType.CustomImage
+
         mapView.addPOIItem(poiItem)
 
+        //원하는 좌표로
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint))
         Log.v(
             "Malibin GPS",
@@ -231,13 +551,17 @@ class HomeFragment : Fragment() {
         toast("setPinMyGps called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy)
     }
 
+    private fun setCameraPosition(latitude: Double, longitude: Double) {
+        var destinationPoint: MapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)
+        mapView.moveCamera(CameraUpdateFactory.newMapPoint(destinationPoint))
+    }
 
     private var mLocationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {
             //위치값이 갱신되면 이 이벤트 발생
             userLatitude = location!!.latitude
-            userLongitude = location!!.longitude
-            userGpsAccuracy = location!!.accuracy
+            userLongitude = location.longitude
+            userGpsAccuracy = location.accuracy
             Log.v(
                 "Malibin GPS",
                 "mLocationListener called, Position : " + userLatitude.toString() + ", " + userLongitude.toString() + ",  " + userGpsAccuracy

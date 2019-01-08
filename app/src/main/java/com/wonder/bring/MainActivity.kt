@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.iid.FirebaseInstanceId
 import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
@@ -14,6 +14,10 @@ import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import android.content.Intent
+import android.widget.TabHost
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
-
     // backpressed변수
     var backPressedTime: Long = 0
 
@@ -32,10 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
 
-
-
     }
-
 
     // 탭바 추가 함수
     private fun configureBottomNavigation() {
@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         val customViewPager = findViewById(R.id.vp_bottom_main_act_frag_pager) as MainFragmentViewPager
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
+
+        customViewPager.offscreenPageLimit=4
 
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
@@ -58,9 +60,6 @@ class MainActivity : AppCompatActivity() {
             tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
                     bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
 
-
-
-
     }
 
 
@@ -74,6 +73,12 @@ class MainActivity : AppCompatActivity() {
             toast("버튼을 한번 더 누르면 종료됩니다.")
         }
     }
-}
+
+
+    }
+
+
+
+
 
 

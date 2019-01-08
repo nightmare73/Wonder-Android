@@ -1,5 +1,6 @@
 package com.wonder.bring.LoginProcess
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -18,6 +19,8 @@ class SplashActivity : AppCompatActivity() {
 
                 //ANKO 라이브러리
                 startActivity<MainActivity>("data1" to "Hello", "data2" to "World!", "data3" to 1000)
+//                val intent : Intent= Intent(this@SplashActivity,MainActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 finish()
                 //finish를 안하면 밑에 깔려잇음. 제거해줌으로 쌓임 방지
 

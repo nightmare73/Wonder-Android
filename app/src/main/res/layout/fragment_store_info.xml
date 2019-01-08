@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".StoreFragment.StoreInfoFragment"
+        tools:context=".StoreProcess.StoreInfoFragment"
         android:layout_marginTop="24dp">
 
     <LinearLayout
@@ -39,7 +39,6 @@
               android:id="@+id/tv_store_info_frag_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="평일, 토요일, 15:00~16:00"
               android:textColor="#909090"
               android:textSize="15sp"
               android:layout_marginLeft="58dp"/>
@@ -63,7 +62,6 @@
                     android:id="@+id/tv_store_info_frag_hoilday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="매주 일요일"
                     android:textColor="#909090"
                     android:textSize="15sp"
                     android:layout_marginLeft="75dp"/>
@@ -87,7 +85,6 @@
                     android:id="@+id/tv_store_info_frag_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="02-243-2224"
                     android:textColor="#909090"
                     android:textSize="15sp"
                     android:layout_marginLeft="58dp"/>

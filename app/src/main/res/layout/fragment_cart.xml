@@ -4,13 +4,102 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".MainFragment.CartFragment"
-            android:layout_marginTop="24dp">
+             android:layout_marginTop="24dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+            android:id="@+id/rl_cart_frag_title_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="fragment_cart"
-            android:gravity="center"/>
+            android:layout_height="46dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장바구니"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"/>
+
+
+        <View
+          android:layout_width="match_parent"
+          android:layout_height="0.3dp"
+          android:background="#afafaf"
+          android:layout_alignParentBottom="true"></View>
+
+    </RelativeLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nestedscroll"
+                android:layout_below="@+id/rl_cart_frag_title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <LinearLayout
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+               <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_cart_frag_list"
+                android:layout_width="match_parent"
+                android:layout_height="485.5dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+               android:paddingBottom="33.5dp">
+               </android.support.v7.widget.RecyclerView>
+
+
+                <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.7dp"
+                        android:background="#afafaf"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"></View>
+
+                <RelativeLayout
+                        android:id="@+id/rl_cart_frag_order_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="72dp"
+                        android:paddingLeft="37dp"
+                        android:paddingRight="36dp"
+                        android:gravity="center"
+                        android:layout_above="@+id/btn_cart_frag_order">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="총 주문금액"
+                            android:textSize="18sp"
+                            android:textColor="@color/warm_grey_two"
+                            android:layout_alignParentLeft="true"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:text="10000원"
+                    android:textColor="@color/warm_grey_two"
+                    android:textSize="18sp"/>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+
+    <ImageView
+            android:id="@+id/btn_cart_frag_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/order"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"/>
+
+
 
 </RelativeLayout>
