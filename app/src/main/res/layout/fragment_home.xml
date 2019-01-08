@@ -45,7 +45,8 @@
             android:layout_alignParentBottom="true" android:id="@+id/btn_maru"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"/>
     <Button
             android:text="경희대"
             android:layout_width="64dp"
@@ -55,7 +56,7 @@
             android:layout_toRightOf="@+id/btn_maru"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/btn_maru"
-            android:layout_marginStart="8dp" android:layout_marginLeft="8dp"/>
+            android:layout_marginStart="8dp" android:layout_marginLeft="8dp" android:visibility="gone"/>
     <android.support.constraint.ConstraintLayout
             android:layout_width="288dp"
             android:layout_height="48dp" android:layout_alignParentStart="true"
@@ -88,7 +89,8 @@
             android:id="@+id/btn_test_my_gps"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/btn_delete_pin" android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/mv_home_fragment_map" android:layout_marginRight="16dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/mv_home_fragment_map" android:layout_marginRight="16dp"
+            android:visibility="gone"/>
     <Button
             android:text="핀삭제"
             android:layout_width="wrap_content"
@@ -98,7 +100,8 @@
             android:layout_above="@+id/btn_test_my_gps"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="@+id/mv_home_fragment_map" android:layout_marginRight="16dp"
-            android:layout_marginBottom="140dp" app:layout_constraintBottom_toBottomOf="@+id/mv_home_fragment_map"/>
+            android:layout_marginBottom="140dp" app:layout_constraintBottom_toBottomOf="@+id/mv_home_fragment_map"
+            android:visibility="gone"/>
     <android.support.constraint.ConstraintLayout
 
             android:id="@+id/cl_home_fragment_summary"
@@ -109,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent" android:visibility="gone"
             app:layout_constraintHorizontal_bias="0.0" android:background="@color/colorWhite"
             android:animateLayoutChanges="true"
-            android:elevation="8dp">
+            android:elevation="16dp">
 
         <TextView
                 android:text="TextView"
