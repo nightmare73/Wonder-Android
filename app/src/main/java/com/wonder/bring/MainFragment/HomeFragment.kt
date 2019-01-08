@@ -25,16 +25,13 @@ import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
 import com.wonder.bring.Network.Get.GetSelectedStoreSummaryResponseData
 import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
 import com.wonder.bring.Network.Get.OtherDataClasses.StoreLocation
-import com.wonder.bring.Network.Get.OtherDataClasses.StoreSummary
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import com.wonder.bring.StoreProcess.StoreActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import net.daum.android.map.MapViewTouchEventListener
 import net.daum.mf.map.api.*
-import org.jetbrains.anko.MAXDPI
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
@@ -42,11 +39,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import kotlin.Exception
 
 
 class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener {
 
-
+    private var isProviederOn: Boolean = false
     private var DEBUG_MODE: Boolean = false
 
     //이떄의 gps는 내가 한양대잇을때의 값을 가져왔음
@@ -303,7 +301,12 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
         btn_home_fragment_search_mylocation.setOnClickListener {
 
             DEBUG_MODE = false
-            setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+            getMyGPS()
+
+            //GPS가 켜져잇을때만 동작시킨다. 만약 false인경우 버튼을 눌러도 아무런 동작을 하지않게 만듬.
+            if (isProviederOn) {
+                setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+            }
         }
     }
 
@@ -387,6 +390,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
         //GPS가 켜져잇는지 안켜져있는지 확인
         if (isGPSEnabled || isNetworkEnabled) {
+
+            isProviederOn = true
             //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
             if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(
@@ -398,10 +403,11 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             }
             Log.v("Malibin Debug", "getMyGPS() 아무의미없는 코드 통과")
 
-
             //getLastKnownLocation에 좌표가 없는 경우를 생각해서 포문을 돌린다
             var providers: List<String> = lm.getProviders(true)
             var location: Location? = null
+
+
             for (provider in providers) {
                 var l = lm.getLastKnownLocation(provider)
                 if (l == null) {
@@ -411,6 +417,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                     location = l
                 }
             }
+
 
             //val location: Location? = lm!!.getLastKnownLocation(LocationManager.GPS_PROVIDER) as? Location
             Log.v("Malibin Debug", "getMyGPS() location 객체 생성 통과")
@@ -430,17 +437,23 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             )
             Log.v("Malibin Debug", "getMyGPS() lm에 리스너 등록 통과")
 
-            userLatitude = location!!.latitude
-            userLongitude = location.longitude
-            userGpsAccuracy = location.accuracy
+            try {
+                userLatitude = location!!.latitude
+                userLongitude = location.longitude
+                userGpsAccuracy = location.accuracy
+                Log.v(
+                    "Malibin GPS",
+                    location!!.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+                )
+            } catch (e: Exception) {
+                toast("GPS 신호가 잘 잡히는 곳으로 이동해 주세요.")
+                Log.v("Malibin GPS", "location이 널임;;;;")
+            }
 
-            Log.v(
-                "Malibin GPS",
-                location.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
-            )
         }
         //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
         else {
+            isProviederOn = false
             toast("GPS를 체크해주세요")
         }
 
@@ -485,7 +498,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                 }
                 setMapviewWithStoreLocation(poiItemsAroundMyLocation)
 
-                toast("서버에서 가져온 데이터 : " + response.body().toString())
+                //toast("서버에서 가져온 데이터 : " + response.body().toString())
+                Log.v("Malibin Debug", "서버에서 가져온 데이터 : " + response.body().toString())
                 Log.v("Malibin Debug", "setPoiItemsAroundMyLocation() onResponse 함수 끝 ")
             }
         })
@@ -527,8 +541,6 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
         poiItem.markerType = MapPOIItem.MarkerType.CustomImage
 
         mapView.addPOIItem(poiItem)
-
-//        var btn: Button =  poiItem.customImageResourceId
 
         //원하는 좌표로
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(userMapPoint))

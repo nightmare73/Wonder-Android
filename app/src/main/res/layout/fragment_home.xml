@@ -109,7 +109,7 @@
             app:layout_constraintBottom_toBottomOf="parent" android:visibility="gone"
             app:layout_constraintHorizontal_bias="0.0" android:background="@color/colorWhite"
             android:animateLayoutChanges="true"
-            android:elevation="6dp">
+            android:elevation="8dp">
 
         <TextView
                 android:text="TextView"
