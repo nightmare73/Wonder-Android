@@ -7,14 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wonder.bring.Adapter.CartListRecyclerViewAdapter
+import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import com.wonder.bring.data.CartListData
+import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.fragment_cart_no.view.*
+import kotlinx.android.synthetic.main.fragment_login_no.view.*
+import org.jetbrains.anko.support.v4.startActivity
 
 
 class CartFragment : Fragment(){
@@ -34,42 +38,31 @@ class CartFragment : Fragment(){
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        var view=inflater.inflate(R.layout.fragment_cart, container, false)
+        var view=inflater.inflate(R.layout.fragment_cart, container, false)
 
-//        // 로그인 여부 파악 : case1) 로그인 앙대어 있으면
-//        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
-//
-//            view=inflater.inflate(R.layout.fragment_login_no,container,false)
-//            view.btn_login_no_frag_goto_login.setOnClickListener {
-//                startActivity<LoginActivity>()
-//                activity!!.overridePendingTransition(R.anim.slide_in_up,0)
-//            }
-//
-//            //로그인 여부파악 : case2) 로그인 되어있는 경우
-//        }
-//        else{
+        // 로그인 여부 파악 : case1) 로그인 앙대어 있으면
+        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
+
+            view=inflater.inflate(R.layout.fragment_login_no,container,false)
+            view.btn_login_no_frag_goto_login.setOnClickListener {
+                startActivity<LoginActivity>()
+            }
+
+            //로그인 여부파악 : case2) 로그인 되어있는 경우
+        }else{
 
             // todo: if( 장바구니에 아무것도 없다면) :
-            val view=inflater.inflate(R.layout.fragment_cart_no,container,false)
-            view.btn_btn_Btn.setOnClickListener {
-
-
-            }
-//                val layoutInflater =
-//                        activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//
-//                val view33 = layoutInflater.inflate(R.layout.activity_main, null)
-//
-//
-//                view33.btn_bottom_navi_main_tab.performClick()
-//            }
+//            view=inflater.inflate(R.layout.fragment_cart_no,container,false)
             // todo: else(장바구니에 1개라도 있다면)
             // 원래 view 뿌려주자
 
 
-//        }
+
+        }
+
 
         return view
+
     }
 
 

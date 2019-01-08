@@ -9,6 +9,9 @@
     <color name="textcolor">#000000</color>
     <color name="edittextcolor">#000000</color>
 
+    <color name="colorWhite" >#ffffff</color>
+
+
 
     <color name="warm_gray">#909090</color>
     <color name="white">#e2e2e2</color>
@@ -17,5 +20,6 @@
     <color name="bright_blue">#006fff</color>
     <color name="black">#000000</color>
     <color name="white_two">#ffffff</color>
+    <color name="salmon">#FA7268</color>
 
 </resources>

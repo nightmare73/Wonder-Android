@@ -19,13 +19,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/leftchevron"
-                android:layout_alignParentLeft="true"/>
+                android:layout_alignParentLeft="true" android:id="@+id/btn_order_act_back"/>
 
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/navbar_go_to_cart_gray"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true" android:id="@+id/btn_order_act_gocart"/>
 
     </RelativeLayout>
 
@@ -37,15 +37,22 @@
             android:layout_marginTop="51dp"
             android:layout_below="@+id/rl_order_act_title_bar">
 
-        <ImageView
+        <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/menu_image1"
-                android:layout_centerInParent="true"/>
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/menu_image1"
+                    android:id="@+id/iv_order_act_menu_image"
+            />
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
-
-
     <TextView
             android:id="@+id/tv_order_act_menu_name"
             android:layout_below="@+id/rl_order_act_menu"

@@ -43,9 +43,9 @@ dependencies {
     // firebase
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
-//    implementation 'com.google.firebase:firebase-core:16.0.6'
-//    implementation 'com.google.firebase:firebase-messaging:17.3.4'
-
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    //    implementation 'com.google.firebase:firebase-core:16.0.6'
+    //    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     // glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 }
