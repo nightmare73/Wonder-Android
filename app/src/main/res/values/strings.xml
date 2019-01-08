@@ -20,9 +20,6 @@
     <string name="next">"다음"</string>
 
 
-
-
-
     <!--가게 액티비티-->
     <string name="store_act_text_menu">"메뉴"</string>
     <string name="store_act_text_info">"정보"</string>
@@ -37,8 +34,8 @@
 
 
     <string-array name="spinner_menu_size">
-        <item>regular</item>
         <item>small</item>
+        <item>regular</item>
         <item>large</item>
     </string-array>
 

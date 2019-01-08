@@ -46,7 +46,7 @@ import java.security.NoSuchAlgorithmException
 
 class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener {
 
-
+    private var debugCnt: Int = 0
     private var DEBUG_MODE: Boolean = false
 
     //이떄의 gps는 내가 한양대잇을때의 값을 가져왔음
@@ -93,27 +93,42 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
         buttonInit()
         requestGpsPermission()
 
-        btn_test_my_gps.setOnClickListener {
-            setPinMyGps()
+        debuggingMode()
+
+    }
+
+    private fun debuggingMode() {
+
+        et_home_fragment_searchbar.setOnClickListener {
+            debugCnt++
+            if (debugCnt >= 10) {
+
+                btn_test_my_gps.visibility = View.VISIBLE
+                btn_delete_pin.visibility = View.VISIBLE
+                btn_maru.visibility = View.VISIBLE
+                btn_univ.visibility = View.VISIBLE
+
+                btn_test_my_gps.setOnClickListener {
+                    setPinMyGps()
+                }
+
+                btn_delete_pin.setOnClickListener {
+                    mapView.removeAllPOIItems()
+                }
+
+                //"37.495426", "127.038843"//테스트용 좌표 브링카페
+                btn_maru.setOnClickListener {
+                    DEBUG_MODE = true
+                    setPoiItemsAroundMyLocation(37.495426, 127.038843)
+                }
+
+                //37.596322, 127.052640 테스트용 경희대 근처 카페
+                btn_univ.setOnClickListener {
+                    DEBUG_MODE = true
+                    setPoiItemsAroundMyLocation(37.596322, 127.052640)
+                }
+            }
         }
-
-        btn_delete_pin.setOnClickListener {
-            mapView.removeAllPOIItems()
-        }
-
-
-        //"37.495426", "127.038843"//테스트용 좌표 브링카페
-        btn_maru.setOnClickListener {
-            DEBUG_MODE = true
-            setPoiItemsAroundMyLocation(37.495426, 127.038843)
-        }
-
-        //37.596322, 127.052640 테스트용 경희대 근처 카페
-        btn_univ.setOnClickListener {
-            DEBUG_MODE = true
-            setPoiItemsAroundMyLocation(37.596322, 127.052640)
-        }
-
     }
 
     //----------------------상속받은 MapView.POIItemEventListener 인터페이스 구현코드----------------------------------------
@@ -286,13 +301,10 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                         }
 
                     })
-
                     true
                 }
-
                 else -> false
             }
-
 
         }
 
@@ -377,6 +389,9 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     }
 
     private fun getMyGPS() {
+
+
+
         Log.v("Malibin Debug", "getMyGPS() 호출됨")
 
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -397,6 +412,13 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             ) {
             }
             Log.v("Malibin Debug", "getMyGPS() 아무의미없는 코드 통과")
+
+            //현위치 마커찍어주는게 안먹어서 그냥 트래킹모드를 사용한다. 현위치 마커만 변동되고 맵이움직이거나 하지는 않음.
+            //커스텀 이미지를 등록해놧더니 와우;; 애니메이션이 자동으로 생겻다 다음 감사합니다 ^^;;;
+            mapView.currentLocationTrackingMode =
+                    MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
+            mapView.setCustomCurrentLocationMarkerTrackingImage(R.drawable.current_location, MapPOIItem.ImageOffset(16, 33))
+            mapView.setShowCurrentLocationMarker(true)
 
 
             //getLastKnownLocation에 좌표가 없는 경우를 생각해서 포문을 돌린다
@@ -438,6 +460,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                 "Malibin GPS",
                 location.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
             )
+
         }
         //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
         else {

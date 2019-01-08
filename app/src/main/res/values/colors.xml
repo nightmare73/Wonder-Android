@@ -9,8 +9,8 @@
     <color name="textcolor">#000000</color>
     <color name="edittextcolor">#000000</color>
 
-    <color name="colorWhite" >#ffffff</color>
-
+    <color name="colorWhite">#ffffff</color>
+    <color name="mypage_nickname">#383838</color>
 
 
     <color name="warm_gray">#909090</color>

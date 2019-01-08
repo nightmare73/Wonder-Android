@@ -171,7 +171,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"></View>
 
-
     <RelativeLayout
             android:layout_below="@+id/v_order_act_underline"
             android:layout_width="match_parent"
@@ -211,14 +210,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/into_cart"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:scaleType="fitXY"/>
 
         <ImageView
                 android:id="@+id/btn_order_act_move_to_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/order_now"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:scaleType="fitXY"/>
 
 
     </LinearLayout>

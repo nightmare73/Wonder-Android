@@ -3,7 +3,6 @@ package com.wonder.bring.Network
 import com.google.gson.JsonObject
 import com.wonder.bring.Network.Get.*
 
-
 import com.wonder.bring.Network.Post.PostLogInResponse
 
 import retrofit2.Call
@@ -55,6 +54,13 @@ interface NetworkService {
         @Path("storeIdx") store_idx: Int
     ): Call<GetStoreInfoResponse>
 
+
+    // 주문리스트 조회
+    @GET("/orders")
+    fun getOrderListResponse(
+        @Header("authorization") authorization: String
+    ) : Call<GetOrderListResponse>
+
     //선택한 매장 조회
     @GET("/maps/stores/{storeIdx}")
     fun getSelectedStoreSummaryRequest(
@@ -69,5 +75,6 @@ interface NetworkService {
         @Path("storeIdx") storeIdx: Int,
         @Path("menuIdx") menuIdx: Int
     ): Call<GetMenuDetailsResponseData>
+
 
 }
