@@ -1,10 +1,7 @@
 package com.wonder.bring.Network
 
 import com.google.gson.JsonObject
-import com.wonder.bring.Network.Get.GetMenuListResponse
-import com.wonder.bring.Network.Get.GetStoreInfoResponse
-import com.wonder.bring.Network.Get.GetCheckDuplicateIdResponseData
-import com.wonder.bring.Network.Get.GetCheckDuplicateNickResponseData
+import com.wonder.bring.Network.Get.*
 import com.wonder.bring.Network.Post.PostLogInResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -47,5 +44,10 @@ interface NetworkService {
         @Path("storeIdx") store_idx : Int
     ) : Call<GetStoreInfoResponse>
 
+    // 주문리스트 조회
+    @GET("/orders")
+    fun getOrderListResponse(
+        @Header("authorization") authorization: String
+    ) : Call<GetOrderListResponse>
 
 }
