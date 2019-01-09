@@ -98,5 +98,9 @@ class OrderHistoryDetailActivity : AppCompatActivity() {
         tv_order_his_detail_act_ordernum.text = orderIdx.toString()
         tv_order_his_detail_act_time.text = orderTime
         tv_order_his_detail_act_storename.text = storeName
+
+        btn_order_his_detail_act_back.setOnClickListener {
+            finish()
+        }
     }
 }
