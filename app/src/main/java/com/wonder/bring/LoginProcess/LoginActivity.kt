@@ -44,8 +44,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
 
-
-
         setOnBtnClickListner()
 
         // edittext입력 시, 로그인버튼 색깔 변하게 하기   Q. 색이 안변했을땐 아예 클릭이 안되게 변경해야할듯, 그리고 로그인이 회색일땐 넘어가지 않도록.
@@ -72,6 +70,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+
+
     private fun setOnBtnClickListner(){
 
         // 로그인
@@ -92,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
         // 뒤로가기
         btn_login_act_back.setOnClickListener {
             finish()
-            overridePendingTransition(R.anim.slide_in_down,0)
+//            overridePendingTransition(R.anim.slide_in_down,0)
         }
 
 
@@ -150,8 +150,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-            super.onBackPressed()
-        overridePendingTransition(R.anim.slide_in_down,0)
-    }
+//    override fun onBackPressed() {
+//            super.onBackPressed()
+//        overridePendingTransition(R.anim.slide_in_down,0)
+//    }
 }

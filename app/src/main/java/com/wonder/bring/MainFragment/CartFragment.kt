@@ -1,26 +1,40 @@
 package com.wonder.bring.MainFragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.Checkable
+import com.wonder.bring.Adapter.CartListRecyclerViewAdapter
 import com.wonder.bring.LoginProcess.LoginActivity
+import com.wonder.bring.MainActivity
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
+import com.wonder.bring.data.CartListData
 import com.wonder.bring.db.SharedPreferenceController
-import kotlinx.android.synthetic.main.fragment_cart.view.*
-import kotlinx.android.synthetic.main.fragment_login_no.*
+import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_cart_no.view.*
 import kotlinx.android.synthetic.main.fragment_login_no.view.*
 import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 
 
 class CartFragment : Fragment(){
 
+    private val TAG = CartFragment::class.java!!.getSimpleName()
+
+    lateinit var cartListRecyclerViewAdapter: CartListRecyclerViewAdapter
+
+
+    val listDataList : ArrayList<CartListData> by lazy {
+        ArrayList<CartListData>()
+    }
+
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,7 +46,6 @@ class CartFragment : Fragment(){
             view=inflater.inflate(R.layout.fragment_login_no,container,false)
             view.btn_login_no_frag_goto_login.setOnClickListener {
                 startActivity<LoginActivity>()
-                activity!!.overridePendingTransition(R.anim.slide_in_up,0)
             }
 
             //로그인 여부파악 : case2) 로그인 되어있는 경우
@@ -49,6 +62,57 @@ class CartFragment : Fragment(){
 
 
         return view
+
     }
 
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+//        setRecyclerView()
+
+    }
+
+    private fun setRecyclerView(){
+
+        // 임시데이터
+        listDataList.add(CartListData
+            ("커피나무",
+            "아메리카노ICE",
+            "Regular",
+            5000,
+            1,
+            "위에 생크림 올려주세요"
+            )
+        )
+
+        listDataList.add(CartListData
+            ("커피나무",
+            "아메리카노ICE",
+            "Regular",
+            5000,
+            1,
+            "위에 생크림 올려주세요"
+        ))
+
+
+        listDataList.add(CartListData
+            ("커피나무",
+            "아메리카노ICE",
+            "Regular",
+            5000,
+            1,
+            "위에 생크림 올려주세요"
+        )
+        )
+
+
+
+        cartListRecyclerViewAdapter= CartListRecyclerViewAdapter(activity!!,listDataList)
+        rv_cart_frag_list.adapter=cartListRecyclerViewAdapter
+        rv_cart_frag_list.layoutManager=LinearLayoutManager(activity)
+
+    }
+
+
 }
+

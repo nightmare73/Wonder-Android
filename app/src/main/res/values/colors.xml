@@ -9,8 +9,8 @@
     <color name="textcolor">#000000</color>
     <color name="edittextcolor">#000000</color>
 
-    <color name="colorWhite" >#ffffff</color>
-
+    <color name="colorWhite">#ffffff</color>
+    <color name="mypage_nickname">#383838</color>
 
 
     <color name="warm_gray">#909090</color>
@@ -22,4 +22,6 @@
     <color name="white_two">#ffffff</color>
     <color name="salmon">#FA7268</color>
 
+    <color name="f8gray">#F8F8F8</color>
+    <color name="afgray">#afafaf</color>
 </resources>

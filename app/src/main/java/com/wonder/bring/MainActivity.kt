@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
+import com.google.firebase.iid.FirebaseInstanceId
 import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainFragment.MainFragmentViewPager
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
@@ -13,6 +14,10 @@ import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import android.content.Intent
+import android.widget.TabHost
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
-
 
     }
 
@@ -69,6 +73,12 @@ class MainActivity : AppCompatActivity() {
             toast("버튼을 한번 더 누르면 종료됩니다.")
         }
     }
-}
+
+
+    }
+
+
+
+
 
 
