@@ -47,6 +47,9 @@ import java.security.NoSuchAlgorithmException
 class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEventListener {
 
     private var debugCnt: Int = 0
+    private var isProviederOn: Boolean = false
+    private var isGPSReceiving: Boolean = false
+
     private var DEBUG_MODE: Boolean = false
 
     //이떄의 gps는 내가 한양대잇을때의 값을 가져왔음
@@ -151,16 +154,6 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
     override fun onPOIItemSelected(p0: MapView?, p1: MapPOIItem?) {
 
-
-        //이거 한번 더 누르면 터져버림 ㅋㅋ;;
-//        var tempMapPOIItem = MapPOIItem()
-//        tempMapPOIItem.customImageResourceId = R.drawable.pin_icon_clicked
-//        tempMapPOIItem.markerType = MapPOIItem.MarkerType.CustomImage
-//        tempMapPOIItem.mapPoint = p1!!.mapPoint
-//        tempMapPOIItem.itemName = ""
-//        tempMapPOIItem.isShowCalloutBalloonOnTouch = false
-//        mapView.addPOIItem(tempMapPOIItem)
-
         var userObject: StoreLocation = p1!!.userObject as StoreLocation
         networkService.getSelectedStoreSummaryRequest("application/json", userObject.storeIdx)
             .enqueue(object : Callback<GetSelectedStoreSummaryResponseData> {
@@ -195,12 +188,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                         )
                     }
                 }
-
-
             })
-
     }
-
 
     //--------------------------------------------------------------------------------------------------------------------
 
@@ -315,7 +304,14 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
         btn_home_fragment_search_mylocation.setOnClickListener {
 
             DEBUG_MODE = false
-            setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+
+            if(!isGPSReceiving){
+                getMyGPS()
+            }
+            //GPS가 켜져잇을때만 동작시킨다. 만약 false인경우 버튼을 눌러도 아무런 동작을 하지않게 만듬.
+            if (isProviederOn) {
+                setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+            }
         }
     }
 
@@ -390,8 +386,6 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
     private fun getMyGPS() {
 
-
-
         Log.v("Malibin Debug", "getMyGPS() 호출됨")
 
         val lm: LocationManager? = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -402,6 +396,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
         //GPS가 켜져잇는지 안켜져있는지 확인
         if (isGPSEnabled || isNetworkEnabled) {
+
+            isProviederOn = true
             //이 코드를 넣어줘야 location 할당하는 코드가 동작함....
             if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(
@@ -417,7 +413,10 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             //커스텀 이미지를 등록해놧더니 와우;; 애니메이션이 자동으로 생겻다 다음 감사합니다 ^^;;;
             mapView.currentLocationTrackingMode =
                     MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
-            mapView.setCustomCurrentLocationMarkerTrackingImage(R.drawable.current_location, MapPOIItem.ImageOffset(16, 33))
+            mapView.setCustomCurrentLocationMarkerTrackingImage(
+                R.drawable.current_location,
+                MapPOIItem.ImageOffset(16, 33)
+            )
             mapView.setShowCurrentLocationMarker(true)
 
 
@@ -452,18 +451,26 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
             )
             Log.v("Malibin Debug", "getMyGPS() lm에 리스너 등록 통과")
 
-            userLatitude = location!!.latitude
-            userLongitude = location.longitude
-            userGpsAccuracy = location.accuracy
-
-            Log.v(
-                "Malibin GPS",
-                location.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
-            )
+            try {
+                isGPSReceiving = true
+                userLatitude = location!!.latitude
+                userLongitude = location.longitude
+                userGpsAccuracy = location.accuracy
+                Log.v(
+                    "Malibin GPS",
+                    location.latitude.toString() + ", " + location.longitude.toString() + ",  " + userGpsAccuracy
+                )
+                setPoiItemsAroundMyLocation(userLatitude, userLongitude)
+            } catch (e: Exception) {
+                isGPSReceiving = false
+                toast("GPS 신호가 잘 잡히는 곳으로 이동해 주세요.")
+                Log.v("Malibin GPS", "location이 널임;;;;")
+            }
 
         }
         //GPS 안켜져있으면 켜달라는 토스트 메세지 띄우기
         else {
+            isProviederOn = false
             toast("GPS를 체크해주세요")
         }
 
@@ -508,7 +515,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                 }
                 setMapviewWithStoreLocation(poiItemsAroundMyLocation)
 
-                toast("서버에서 가져온 데이터 : " + response.body().toString())
+                //toast("서버에서 가져온 데이터 : " + response.body().toString())
+                Log.v("Malibin Debug", "서버에서 가져온 데이터 : " + response.body().toString())
                 Log.v("Malibin Debug", "setPoiItemsAroundMyLocation() onResponse 함수 끝 ")
             }
         })
