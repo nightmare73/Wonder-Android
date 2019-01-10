@@ -14,7 +14,7 @@ class OrderHistoryDetailRecyclerViewAdapter(val ctx: Context, val dataList: Arra
     RecyclerView.Adapter<OrderHistoryDetailRecyclerViewAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(ctx).inflate(R.layout.item_order_detail, parent, false)
+        val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_order_detail, parent, false)
         return Holder(view)
     }
 
@@ -23,9 +23,9 @@ class OrderHistoryDetailRecyclerViewAdapter(val ctx: Context, val dataList: Arra
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.tv_name.text = dataList[position].name
         holder.tv_amountSize.text =
-                ("(" + SizeConvertor.parseSizeString(dataList[position].size) + " / " + dataList[position].orderCount + "개")
+                ("(" + SizeConvertor.parseSizeString(dataList[position].size) + " / " + dataList[position].orderCount + "개)")
         holder.tv_request.text  = dataList[position].memo
-        holder.tv_cost.text = dataList[position].totalPrice.toString()
+        holder.tv_cost.text = (dataList[position].totalPrice.toString() + "원")
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
