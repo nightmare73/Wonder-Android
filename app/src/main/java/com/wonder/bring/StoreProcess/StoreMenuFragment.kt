@@ -98,6 +98,15 @@ class StoreMenuFragment : Fragment() {
 
     private fun setRecyclerView() {
 
+//        //임시데이터
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+//        listDataList.add(MenuListData(1,"haha",6000,1))
+
         menuRecyclerViewAdapter = MenuRecyclerViewAdapter(activity!!, listDataList)
         rv_store_menu_frag_menu_list.adapter = menuRecyclerViewAdapter
         rv_store_menu_frag_menu_list.layoutManager = LinearLayoutManager(activity)

@@ -68,6 +68,7 @@ interface NetworkService {
         @Path("storeIdx") storeIdx: Int
     ): Call<GetSelectedStoreSummaryResponseData>
 
+
     //메뉴 상세 정보 조회
     @GET("/stores/{storeIdx}/menu/{menuIdx}")
     fun getMenuDetailsRequest(
