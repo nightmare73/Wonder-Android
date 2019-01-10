@@ -16,6 +16,7 @@
 
 
         <TextView
+                android:fontFamily="@font/nanumsquareroundotfr"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="@string/store_info_frag_text_info"
@@ -29,6 +30,7 @@
            android:layout_marginTop="30dp">
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/store_info_frag_text_info_time"
@@ -36,6 +38,7 @@
               android:textColor="@color/textcolor"/>
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
               android:id="@+id/tv_store_info_frag_time"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -52,6 +55,7 @@
                 android:layout_marginTop="14dp">
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/store_info_frag_text_info_holiday"
@@ -59,6 +63,7 @@
                     android:textColor="@color/textcolor"/>
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:id="@+id/tv_store_info_frag_hoilday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -75,6 +80,7 @@
                 android:layout_marginTop="14dp">
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/store_info_frag_text_info_tel"
@@ -82,6 +88,7 @@
                     android:textColor="@color/textcolor"/>
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:id="@+id/tv_store_info_frag_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

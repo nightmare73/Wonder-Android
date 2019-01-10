@@ -40,8 +40,10 @@
         <activity android:name=".LoginProcess.SignupActivity">
         </activity>
         <activity android:name=".OrderProcess.OrderActivity">
+
         </activity>
         <activity android:name=".StoreProcess.StoreActivity">
+
         </activity>
         <activity android:name=".LoginProcess.NicknameActivity">
         </activity>
