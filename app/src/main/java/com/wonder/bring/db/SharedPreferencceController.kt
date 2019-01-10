@@ -4,12 +4,12 @@ import android.content.Context
 import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 
 
-object SharedPreferenceController{
+object SharedPreferenceController {
     private val USER_NAME = "MYKEY"
     private val myAuth = "myAuth"
 
 
-    fun setAuthorization(context: Context, authorization : String){
+    fun setAuthorization(context: Context, authorization: String) {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         val editor = pref.edit()
         editor.putString(myAuth, authorization)
@@ -17,19 +17,28 @@ object SharedPreferenceController{
     }
 
 
-    fun getAuthorization(context: Context) : String {
+    fun getAuthorization(context: Context): String {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         return pref.getString(myAuth, "")
     }
 
 
-
-    fun clearSPC(context: Context){
+    fun clearSPC(context: Context) {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE) //현재 내 기기에서만 볼수 있는 데이터
         val editor = pref.edit()
         editor.clear()
         editor.commit()
     }
 
+    fun setCartData(context: Context, userId: String, cartData: String) {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString(userId+"Cart", cartData)
+        editor.commit()
+    }
 
+    fun getCartData(context: Context, userId: String): String {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
+        return pref.getString(userId+"Cart", "nothing")
+    }
 }
