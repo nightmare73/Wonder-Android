@@ -82,7 +82,7 @@
                     android:textSize="14sp"
                     android:paddingLeft="17dp"/>
 
-            <ImageButton
+            <ImageView
                     android:layout_toLeftOf="@id/et_signup_act_id"
                     android:layout_width="69dp"
                     android:layout_height="44dp"
