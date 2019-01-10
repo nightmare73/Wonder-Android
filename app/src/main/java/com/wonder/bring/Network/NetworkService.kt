@@ -4,6 +4,9 @@ import com.google.gson.JsonObject
 import com.wonder.bring.Network.Get.*
 
 import com.wonder.bring.Network.Post.PostLogInResponse
+import com.wonder.bring.Network.Post.PostSignupResponseData
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 import retrofit2.Call
 import retrofit2.http.*
@@ -17,6 +20,16 @@ interface NetworkService {
         @Body() body: JsonObject
     ): Call<PostLogInResponse>
 
+    //회원 가입
+    @Multipart
+    @POST("/users")
+    fun postSignupRequest(
+        @Header("Authorization") content_type: String,
+        @Part("id") id: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("nick") nick: RequestBody,
+        @Part profile: MultipartBody.Part?
+    ): Call<PostSignupResponseData>
 
     @GET("/maps")
     fun getStoreLocationAroundUserRequest(
@@ -84,4 +97,6 @@ interface NetworkService {
         @Header("Authorization") authorization: String,
         @Path("orderIdx") orderIdx: Int
     ): Call<GetOrderDetailListResponseData>
+
+
 }
