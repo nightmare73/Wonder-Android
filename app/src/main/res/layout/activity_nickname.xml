@@ -47,7 +47,6 @@
     </LinearLayout>
 
 
-
     <RelativeLayout
             android:layout_below="@id/ll_nickname_act_titlebar_underline_layout"
             android:layout_width="match_parent"
@@ -74,7 +73,7 @@
                 android:textSize="14sp"
                 android:paddingLeft="17dp"/>
 
-        <ImageButton
+        <ImageView
                 android:layout_width="69dp"
                 android:layout_height="44dp"
                 android:layout_alignRight="@id/et_nickname_act_nickname"
@@ -82,8 +81,7 @@
                 android:src="@drawable/check_duplicate_off"
                 android:layout_marginRight="15dp"
                 android:layout_alignBottom="@+id/et_nickname_act_nickname"
-                />
-
+        />
         <TextView android:layout_width="match_parent"
                   android:lineSpacingExtra="2sp"
                   android:textColor="#006fff"
@@ -97,12 +95,15 @@
                   android:visibility="gone"/>
     </RelativeLayout>
 
-    <ImageButton
+    <TextView
             android:id="@+id/btn_nickname_act_next"
             android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:src="@drawable/next_off"
-            android:background="@color/transparent"
+            android:layout_height="59dp"
+            android:text="다음"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="#e2e2e2"
+            android:textColor="#909090"
             android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>
