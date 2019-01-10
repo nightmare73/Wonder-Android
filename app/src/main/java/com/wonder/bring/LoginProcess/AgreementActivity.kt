@@ -3,17 +3,31 @@ package com.wonder.bring.LoginProcess
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.util.Log
+import com.wonder.bring.Network.ApplicationController
+import com.wonder.bring.Network.NetworkService
+import com.wonder.bring.Network.Post.PostSignupResponseData
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_agreement.*
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.textColor
+import org.jetbrains.anko.toast
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AgreementActivity : AppCompatActivity() {
 
     var id: String = ""
     var pass: String = ""
     var nick: String = ""
+
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +36,9 @@ class AgreementActivity : AppCompatActivity() {
         variableInit()
         setCheckBoxListener()
 
-        Log.v("Malibin Debug","id : $id, pass : $pass, nick : $nick")
+        submitButtonInit()
 
+        Log.v("Malibin Debug","넘어온 변수들 id : $id, pass : $pass, nick : $nick")
     }
 
     private fun variableInit(){
@@ -77,6 +92,53 @@ class AgreementActivity : AppCompatActivity() {
             btn_agree_act_submit.backgroundResource = R.color.white
             btn_agree_act_submit.textColor = Color.parseColor("#909090")
         }
+    }
+
+    private fun submitButtonInit(){
+
+        btn_agree_act_submit.setOnClickListener {
+
+            requestSignup()
+        }
+    }
+
+    private fun requestSignup(){
+
+        var _id = RequestBody.create(MediaType.parse("text/plain"), id)
+        var _pass = RequestBody.create(MediaType.parse("text/plain"), pass)
+        var _nick = RequestBody.create(MediaType.parse("text/plain"), nick)
+
+        networkService.postSignupRequest("multipart/form-data",_id,_pass,_nick,null).enqueue(object : Callback<PostSignupResponseData>{
+            override fun onFailure(call: Call<PostSignupResponseData>, t: Throwable) {
+                toast("서버통신에 실패하였습니다.")
+            }
+
+            override fun onResponse(call: Call<PostSignupResponseData>, response: Response<PostSignupResponseData>) {
+
+                Log.v("Malibin Debug",response.body().toString())
+
+                if(response.isSuccessful){
+
+
+                    var branch = response.body()!!.status
+
+                    when(branch){
+                        201->{
+                            toast("회원 가입이 완료되었습니다!")
+
+                            NicknameActivity.NA.finish()
+                            SignupActivity.SA.finish()
+                            finish()
+                        }
+                        else ->{
+                            toast("회원 가입에 실패하였습니다.")
+                        }
+                    }
+                }
+            }
+
+        })
+
     }
 
 

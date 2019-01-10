@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.wonder.bring.Network.ApplicationController
-import com.wonder.bring.Network.Get.GetCheckDuplicateIdResponseData
+import com.wonder.bring.Network.Get.GetCheckDuplicateNickResponseData
 import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_nickname.*
@@ -31,17 +31,23 @@ class NicknameActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
+    companion object {
+        public final lateinit var NA :AppCompatActivity
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nickname)
+
+        NA = this
 
         variableInit()
         setOnBtnClickListner()
 
     }
 
-    private fun variableInit(){
+    private fun variableInit() {
         id = intent.getStringExtra("id")
         pass = intent.getStringExtra("pass")
     }
@@ -58,11 +64,11 @@ class NicknameActivity : AppCompatActivity() {
 
             if (!input_nickname.equals("")) {
 
-                networkService.getCheckDuplicateIdRequest("application/json", input_nickname)
-                    .enqueue(object : Callback<GetCheckDuplicateIdResponseData> {
+                networkService.getCheckDuplicateNickRequest("application/json", input_nickname)
+                    .enqueue(object : Callback<GetCheckDuplicateNickResponseData> {
                         override fun onResponse(
-                            call: Call<GetCheckDuplicateIdResponseData>,
-                            response: Response<GetCheckDuplicateIdResponseData>
+                            call: Call<GetCheckDuplicateNickResponseData>,
+                            response: Response<GetCheckDuplicateNickResponseData>
                         ) {
                             Log.v("malibin debug", "서버통신성공 : " + response.body().toString())
                             if (response.body()!!.status == 200) {
@@ -87,7 +93,7 @@ class NicknameActivity : AppCompatActivity() {
                             completeCheck()
                         }
 
-                        override fun onFailure(call: Call<GetCheckDuplicateIdResponseData>, t: Throwable) {
+                        override fun onFailure(call: Call<GetCheckDuplicateNickResponseData>, t: Throwable) {
 
                         }
                     })
@@ -98,7 +104,6 @@ class NicknameActivity : AppCompatActivity() {
 
             var nick = et_nickname_act_nickname.text.toString()
 
-            Log.v("Malibin Debug","id : $id, pass : $pass, nick : $nick")
             startActivity<AgreementActivity>("id" to id, "pass" to pass, "nick" to nick)
         }
     }
@@ -118,5 +123,6 @@ class NicknameActivity : AppCompatActivity() {
         }
 
     }
+
 
 }
