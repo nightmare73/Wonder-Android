@@ -20,6 +20,9 @@ import android.os.PowerManager
 import android.text.TextUtils
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
+import android.R.attr.data
+
+
 
 
 class FireBaseMessagingService : FirebaseMessagingService() {
@@ -38,6 +41,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
 
         val notification = remoteMessage!!.notification
+        val data=remoteMessage!!.data
         Log.d(TAG, "From: ${remoteMessage?.from}")
 
         // Check if message contains a data payload.
@@ -47,6 +51,26 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
 //                scheduleJob()
+
+//                val title = data["title"]
+                var title=data.get("title")
+                var body=data.get("body")
+//                val body = data["body"]
+                Log.d(TAG,title)
+//                var body = notification!!.body
+                Log.d(TAG,body)
+
+                try {
+                    if (!TextUtils.isEmpty(title)) title = URLDecoder.decode(title, "UTF-8")  // 한글깨짐으로 서버에서 URLEncoding해서 보냄..
+                    if (!TextUtils.isEmpty(body)) body = URLDecoder.decode(body, "UTF-8")
+                    Log.d(TAG,"데이터 형식 여기로 들어옴 한글 변환")
+                } catch (e: UnsupportedEncodingException) {
+                    e.printStackTrace()
+                    Log.d(TAG,"데이터 여기로 들어옴")
+                }
+
+                sendNotification(title!!, body!!)
+
             } else {
                 // Handle message within 10 seconds
                 handleNow()
@@ -62,18 +86,20 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             var title = notification!!.title
             Log.d(TAG,title)
             var body = notification!!.body
-           Log.d(TAG,body)
+            Log.d(TAG,body)
 
             try {
                 if (!TextUtils.isEmpty(title)) title = URLDecoder.decode(title, "UTF-8")  // 한글깨짐으로 서버에서 URLEncoding해서 보냄..
                 if (!TextUtils.isEmpty(body)) body = URLDecoder.decode(body, "UTF-8")
-                Log.d(TAG,"여기로 들어옴 한글 변환")
+                Log.d(TAG,"노티 형식 여기로 들어옴 한글 변환")
             } catch (e: UnsupportedEncodingException) {
                 e.printStackTrace()
-                Log.d(TAG,"여기로 들어옴")
+                Log.d(TAG,"노티 여기로 들어옴")
             }
 
             sendNotification(title!!, body!!)
+
+
         }
 
 //        if (remoteMessage!!.getNotification() != null) {
@@ -98,6 +124,8 @@ class FireBaseMessagingService : FirebaseMessagingService() {
     private fun sendRegistrationToServer(token: String?) {
         // TODO: Implement this method to send token to your app server.
     }
+
+
 
     private fun sendNotification(title: String, body: String?) {
 
