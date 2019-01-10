@@ -15,15 +15,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import android.content.Intent
+import android.util.Log
 import android.widget.TabHost
-
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.wonder.bring.db.Cart
+import com.wonder.bring.db.CartData
 
 
 class MainActivity : AppCompatActivity() {
 
 
     // 통신이 들어가는 곳은 다 써주자.
-    val networkService : NetworkService by lazy {
+    val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
     }
 
@@ -35,6 +39,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
 
+
+        var gson: Gson = GsonBuilder().create()
+
+        var cartdata = CartData(
+            100, 200, "유알엘데스네", "가게이름",
+            "메뉴이름", "요청사항데스네", 3, 1, 7000
+        )
+
+        var cartlist: ArrayList<CartData> = ArrayList()
+        cartlist.add(cartdata)
+        cartlist.add(cartdata)
+
+
+        Log.v("Malibin Debug","cart 객체 json : " + gson.toJson(cartlist))
+
+
     }
 
     // 탭바 추가 함수
@@ -45,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
 
-        customViewPager.offscreenPageLimit=4
+        customViewPager.offscreenPageLimit = 4
 
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
@@ -53,12 +73,12 @@ class MainActivity : AppCompatActivity() {
 
         tl_bottom_main_act_bottom_menu.getTabAt(0)!!.customView =
                 bottomNaviLayout.findViewById(R.id.btn_bottom_navi_main_tab) as RelativeLayout
-            tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
-                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_orderlist_tab) as RelativeLayout
-            tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
-                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
-            tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
-                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
+        tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
+                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_orderlist_tab) as RelativeLayout
+        tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
+                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
+        tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
+                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
 
     }
 
@@ -75,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    }
+}
 
 
 
