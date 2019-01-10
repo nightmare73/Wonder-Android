@@ -21,6 +21,8 @@ import retrofit2.Response
 class NicknameActivity : AppCompatActivity() {
 
     var input_nickname: String = ""
+    var id: String = ""
+    var pass: String = ""
 
     var canUseCurrentNick = false
 
@@ -34,19 +36,20 @@ class NicknameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nickname)
 
+        variableInit()
         setOnBtnClickListner()
 
+    }
+
+    private fun variableInit(){
+        id = intent.getStringExtra("id")
+        pass = intent.getStringExtra("pass")
     }
 
 
     private fun setOnBtnClickListner() {
 
         btn_nickname_act_next.isEnabled = false
-
-//        입력이 안됬을 때 넘어가지 않도록 다 막아놔야하는데 1. 중복체크 이후로만 작동되게 or 색이 변경된 다음 버튼( 다음버튼이 중복체크 이후에만 색이변경되니까!)를 클릭했을때만
-        btn_nickname_act_next.setOnClickListener {
-            startActivity<AgreementActivity>()
-        }
 
         // 닉네임 중복체크    띄어쓰기 안막음
         btn_nickname_act_check_duplicate_off.setOnClickListener {
@@ -89,6 +92,14 @@ class NicknameActivity : AppCompatActivity() {
                         }
                     })
             }
+        }
+
+        btn_nickname_act_next.setOnClickListener {
+
+            var nick = et_nickname_act_nickname.text.toString()
+
+            Log.v("Malibin Debug","id : $id, pass : $pass, nick : $nick")
+            startActivity<AgreementActivity>("id" to id, "pass" to pass, "nick" to nick)
         }
     }
 

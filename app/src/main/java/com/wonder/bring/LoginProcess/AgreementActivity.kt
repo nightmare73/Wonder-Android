@@ -1,48 +1,83 @@
 package com.wonder.bring.LoginProcess
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_agreement.*
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.textColor
 
 class AgreementActivity : AppCompatActivity() {
+
+    var id: String = ""
+    var pass: String = ""
+    var nick: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agreement)
 
-        setOnBtnClickListner()
+        variableInit()
+        setCheckBoxListener()
+
+        Log.v("Malibin Debug","id : $id, pass : $pass, nick : $nick")
 
     }
 
-    // all 체크 할때만  완료버튼 색깔 변하게 하기  1.전체  2. 2번째  3. 3번째 4. 2,3번째누르면 1번째에 불들어오고, 1번째에 불이 드러오니까 완료버튼에도 불이 들어와야함.
-//    et_agreement_act_pw.addTextChangedListener(object : TextWatcher{
-//
-//        override fun afterTextChanged(p0: Editable?) {
-//            input_id = et_login_act_id.text.toString()
-//            input_pw = et_login_act_pw.text.toString()
-//
-//            if(input_id.length > 0 && input_pw.length > 0)
-//                btn_agreement_act_login.isSelected=true
-//            else
-//                btn_login_act_login.isSelected=false
-//
-//        }
-//
-//        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//        }
-//
-//        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//        }
-//    })
+    private fun variableInit(){
 
+        id = intent.getStringExtra("id")
+        pass = intent.getStringExtra("pass")
+        nick = intent.getStringExtra("nick")
+    }
 
-//    동의체크안하면 비활성화시켜야하는데 ㅠㅠㅠ
-    private fun setOnBtnClickListner() {
-        btn_agreemnet_act_finish.setOnClickListener {
-            startActivity<LoginActivity>()
+    private fun setCheckBoxListener() {
+
+        cb_agree_act_whole.setOnClickListener {
+
+            if (cb_agree_act_whole.isChecked) {
+                cb_agree_act_one.isChecked = true
+                cb_agree_act_two.isChecked = true
+            } else {
+                cb_agree_act_one.isChecked = false
+                cb_agree_act_two.isChecked = false
+            }
+            completeCheck()
         }
 
+        cb_agree_act_one.setOnClickListener {
+
+            checkWhole()
+            completeCheck()
+        }
+
+        cb_agree_act_two.setOnClickListener {
+
+            checkWhole()
+            completeCheck()
+        }
     }
+
+    private fun checkWhole() {
+        if (cb_agree_act_one.isChecked && cb_agree_act_two.isChecked)
+            cb_agree_act_whole.isChecked = true
+        else
+            cb_agree_act_whole.isChecked = false
+    }
+
+    private fun completeCheck() {
+        if (cb_agree_act_whole.isChecked) {
+            btn_agree_act_submit.isEnabled = true
+            btn_agree_act_submit.backgroundResource = R.color.salmon
+            btn_agree_act_submit.textColor = Color.parseColor("#FFFFFF")
+        } else {
+            btn_agree_act_submit.isEnabled = false
+            btn_agree_act_submit.backgroundResource = R.color.white
+            btn_agree_act_submit.textColor = Color.parseColor("#909090")
+        }
+    }
+
+
 }
