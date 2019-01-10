@@ -1,6 +1,7 @@
 package com.wonder.bring.Adapter
 
 import android.content.Context
+import org.jetbrains.anko.support.v4.startActivity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.wonder.bring.OrderHistoryDetailActivity
 import com.wonder.bring.R
 import com.wonder.bring.data.OrderListData
+import org.jetbrains.anko.startActivity
 
 
 class OrderListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<OrderListData>) :
@@ -52,8 +56,12 @@ class OrderListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Ord
         }
 
 
-        holder.btn_order_detaild.setOnClickListener {
-           // todo : 다음 액티비티로 넘어가야해
+        holder.ll_whole_layout.setOnClickListener {
+            ctx.startActivity<OrderHistoryDetailActivity>(
+                "orderIdx" to dataList[position].orderIdx ,
+                "orderTime" to dataList[position].time,
+                "storeName" to dataList[position].name
+            )
         }
 
     }
@@ -81,7 +89,7 @@ class OrderListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Ord
         var tv_order_time : TextView = itemView.findViewById(R.id.tv_order_item_order_time)
         var tv_store_name: TextView = itemView.findViewById(R.id.tv_order_item_store_name)
         var iv_flag_state : ImageView=itemView.findViewById(R.id.iv_order_item_order_present)
-        var btn_order_detaild: Button = itemView.findViewById(R.id.btn_order_item_detailed)
+        var ll_whole_layout: LinearLayout = itemView.findViewById(R.id.ll_order_item_frame)
 
     }
 

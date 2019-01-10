@@ -59,7 +59,7 @@ interface NetworkService {
     @GET("/orders")
     fun getOrderListResponse(
         @Header("authorization") authorization: String
-    ) : Call<GetOrderListResponse>
+    ): Call<GetOrderListResponse>
 
     //선택한 매장 조회
     @GET("/maps/stores/{storeIdx}")
@@ -76,5 +76,11 @@ interface NetworkService {
         @Path("menuIdx") menuIdx: Int
     ): Call<GetMenuDetailsResponseData>
 
-
+    //현재 주문 내역 상세 조회
+    @GET("/orders/{orderIdx}")
+    fun getOrderDetailListRequest(
+        @Header("Content-Type") content_type: String,
+        @Header("Authorization") authorization: String,
+        @Path("orderIdx") orderIdx: Int
+    ): Call<GetOrderDetailListResponseData>
 }
