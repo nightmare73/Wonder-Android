@@ -167,7 +167,12 @@ class SignupActivity : AppCompatActivity() {
 
 //다음으로 넘어가는 함수 if 위에 결과값들이 다 정확하면 startactivity(nicknameactiviy)() else 정보를 정확히 입력해주세요
         btn_signup_act_next.setOnClickListener {
-            toast("버튼 눌림")
+
+            var id: String = et_signup_act_id.text.toString()
+            var pass: String = et_signup_act_pw1.text.toString()
+
+            startActivity<NicknameActivity>("id" to id, "pass" to pass)
+
         }
     }
 }
