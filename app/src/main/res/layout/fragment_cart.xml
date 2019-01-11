@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".MainFragment.CartFragment"
-             android:layout_marginTop="24dp">
 
-   c
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainFragment.CartFragment" android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginTop="24dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/rl_cart_frag_login"
+                    android:visibility="gone">
+
+        c
 
 
-    <android.support.v4.widget.NestedScrollView
+        <android.support.v4.widget.NestedScrollView
                 android:id="@+id/nestedscroll"
                 android:layout_below="@+id/rl_cart_frag_title_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             <LinearLayout
-               android:orientation="vertical"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-               <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_cart_frag_list"
-                android:layout_width="match_parent"
-                android:layout_height="485.5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-               android:paddingBottom="33.5dp">
-               </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_cart_frag_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="485.5dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:paddingBottom="33.5dp">
+                </android.support.v7.widget.RecyclerView>
 
 
                 <View
@@ -59,8 +69,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text="10000원"
-                    android:textColor="@color/warm_grey_two"
-                    android:textSize="18sp"/>
+                            android:textColor="@color/warm_grey_two"
+                            android:textSize="18sp"/>
 
                 </RelativeLayout>
 
@@ -68,19 +78,105 @@
             </LinearLayout>
 
 
-
         </android.support.v4.widget.NestedScrollView>
 
 
+        <ImageView
+                android:id="@+id/btn_cart_frag_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/order"
+                android:layout_alignParentBottom="true"
+                android:scaleType="fitXY"/>
 
-    <ImageView
-            android:id="@+id/btn_cart_frag_order"
+
+    </RelativeLayout>
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/order"
-            android:layout_alignParentBottom="true"
-            android:scaleType="fitXY"/>
+            android:layout_height="match_parent" android:id="@+id/rl_cart_frag_logout"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="210dp"
+                android:layout_height="275dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent">
 
 
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="29dp"
+                    android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.0" android:id="@+id/ll_left_side_space">
+            </LinearLayout>
 
-</RelativeLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" android:id="@+id/ll_right_side_space"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" android:id="@+id/ll_top_side_space"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" android:id="@+id/ll_bottom_side_space"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/big_popup_logo_login"
+                    android:id="@+id/iv1"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_top_side_space"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space" android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp" app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space"
+                    app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:id="@+id/btn_cart_frag_login"
+                    android:background="@drawable/round_background_dialog_topbtn" android:layout_marginTop="52dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bring_dialog_message"
+                    app:layout_constraintHorizontal_bias="0.0">
+
+                <TextView
+                        android:text="로그인하러가기"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/tv1"
+                        android:textColor="@color/colorWhite"/>
+            </android.support.constraint.ConstraintLayout>
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_bring_dialog_message" android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@+id/iv1"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space" android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp" app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    app:layout_constraintHorizontal_bias="0.483" android:gravity="center"
+                    android:text="로그인이 필요한 기능입니다."/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

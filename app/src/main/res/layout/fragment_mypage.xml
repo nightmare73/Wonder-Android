@@ -1,189 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".MainFragment.MypageFragment"
-             android:layout_marginTop="24dp">
 
-    <RelativeLayout
-            android:id="@+id/rl_mypage_frag_title_bar"
-            android:layout_width="match_parent"
-            android:layout_height="46dp">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="마이페이지"
-                android:fontFamily="@font/nanumsquareroundotfr"
-                android:textSize="20sp"
-                android:textColor="@color/warm_grey_two"
-                android:layout_centerInParent="true"/>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:background="#afafaf"
-                android:layout_alignParentBottom="true"></View>
-
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rl_mypage_frag_nick"
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainFragment.MypageFragment"
         android:layout_width="match_parent"
-        android:layout_height="155dp"
-        android:layout_below="@id/rl_mypage_frag_title_bar">
+        android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rl_mypage_frag_login" app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="24dp" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        <RelativeLayout
+                android:id="@+id/rl_mypage_frag_title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="46dp">
 
-        <ImageView
-                android:id="@+id/iv_mypage_frag_user_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/user_default_image"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="마이페이지"
+                    android:fontFamily="@font/nanumsquareroundotfr"
+                    android:textSize="20sp"
+                    android:textColor="@color/warm_grey_two"
+                    android:layout_centerInParent="true"/>
 
-        <TextView
-                android:id="@+id/tv_mypage_act_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/iv_mypage_frag_user_image"
-                android:layout_marginLeft="25dp"
-                android:text="브링브링"
-                android:fontFamily="@font/nanumsquareroundotfb"
-                android:textColor="#383838"
-                android:textSize="29sp"
-                android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
-
-        <View
-           android:layout_width="match_parent"
-           android:layout_height="0.7dp"
-           android:background="#afafaf"
-           android:layout_marginLeft="8.5dp"
-           android:layout_marginRight="7.5dp"
-           android:layout_alignParentBottom="true"></View>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="#afafaf"
+                    android:layout_alignParentBottom="true"></View>
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
 
-    <RelativeLayout
-            android:id="@+id/rl_order_frag_point"
-            android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:layout_below="@id/rl_mypage_frag_nick"
-            android:layout_centerVertical="true">
+        <RelativeLayout
+                android:id="@+id/rl_mypage_frag_nick"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
+                android:layout_below="@id/rl_mypage_frag_title_bar">
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+
+                <ImageView
+                        android:id="@+id/iv_mypage_frag_user_image"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/user_default_image"/>
+
+                <TextView
+                        android:id="@+id/tv_mypage_act_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/iv_mypage_frag_user_image"
+                        android:layout_marginLeft="25dp"
+                        android:text="브링브링"
+                        android:fontFamily="@font/nanumsquareroundotfb"
+                        android:textColor="#383838"
+                        android:textSize="29sp"
+                        android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="#afafaf"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_alignParentBottom="true"></View>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:id="@+id/rl_order_frag_point"
+                android:layout_width="match_parent"
+                android:layout_height="116dp"
+                android:layout_below="@id/rl_mypage_frag_nick"
+                android:layout_centerVertical="true">
+
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="42dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_mypage_act_point"
+                        android:text="포인트"
+                        android:fontFamily="@font/nanumsquareroundotfr"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"/>
+
+                <TextView
+                        android:id="@+id/tv_mypage_act_point_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="3000p"
+                        android:fontFamily="@font/nanumsquareroundotfr"
+                        android:textColor="@color/warm_gray"
+                        android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="#afafaf"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_alignParentBottom="true"></View>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:id="@+id/rl_order_frag_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="116dp"
+                android:layout_below="@id/rl_order_frag_point"
+                android:layout_centerVertical="true">
+
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="42dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_mypage_act_coupon"
+                        android:text="쿠폰"
+                        android:fontFamily="@font/nanumsquareroundotfr"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"/>
+
+                <TextView
+                        android:id="@+id/tv_mypage_act_coupon_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="3장"
+                        android:fontFamily="@font/nanumsquareroundotfr"
+                        android:textColor="@color/warm_gray"
+                        android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.7dp"
+                    android:background="#afafaf"
+                    android:layout_marginLeft="8.5dp"
+                    android:layout_marginRight="7.5dp"
+                    android:layout_alignParentBottom="true"></View>
+
+        </RelativeLayout>
 
 
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="40dp"
-                android:paddingRight="42dp">
+                android:layout_marginTop="130.5dp"
+                android:layout_below="@+id/rl_order_frag_coupon"
+                android:gravity="center">
 
-            <TextView
+            <ImageView
+                    android:id="@+id/btn_mypage_frag_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_mypage_act_point"
-                    android:text="포인트"
-                    android:fontFamily="@font/nanumsquareroundotfr"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"/>
+                    android:src="@drawable/logout"/>
 
-            <TextView
-                    android:id="@+id/tv_mypage_act_point_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="3000p"
-                    android:fontFamily="@font/nanumsquareroundotfr"
-                    android:textColor="@color/warm_gray"
-                    android:textSize="20sp"/>
 
         </RelativeLayout>
 
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="#afafaf"
-                android:layout_marginLeft="8.5dp"
-                android:layout_marginRight="7.5dp"
-                android:layout_alignParentBottom="true"></View>
-
     </RelativeLayout>
-
-
-    <RelativeLayout
-            android:id="@+id/rl_order_frag_coupon"
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="116dp"
-            android:layout_below="@id/rl_order_frag_point"
-            android:layout_centerVertical="true">
+            android:layout_height="match_parent" android:id="@+id/rl_mypage_frag_logout"
+            android:layout_marginTop="24dp" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="210dp"
+                android:layout_height="275dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent">
 
 
-        <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="40dp"
-                android:paddingRight="42dp">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="29dp"
+                    android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.0" android:id="@+id/ll_left_side_space">
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" android:id="@+id/ll_right_side_space"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintVertical_bias="0.0">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" android:id="@+id/ll_top_side_space"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0">
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" android:id="@+id/ll_bottom_side_space"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" app:srcCompat="@drawable/big_popup_logo_login"
+                    android:id="@+id/iv2"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_top_side_space"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space" android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp" app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"/>
+            <android.support.constraint.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space"
+                    app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:id="@+id/btn_mypage_frag_login"
+                    android:background="@drawable/round_background_dialog_topbtn" android:layout_marginTop="52dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_bring_dialog_message"
+                    app:layout_constraintHorizontal_bias="0.0">
+
+                <TextView
+                        android:text="로그인하러가기"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" android:id="@+id/tv1"
+                        android:textColor="@color/colorWhite"/>
+            </android.support.constraint.ConstraintLayout>
+
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_mypage_act_coupon"
-                    android:text="쿠폰"
-                    android:fontFamily="@font/nanumsquareroundotfr"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"/>
-
-            <TextView
-                    android:id="@+id/tv_mypage_act_coupon_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="3장"
-                    android:fontFamily="@font/nanumsquareroundotfr"
-                    android:textColor="@color/warm_gray"
-                    android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="#afafaf"
-                android:layout_marginLeft="8.5dp"
-                android:layout_marginRight="7.5dp"
-                android:layout_alignParentBottom="true"></View>
-
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="130.5dp"
-        android:layout_below="@+id/rl_order_frag_coupon"
-        android:gravity="center">
-
-        <ImageView
-                android:id="@+id/btn_mypage_frag_logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logout"/>
-
-
-    </RelativeLayout>
-
-
-</RelativeLayout>
+                    android:id="@+id/tv_bring_dialog_message" android:layout_marginTop="32dp"
+                    app:layout_constraintTop_toBottomOf="@+id/iv2"
+                    app:layout_constraintEnd_toStartOf="@+id/ll_right_side_space" android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp" app:layout_constraintStart_toEndOf="@+id/ll_left_side_space"
+                    android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
+                    app:layout_constraintHorizontal_bias="0.483" android:gravity="center"
+                    android:text="로그인이 필요한 기능입니다."/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

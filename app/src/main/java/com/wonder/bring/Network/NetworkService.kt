@@ -111,4 +111,10 @@ interface NetworkService {
 
 
 
+    //토큰 유효성 검사
+    @GET("/login")
+    fun getTokenValidationRequest(
+        @Header("Authorization") authorization: String
+    ): Call<GetTokenValidationResponseData>
+
 }
