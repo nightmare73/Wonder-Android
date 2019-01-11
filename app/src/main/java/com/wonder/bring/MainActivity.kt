@@ -1,6 +1,5 @@
 package com.wonder.bring
 
-import android.nfc.cardemulation.CardEmulation
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,8 +14,11 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.db.CartData
 import com.wonder.bring.db.SharedPreferenceController
+import kotlinx.android.synthetic.main.fragment_login_no.view.*
+import org.jetbrains.anko.support.v4.startActivity
 import java.lang.reflect.Type
 
 
@@ -71,24 +73,29 @@ class MainActivity : AppCompatActivity() {
         val customViewPager = findViewById(R.id.vp_bottom_main_act_frag_pager) as MainFragmentViewPager
         customViewPager.setPagingEnabled(false)
         customViewPager.adapter = MyFragmentStatePagerAdapter(supportFragmentManager, 4)
-
         customViewPager.offscreenPageLimit = 4
 
         tl_bottom_main_act_bottom_menu.setupWithViewPager(vp_bottom_main_act_frag_pager)
 
         val bottomNaviLayout: View = this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
 
-        tl_bottom_main_act_bottom_menu.getTabAt(0)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_main_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_orderlist_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
-        tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
-                bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
+
+            tl_bottom_main_act_bottom_menu.getTabAt(0)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_main_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(1)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_orderlist_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(2)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_cart_tab) as RelativeLayout
+            tl_bottom_main_act_bottom_menu.getTabAt(3)!!.customView =
+                    bottomNaviLayout.findViewById(R.id.btn_bottom_navi_my_page_tab) as RelativeLayout
+
 
     }
 
+    // 해당 탭으로 이동
+     public fun moveToTab(position: Int) {
+        vp_bottom_main_act_frag_pager.setCurrentItem(position)
+    }
 
     override fun onBackPressed() {
         var temp: Long = System.currentTimeMillis()
@@ -100,6 +107,8 @@ class MainActivity : AppCompatActivity() {
             toast("버튼을 한번 더 누르면 종료됩니다.")
         }
     }
+
+
 
 
 }
