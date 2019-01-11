@@ -1,6 +1,7 @@
 package com.wonder.bring.MainFragment
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,6 +21,7 @@ import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import com.wonder.bring.data.MenuListData
 import com.wonder.bring.data.OrderListData
+import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_store.*
 import kotlinx.android.synthetic.main.fragment_orderhistory.*
 import kotlinx.android.synthetic.main.rv_item_orderlist.*
@@ -84,7 +86,6 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
 //        }
 
 
-        getResponse()
         return view
     }
 
@@ -121,9 +122,12 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
 
         // todo: 통신을 위해서 잠깐 tmp_token사용한것
         // todo: sharedpreference에서 내 토큰 꺼내와서 다시 통신 해보야함.
-        val tmp_token =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
-        val getOrderListResponse = networkService.getOrderListResponse(tmp_token)
+        //val tmp_token =
+        //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
+        // val getOrderListResponse = networkService.getOrderListResponse(tmp_token)
+
+        val token = SharedPreferenceController.getAuthorization(activity!!.applicationContext)
+        val getOrderListResponse = networkService.getOrderListResponse(token)
 
         getOrderListResponse.enqueue(object : Callback<GetOrderListResponse> {
 
@@ -131,7 +135,12 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
                 if (response.isSuccessful) {
 
                     var body = response!!.body()
-                    var temp: ArrayList<OrderListData> = response.body()!!.data.orderList
+                    var temp: ArrayList<OrderListData> = ArrayList()
+                    try {
+                        temp = response.body()!!.data.orderList
+                    } catch (e: Exception) {
+
+                    }
 
                     when (body!!.message) {
 
@@ -174,9 +183,11 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
     fun viewToggle(isLogin: Boolean) {
 
         if (isLogin) {
+            getResponse()
             ll_orderhistory_frag_login.visibility = View.VISIBLE
             ll_orderhistory_frag_logout.visibility = View.GONE
         } else {
+            orderRecyclerViewAdapter.dataList.clear()
             ll_orderhistory_frag_login.visibility = View.GONE
             ll_orderhistory_frag_logout.visibility = View.VISIBLE
         }
