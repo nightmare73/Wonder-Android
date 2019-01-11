@@ -7,12 +7,15 @@
         android:layout_height="match_parent"
         tools:context=".LoginProcess.SplashActivity">
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content" android:id="@+id/la_splash_act_anim"
+                                           app:layout_constraintEnd_toEndOf="parent"
+                                           app:layout_constraintTop_toTopOf="parent"
+                                           app:layout_constraintStart_toStartOf="parent"
+                                           app:layout_constraintBottom_toBottomOf="parent"
 
-            android:layout_width="129.1dp"
-            android:src="@drawable/logo_with_name"
-            android:layout_height="159.8dp"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+                                           app:lottie_rawRes="@raw/bringlottie"
+                                           app:lottie_loop="false"
+                                           app:lottie_autoPlay="true"/>
 
 </android.support.constraint.ConstraintLayout>
