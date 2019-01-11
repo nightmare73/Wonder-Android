@@ -11,7 +11,6 @@ import com.wonder.bring.R
 import org.jetbrains.anko.startActivity
 
 class SplashActivity : AppCompatActivity() {
-    internal var handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

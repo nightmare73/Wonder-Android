@@ -4,6 +4,8 @@ import com.google.gson.JsonObject
 import com.wonder.bring.Network.Get.*
 
 import com.wonder.bring.Network.Post.PostLogInResponse
+import com.wonder.bring.Network.Post.PostOrderRequest
+import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.Network.Post.PostSignupResponseData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -99,6 +101,14 @@ interface NetworkService {
         @Header("Authorization") authorization: String,
         @Path("orderIdx") orderIdx: Int
     ): Call<GetOrderDetailListResponseData>
+
+    //주문하기
+    @POST("/orders")
+    fun postOrderResponse(
+       @Header("Authorization") authorization: String,
+        @Body() body: PostOrderRequest
+    ): Call<PostOrderResponse>
+
 
 
     //토큰 유효성 검사

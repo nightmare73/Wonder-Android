@@ -38,7 +38,7 @@
                                      android:layout_height="wrap_content">
     <TextView android:layout_width="match_parent"
               android:id="@+id/tv_signup_act_title"
-
+              android:fontFamily="@font/nanumsquareroundotfr"
               android:text="회원가입"
               android:textSize="20dp"
               android:gravity="center"
@@ -67,6 +67,7 @@
                 android:textColor="#fa7268"
                 android:text="브링"
                 android:layout_marginTop="7dp"
+                android:fontFamily="@font/nanumsquareroundotfr"
                 android:layout_gravity="center_horizontal"
                 />
 
@@ -78,6 +79,7 @@
                 android:textColor="#909090"
                 android:gravity="center_horizontal"
                 android:text="에 오신 것을 환영합니다!"
+                android:fontFamily="@font/nanumsquareroundotfr"
                 android:layout_marginTop="7dp"
                 android:layout_gravity="center_horizontal"/>
 
@@ -96,6 +98,7 @@
                     android:layout_marginTop="22dp"
                     android:textColorHint="#909090"
                     android:hint="아이디"
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:textSize="14sp"
                     android:paddingLeft="17dp"/>
 
@@ -116,6 +119,7 @@
                       android:id="@+id/tv_signup_act_canuseid"
                       android:paddingLeft="10dp"
                       android:text="사용 할 수 있는 아이디 입니다"
+                      android:fontFamily="@font/nanumsquareroundotfr"
                       android:layout_below="@id/et_signup_act_id"
                       android:layout_height="wrap_content"
                       android:visibility="gone"/>
@@ -133,7 +137,8 @@
                 android:hint="비밀번호"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"
-                 android:inputType="textPassword"/>
+                 android:inputType="textPassword"
+                android:fontFamily="@font/nanumsquareroundotfr"/>
 
         <EditText
                 android:id="@+id/et_signup_act_pw2"
@@ -144,7 +149,8 @@
                 android:hint="비밀번호확인"
                 android:textSize="14sp"
                 android:paddingLeft="17dp"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:fontFamily="@font/nanumsquareroundotfr"/>
 
         <TextView android:layout_width="wrap_content"
                   android:lineSpacingExtra="2sp"
@@ -164,6 +170,7 @@
             android:layout_height="59dp"
             android:background="#e2e2e2"
             android:text="@string/next"
+            android:fontFamily="@font/nanumsquareroundotfb"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="#909090"

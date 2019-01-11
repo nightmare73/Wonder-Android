@@ -81,16 +81,31 @@
         </android.support.v4.widget.NestedScrollView>
 
 
-        <ImageView
+        <RelativeLayout
                 android:id="@+id/btn_cart_frag_order"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/order"
+                android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
-                android:scaleType="fitXY"/>
+                android:background="#fa7268"
+                android:gravity="center">
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="19sp"
+                    android:textColor="@color/white_two"
+                    android:text="주문하기"
+                    android:fontFamily="@font/nanumsquareroundotfr"
+                    android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
+
+
+    <!--로그아웃일때-->
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:id="@+id/rl_cart_frag_logout"
