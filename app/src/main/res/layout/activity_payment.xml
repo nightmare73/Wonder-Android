@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".OrderProcess.PaymentActivity"
+        android:layout_marginTop="24dp">
+
+
+    <RelativeLayout
+            android:id="@+id/ll_order_total_act_title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="46.5dp"
+            android:paddingLeft="19.5dp">
+
+        <ImageView
+                android:id="@+id/btn_order_total_act_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/leftchevron"
+                android:layout_centerVertical="true"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="주문하기"
+                android:fontFamily="@font/nanumsquareroundotfr"
+                android:textSize="20sp"
+                android:textColor="#707070"
+                android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#afafaf"
+            android:layout_below="@+id/ll_order_total_act_title_bar"></View>
+
+
+    <LinearLayout
+        android:layout_below="@+id/ll_order_total_act_title_bar"
+         android:layout_marginTop="66dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="37dp"
+                android:paddingRight="36dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 주문금액"
+                    android:textSize="21sp"
+                    android:textColor="#707070"
+                    android:fontFamily="@font/nanumsquareroundotfb"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+            <TextView
+                    android:id="@+id/tv_payment_act_order_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="10000원"
+                    android:textColor="@color/warm_gray"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/nanumsquareroundotfr"
+                    android:textSize="18sp"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="69dp"
+                android:paddingLeft="37dp"
+                android:paddingRight="36dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="쿠폰"
+                android:textStyle="bold"
+                android:textSize="21sp"
+                android:fontFamily="@font/nanumsquareroundotfb"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"/>
+
+
+        <TextView
+                android:id="@+id/tv_order_act_total_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="없음"
+                android:textColor="@color/warm_gray"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumsquareroundotfr"
+                android:layout_toLeftOf="@+id/iv_payment_act_coupon"/>
+
+        <ImageView
+                android:id="@+id/iv_payment_act_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/drop_down_icon_pink"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="#868686"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="36dp"
+                android:layout_marginTop="8.5dp"></View>
+
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="37dp"
+                android:paddingRight="36dp"
+                android:layout_marginTop="36.5dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="포인트 사용"
+                    android:textSize="21sp"
+                    android:fontFamily="@font/nanumsquareroundotfb"
+                    android:textColor="@color/black"
+                    android:layout_alignParentLeft="true"/>
+
+
+            <TextView
+                    android:id="@+id/tv_order_act_total_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/warm_gray"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:textSize="21sp"
+                    android:layout_toLeftOf="@+id/iv_payment_act_point_icon"/>
+
+            <ImageView
+                    android:id="@+id/iv_payment_act_point_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/point_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+
+
+        </RelativeLayout>
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="#868686"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="36dp"
+                android:layout_marginTop="8.5dp"></View>
+
+
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="37dp"
+                android:layout_marginTop="197.5dp"
+                android:paddingRight="36dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="할인합계"
+                    android:textSize="21sp"
+                    android:textColor="#707070"
+                    android:fontFamily="@font/nanumsquareroundotfb"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="10000원"
+                    android:textColor="@color/warm_gray"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/nanumsquareroundotfr"
+                    android:textSize="18sp"/>
+
+        </RelativeLayout>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:background="#868686"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="36dp"
+                android:layout_marginTop="31dp"></View>
+
+
+
+    <RelativeLayout
+            android:id="@+id/rl_order_total_act_payprice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:paddingLeft="37dp"
+            android:paddingRight="36dp"
+            android:layout_marginTop="41dp"
+            android:gravity="center"
+            android:layout_above="@+id/rl_order_total_act_pay">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="총 결제금액"
+                android:textSize="18sp"
+                android:textColor="#707070"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+
+        <TextView
+                android:id="@+id/tv_payment_act_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="10000원"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:textSize="30sp"/>
+
+    </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+    <RelativeLayout
+            android:id="@+id/rl_order_total_act_pay"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="#fa7268"
+            android:gravity="center">
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="19sp"
+                android:textColor="@color/white_two"
+                android:text="결제하기"
+                android:fontFamily="@font/nanumsquareroundotfr"
+                android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

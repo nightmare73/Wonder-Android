@@ -21,6 +21,7 @@ import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.R
 import com.wonder.bring.SizeConvertor
 import kotlinx.android.synthetic.main.activity_order.*
+import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -247,6 +248,10 @@ class OrderActivity : AppCompatActivity() {
                     if(response.body()!!.status==201){      //1. 주문하기 성공
                         var message = response.body()
                         Log.d(TAG,message.toString())
+
+                        // paymentActivity 로 이동
+                        startActivity<PaymentActivity>("totalPrice" to totalPrice)
+
                     }else if(response.body()!!.status==400){        // 주문하기 실패
                         var message = response.body()
                         Log.d(TAG,message.toString())
