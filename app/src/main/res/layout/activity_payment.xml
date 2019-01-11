@@ -196,7 +196,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="10000원"
+                    android:text="0원"
                     android:textColor="@color/warm_gray"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/nanumsquareroundotfr"
@@ -231,6 +231,7 @@
                 android:text="총 결제금액"
                 android:textSize="18sp"
                 android:textColor="#707070"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"/>
 

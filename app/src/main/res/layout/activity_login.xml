@@ -32,6 +32,7 @@
          android:id="@+id/tv_login_act_title"
          android:layout_centerInParent="true"
          android:text="@string/login_act_text_login_title_bar"
+         android:fontFamily="@font/nanumsquareroundotfr"
          android:textSize="20sp"
          android:textColor="#707070"
          android:layout_height="wrap_content"/>
