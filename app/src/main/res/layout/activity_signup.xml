@@ -114,7 +114,8 @@
                 android:textColorHint="#909090"
                 android:hint="비밀번호"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+                android:paddingLeft="17dp"
+                 android:inputType="textPassword"/>
 
         <EditText
                 android:id="@+id/et_signup_act_pw2"
@@ -124,7 +125,8 @@
                 android:textColorHint="#909090"
                 android:hint="비밀번호확인"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+                android:paddingLeft="17dp"
+                android:inputType="textPassword"/>
 
         <TextView android:layout_width="wrap_content"
                   android:lineSpacingExtra="2sp"

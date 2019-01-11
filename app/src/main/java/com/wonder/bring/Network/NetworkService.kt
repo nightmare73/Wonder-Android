@@ -31,12 +31,14 @@ interface NetworkService {
         @Part profile: MultipartBody.Part?
     ): Call<PostSignupResponseData>
 
+
     @GET("/maps")
     fun getStoreLocationAroundUserRequest(
         @Header("Content-Type") content_type: String,
         @Query("latitude") latitude: String,
         @Query("longitude") longitude: String
     ): Call<GetStoreLocationAroundUserResponseData>
+
 
     @GET("/users/check")
     fun getCheckDuplicateIdRequest(

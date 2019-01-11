@@ -16,6 +16,7 @@ interface DaumService {
         @Query("size") size: Int
         ): Call<GetDaumAdressResponseData>
 
+
     @GET("/v2/local/search/keyword.json")
     fun getDaumKeywordAdressRequest(
         @Header("Authorization") authorization: String,

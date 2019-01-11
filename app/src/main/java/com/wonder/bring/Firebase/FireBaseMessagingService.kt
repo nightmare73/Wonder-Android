@@ -15,7 +15,6 @@ import android.graphics.Color
 import android.nfc.Tag
 import com.wonder.bring.MainActivity
 import com.wonder.bring.R
-
 import android.os.PowerManager
 import android.text.TextUtils
 import java.io.UnsupportedEncodingException
@@ -27,12 +26,9 @@ import android.R.attr.data
 
 class FireBaseMessagingService : FirebaseMessagingService() {
 
-
-
     override fun onNewToken(token: String?) {
         super.onNewToken(token)
         Log.d(TAG, token!!)
-
 
     }
 
@@ -56,9 +52,9 @@ class FireBaseMessagingService : FirebaseMessagingService() {
                 var title=data.get("title")
                 var body=data.get("body")
 //                val body = data["body"]
-                Log.d(TAG,title)
+                Log.d(TAG,title!!)
 //                var body = notification!!.body
-                Log.d(TAG,body)
+                Log.d(TAG,body!!)
 
                 try {
                     if (!TextUtils.isEmpty(title)) title = URLDecoder.decode(title, "UTF-8")  // 한글깨짐으로 서버에서 URLEncoding해서 보냄..
@@ -109,10 +105,6 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 //        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
 //        val wakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG")
 //        wakeLock.acquire(3000)
-//
-
-
-
 
     }
 
@@ -168,7 +160,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
                 if (procInfos[i].processName == context.packageName) {
                     return true
                 }
-            }
+        }
 
             return false
         }
