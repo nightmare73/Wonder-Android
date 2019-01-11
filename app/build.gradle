@@ -53,6 +53,9 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     //Lottie
     implementation 'com.airbnb.android:lottie:2.6.0'
+    //gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
