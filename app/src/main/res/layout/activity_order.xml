@@ -79,7 +79,7 @@
             android:id="@+id/rl_order_act_menu_quantity"
             android:layout_below="@+id/tv_order_act_menu_price"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="57dp"
             android:paddingLeft="37dp"
             android:paddingRight="43dp">
@@ -148,7 +148,8 @@
                 android:layout_width="wrap_content"
                 android:background="@drawable/spinner_background"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                >
         </Spinner>
 
     </RelativeLayout>
@@ -161,7 +162,9 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="34dp"
-            android:hint="(요청사항)"
+            android:hint="요청사항"
+            android:textSize="15sp"
+            android:textColor="@color/warm_grey_two"
             android:fontFamily="@font/nanumsquareroundotfb"
             android:paddingLeft="7dp"
             android:background="@drawable/login_edit_border_off"/>

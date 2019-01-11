@@ -34,9 +34,10 @@
 
 
     <string-array name="spinner_menu_size">
-    <item>small</item>
-    <item>regular</item>
-    <item>large</item>
-</string-array>
+        <item>small</item>
+        <item>regular</item>
+        <item>large</item>
+
+    </string-array>
 
 </resources>

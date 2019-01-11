@@ -22,9 +22,9 @@ class MyFragmentStatePagerAdapter(fm: FragmentManager, // Count number of tabs
         when (position) {           // 자바로 치면, switch문법
 
             0 -> return HomeFragment()
-            1 -> return OrderhistoryFragment()
-            2 -> return CartFragment()
-            3 -> return MypageFragment()
+            1 -> return OrderhistoryFragment.getInstance()
+            2 -> return CartFragment.getInstance()
+            3 -> return MypageFragment.getInstance()
             else -> return null
 
         }

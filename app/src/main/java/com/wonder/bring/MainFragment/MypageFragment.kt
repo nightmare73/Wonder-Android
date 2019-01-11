@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,20 @@ import org.jetbrains.anko.support.v4.toast
 
 class MypageFragment : Fragment() {
 
+    companion object {
+        private var instance: MypageFragment? = null
+        @Synchronized
+        fun getInstance(): MypageFragment {
+            if (instance == null) {
+                instance = MypageFragment().apply {
+                    arguments = Bundle().apply {
+                        //putSerializable("data", data)
+                    }
+                }
+            }
+            return instance!!
+        }
+    }
 
 
 
@@ -53,7 +68,35 @@ class MypageFragment : Fragment() {
 ////
 ////        }
 
+
         return view
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        btn_mypage_frag_logout.setOnClickListener {
+            Log.v("Malibin Debug", "로그아웃버튼 눌림")
+            SharedPreferenceController.setAuthorization(activity!!.applicationContext,"")
+            (activity as MainActivity).settingView(false)
+        }
+
+        btn_mypage_frag_login.setOnClickListener {
+
+            (activity as MainActivity).callLoginAct()
+        }
+    }
+
+    fun viewToggle(isLogin: Boolean) {
+
+        if (isLogin) {
+            rl_mypage_frag_login.visibility = View.VISIBLE
+            rl_mypage_frag_logout.visibility = View.GONE
+        } else {
+            rl_mypage_frag_login.visibility = View.GONE
+            rl_mypage_frag_logout.visibility = View.VISIBLE
+        }
+
     }
 
 }
