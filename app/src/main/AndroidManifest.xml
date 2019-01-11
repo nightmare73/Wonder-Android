@@ -29,11 +29,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".LoginProcess.LoginActivity">
         </activity>
@@ -48,6 +43,11 @@
         <activity android:name=".LoginProcess.AgreementActivity">
         </activity>
         <activity android:name=".LoginProcess.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".MypageActivity">
         </activity>
