@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wonder.bring.Adapter.OrderListRecyclerViewAdapter
+import com.wonder.bring.LoginProcess.LoginActivity
+import com.wonder.bring.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.Get.GetOrderListResponse
@@ -21,13 +23,29 @@ import com.wonder.bring.data.OrderListData
 import kotlinx.android.synthetic.main.activity_store.*
 import kotlinx.android.synthetic.main.fragment_orderhistory.*
 import kotlinx.android.synthetic.main.rv_item_orderlist.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class OrderhistoryFragment : Fragment() ,View.OnClickListener{
+class OrderhistoryFragment : Fragment(), View.OnClickListener {
+
+    companion object {
+        private var instance: OrderhistoryFragment? = null
+        @Synchronized
+        fun getInstance(): OrderhistoryFragment {
+            if (instance == null) {
+                instance = OrderhistoryFragment().apply {
+                    arguments = Bundle().apply {
+                        //putSerializable("data", data)
+                    }
+                }
+            }
+            return instance!!
+        }
+    }
 
 
     private val TAG = OrderhistoryFragment::class.java!!.getSimpleName()
@@ -35,7 +53,7 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
     lateinit var orderRecyclerViewAdapter: OrderListRecyclerViewAdapter
 
 
-    val listDataList : ArrayList<OrderListData> by lazy {
+    val listDataList: ArrayList<OrderListData> by lazy {
         ArrayList<OrderListData>()
     }
 
@@ -44,9 +62,9 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_orderhistory, container, false)
+
 
 //        // case1 :  로그인 앙대어 있으면
 //        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
@@ -76,26 +94,35 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setBtnClickListener()
         setRecyclerView()
 
     }
 
+    private fun setBtnClickListener() {
 
-    private fun setRecyclerView(){
+        btn_oh_frag_login.setOnClickListener {
 
-        orderRecyclerViewAdapter= OrderListRecyclerViewAdapter(activity!!,listDataList)
-        rv_order_frag_list.adapter=orderRecyclerViewAdapter
-        rv_order_frag_list.layoutManager= LinearLayoutManager(activity)
-
+            (activity as MainActivity).callLoginAct()
+        }
     }
 
+
+    private fun setRecyclerView() {
+
+        orderRecyclerViewAdapter = OrderListRecyclerViewAdapter(activity!!, listDataList)
+        rv_order_frag_list.adapter = orderRecyclerViewAdapter
+        rv_order_frag_list.layoutManager = LinearLayoutManager(activity)
+
+    }
 
 
     private fun getResponse() {
 
         // todo: 통신을 위해서 잠깐 tmp_token사용한것
         // todo: sharedpreference에서 내 토큰 꺼내와서 다시 통신 해보야함.
-        val tmp_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
+        val tmp_token =
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
         val getOrderListResponse = networkService.getOrderListResponse(tmp_token)
 
         getOrderListResponse.enqueue(object : Callback<GetOrderListResponse> {
@@ -104,7 +131,7 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
                 if (response.isSuccessful) {
 
                     var body = response!!.body()
-                    var temp : ArrayList<OrderListData> = response.body()!!.data.orderList
+                    var temp: ArrayList<OrderListData> = response.body()!!.data.orderList
 
                     when (body!!.message) {
 
@@ -113,10 +140,10 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
                             Log.d(TAG, "OrderList Success")
                             tv_orderhistory_frag_nickname.text = body.data.nick
 
-                            if (temp.size > 0){
+                            if (temp.size > 0) {
                                 val position = orderRecyclerViewAdapter.itemCount
                                 orderRecyclerViewAdapter.dataList.addAll(temp)
-                               orderRecyclerViewAdapter.notifyItemInserted(position)
+                                orderRecyclerViewAdapter.notifyItemInserted(position)
 
                             }
                         }
@@ -132,7 +159,7 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
 
                     }
 
-                }else{
+                } else {
                     Log.e(TAG, "OrderList Failed")
                 }
 
@@ -142,5 +169,17 @@ class OrderhistoryFragment : Fragment() ,View.OnClickListener{
                 Log.e("Order list fail", t.toString())
             }
         })
+    }
+
+    fun viewToggle(isLogin: Boolean) {
+
+        if (isLogin) {
+            ll_orderhistory_frag_login.visibility = View.VISIBLE
+            ll_orderhistory_frag_logout.visibility = View.GONE
+        } else {
+            ll_orderhistory_frag_login.visibility = View.GONE
+            ll_orderhistory_frag_logout.visibility = View.VISIBLE
+        }
+
     }
 }
