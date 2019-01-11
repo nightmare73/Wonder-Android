@@ -41,24 +41,25 @@ class CartFragment : Fragment(){
         var view=inflater.inflate(R.layout.fragment_cart, container, false)
 
         // 로그인 여부 파악 : case1) 로그인 앙대어 있으면
-        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
-
-            view=inflater.inflate(R.layout.fragment_login_no,container,false)
-            view.btn_login_no_frag_goto_login.setOnClickListener {
-                startActivity<LoginActivity>()
-            }
-
-            //로그인 여부파악 : case2) 로그인 되어있는 경우
-        }else{
-
+//        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
+//
+//            view=inflater.inflate(R.layout.fragment_login_no,container,false)
+//            view.btn_login_no_frag_goto_login.setOnClickListener {
+//                startActivity<LoginActivity>()
+//            }
+//
+//            //로그인 여부파악 : case2) 로그인 되어있는 경우
+//        }else{
+//
             // todo: if( 장바구니에 아무것도 없다면) :
-//            view=inflater.inflate(R.layout.fragment_cart_no,container,false)
+
+//        ifview=inflater.inflate(R.layout.fragment_cart_no,container,false)
             // todo: else(장바구니에 1개라도 있다면)
             // 원래 view 뿌려주자
-
-
-
-        }
+//
+//
+//
+//        }
 
 
         return view

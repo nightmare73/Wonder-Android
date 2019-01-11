@@ -13,7 +13,8 @@
                   android:layout_marginBottom="682dp"
                   android:layout_marginRight="321dp"
                   android:layout_marginLeft="17dp"
-                  android:layout_height="22dp">
+                  android:layout_height="22dp"
+                    android:id="@+id/topLayout">
 
         <ImageView android:layout_width="match_parent"
                    android:id="@+id/btn_signup_act_back"
@@ -43,38 +44,54 @@
               android:gravity="center"
               android:textColor="#707070"
               android:layout_height="wrap_content"/>
-</LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_centerInParent="true"
+            android:layout_marginTop="116dp"
+            android:layout_centerHorizontal="true"
             android:paddingBottom="40dp">
-        <ImageView
-                android:layout_width="95dp"
-                android:layout_height="90.6dp"
-                android:src="@drawable/logo"
-                android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="40dp">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="18sp"
+                android:textColor="#fa7268"
+                android:text="브링"
+                android:layout_marginTop="7dp"
+                android:layout_gravity="center_horizontal"
+                />
+
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:textColor="#909090"
                 android:gravity="center_horizontal"
-                android:text="브링에 오신 것을 환영합니다"
+                android:text="에 오신 것을 환영합니다!"
                 android:layout_marginTop="7dp"
                 android:layout_gravity="center_horizontal"/>
 
+    </LinearLayout>
+
         <RelativeLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
 
             <EditText
                     android:id="@+id/et_signup_act_id"
                     android:background="@drawable/login_edit_border_off"
-                    android:layout_width="268dp"
+                    android:layout_width="400dp"
                     android:layout_height="44dp"
                     android:layout_marginTop="22dp"
                     android:textColorHint="#909090"
@@ -100,31 +117,34 @@
                       android:paddingLeft="10dp"
                       android:text="사용 할 수 있는 아이디 입니다"
                       android:layout_below="@id/et_signup_act_id"
-                      android:layout_height="wrap_content" android:visibility="gone"/>
+                      android:layout_height="wrap_content"
+                      android:visibility="gone"/>
         </RelativeLayout>
 
 
 
         <EditText
                 android:id="@+id/et_signup_act_pw1"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
                 android:background="@drawable/login_edit_border_off"
                 android:layout_marginTop="19dp"
                 android:textColorHint="#909090"
                 android:hint="비밀번호"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+                android:paddingLeft="17dp"
+                 android:inputType="textPassword"/>
 
         <EditText
                 android:id="@+id/et_signup_act_pw2"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
+                android:layout_width="320dp"
+                android:layout_height="48dp"
                 android:background="@drawable/login_edit_border_off"
                 android:textColorHint="#909090"
                 android:hint="비밀번호확인"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+                android:paddingLeft="17dp"
+                android:inputType="textPassword"/>
 
         <TextView android:layout_width="wrap_content"
                   android:lineSpacingExtra="2sp"
@@ -137,14 +157,6 @@
 
     </LinearLayout>
 
-
-    <!--<ImageButton-->
-            <!--android:id="@+id/btn_signup_act_next"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@drawable/next_off"-->
-            <!--android:background="@color/transparent"-->
-            <!--android:layout_alignParentBottom="true"/>-->
 
     <TextView
             android:id="@+id/btn_signup_act_next"

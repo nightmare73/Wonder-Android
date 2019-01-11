@@ -30,29 +30,27 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
-            android:id="@+id/rl_order_act_menu"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="51dp"
-            android:layout_below="@+id/rl_order_act_title_bar">
 
         <android.support.v7.widget.CardView
+                android:id="@+id/rl_order_act_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                android:layout_marginTop="51dp"
+                android:layout_below="@id/rl_order_act_title_bar">
+
+
             <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/menu_image1"
                     android:id="@+id/iv_order_act_menu_image"
-            />
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
         </android.support.v7.widget.CardView>
 
-    </RelativeLayout>
+
     <TextView
             android:id="@+id/tv_order_act_menu_name"
             android:layout_below="@+id/rl_order_act_menu"
@@ -61,6 +59,7 @@
             android:text="아메리카노 ICE"
             android:textSize="18sp"
             android:textColor="@color/textcolor"
+            android:fontFamily="@font/nanumsquareroundotfb"
             android:layout_centerInParent="true"
             android:layout_marginTop="30dp"/>
 
@@ -71,6 +70,7 @@
             android:layout_height="wrap_content"
             android:text="5000원"
             android:textSize="18sp"
+            android:fontFamily="@font/nanumsquareroundotfb"
             android:textColor="@color/textcolor"
             android:layout_centerInParent="true"
             android:layout_marginTop="8dp"/>
@@ -79,7 +79,7 @@
             android:id="@+id/rl_order_act_menu_quantity"
             android:layout_below="@+id/tv_order_act_menu_price"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="57dp"
             android:paddingLeft="37dp"
             android:paddingRight="43dp">
@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:text="수량"
                 android:textSize="15sp"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -106,6 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:layout_toLeftOf="@+id/btn_order_act_plus_icon"
                 android:layout_marginLeft="38dp"
                 android:layout_marginRight="38dp"
@@ -135,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="사이즈"
                 android:textSize="15sp"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"/>
 
@@ -144,7 +148,8 @@
                 android:layout_width="wrap_content"
                 android:background="@drawable/spinner_background"
                 android:layout_height="30dp"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                >
         </Spinner>
 
     </RelativeLayout>
@@ -157,7 +162,10 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="34dp"
             android:layout_marginRight="34dp"
-            android:hint="(요청사항)"
+            android:hint="요청사항"
+            android:textSize="15sp"
+            android:textColor="@color/warm_grey_two"
+            android:fontFamily="@font/nanumsquareroundotfb"
             android:paddingLeft="7dp"
             android:background="@drawable/login_edit_border_off"/>
 
@@ -184,13 +192,16 @@
                 android:layout_height="wrap_content"
                 android:text="총 주문금액"
                 android:textSize="18sp"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:textColor="#707070"
                 android:layout_alignParentLeft="true"/>
 
         <TextView
+                android:id="@+id/tv_order_act_total_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5000원"
+                android:fontFamily="@font/nanumsquareroundotfb"
                 android:textSize="18sp"
                 android:textColor="#707070"
                 android:layout_alignParentRight="true"/>
@@ -205,21 +216,43 @@
             android:orientation="horizontal"
             android:layout_marginTop="51dp">
 
-        <ImageView
-                android:id="@+id/btn_order_act_move_to_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/into_cart"
-                android:layout_weight="1"
-                android:scaleType="fitXY"/>
 
-        <ImageView
+        <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:background="@color/warm_gray">
+
+            <TextView
+                    android:id="@+id/btn_order_act_move_to_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장바구니 담기"
+                    android:textSize="19sp"
+                    android:fontFamily="@font/nanumsquareroundotfb"
+                    android:textColor="@color/colorWhite"
+                   android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
                 android:id="@+id/btn_order_act_move_to_order"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/order_now"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"/>
+                android:background="@color/salmon">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="바로 주문하기"
+                    android:fontFamily="@font/nanumsquareroundotfb"
+                    android:textSize="19sp"
+                    android:textColor="@color/colorWhite"
+                    android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
 
 
     </LinearLayout>
