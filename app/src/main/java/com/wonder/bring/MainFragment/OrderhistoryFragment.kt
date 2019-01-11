@@ -1,5 +1,7 @@
 package com.wonder.bring.MainFragment
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -25,7 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class OrderhistoryFragment : Fragment() {
+class OrderhistoryFragment : Fragment() ,View.OnClickListener{
 
 
     private val TAG = OrderhistoryFragment::class.java!!.getSimpleName()
@@ -68,6 +70,10 @@ class OrderhistoryFragment : Fragment() {
         return view
     }
 
+    override fun onClick(v: View?) {
+
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setRecyclerView()
@@ -105,7 +111,6 @@ class OrderhistoryFragment : Fragment() {
                         //case 1
                         "주문내역 조회 성공" -> {
                             Log.d(TAG, "OrderList Success")
-                            toast("주문내역 조회 성공!")
                             tv_orderhistory_frag_nickname.text = body.data.nick
 
                             if (temp.size > 0){
