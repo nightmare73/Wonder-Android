@@ -106,7 +106,8 @@
                     android:textColorHint="#909090"
                     android:hint="@string/login_act_edit_id"
                     android:textSize="14sp"
-                    android:paddingLeft="24dp"/>
+                    android:paddingLeft="24dp"
+                  />
 
         </RelativeLayout>
 
