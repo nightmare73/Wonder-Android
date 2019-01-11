@@ -7,6 +7,44 @@
         android:layout_height="match_parent"
         tools:context=".LoginProcess.SignupActivity">
 
+    <LinearLayout android:layout_width="22dp"
+                  android:orientation="vertical"
+                  android:layout_marginTop="36dp"
+                  android:layout_marginBottom="682dp"
+                  android:layout_marginRight="321dp"
+                  android:layout_marginLeft="17dp"
+                  android:layout_height="22dp">
+
+        <ImageView android:layout_width="match_parent"
+                   android:id="@+id/btn_signup_act_back"
+                   android:src="@drawable/leftchevron"
+                   android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_marginTop="70.5dp"
+                  android:layout_height="wrap_content">
+
+        <View android:layout_width="match_parent"
+              android:layout_height="0.3dp"
+              android:background="#afafaf"></View>
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_width="match_parent"
+                                     android:layout_marginTop="36dp"
+                                     android:layout_marginBottom="682dp"
+                                     android:layout_height="wrap_content">
+    <TextView android:layout_width="match_parent"
+              android:id="@+id/tv_signup_act_title"
+
+              android:text="회원가입"
+              android:textSize="20dp"
+              android:gravity="center"
+              android:textColor="#707070"
+              android:layout_height="wrap_content"/>
+</LinearLayout>
+
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,13 +52,10 @@
             android:layout_centerInParent="true"
             android:paddingBottom="40dp">
         <ImageView
-                android:layout_width="221dp"
-                android:layout_height="59dp"
-                android:src="@drawable/ic_launcher_background"
+                android:layout_width="95dp"
+                android:layout_height="90.6dp"
+                android:src="@drawable/logo"
                 android:layout_gravity="center_horizontal"/>
-
-
-
 
         <TextView
                 android:layout_width="wrap_content"
@@ -30,78 +65,95 @@
                 android:gravity="center_horizontal"
                 android:text="브링에 오신 것을 환영합니다"
                 android:layout_marginTop="7dp"
-                android:layout_gravity="center_horizontal"
-        />
+                android:layout_gravity="center_horizontal"/>
+
+        <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+
+            <EditText
+                    android:id="@+id/et_signup_act_id"
+                    android:background="@drawable/login_edit_border_off"
+                    android:layout_width="268dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="22dp"
+                    android:textColorHint="#909090"
+                    android:hint="아이디"
+                    android:textSize="14sp"
+                    android:paddingLeft="17dp"/>
+
+            <ImageView
+                    android:layout_toLeftOf="@id/et_signup_act_id"
+                    android:layout_width="69dp"
+                    android:layout_height="44dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignBottom="@+id/et_signup_act_id"
+                    android:id="@+id/btn_signup_act_check_duplicate_off"
+                    android:src="@drawable/check_duplicate_off"
+                    android:layout_alignParentRight="true"
+            />
+
+            <TextView android:layout_width="wrap_content"
+                      android:lineSpacingExtra="2sp"
+                      android:textColor="#006fff"
+                      android:id="@+id/tv_signup_act_canuseid"
+                      android:paddingLeft="10dp"
+                      android:text="사용 할 수 있는 아이디 입니다"
+                      android:layout_below="@id/et_signup_act_id"
+                      android:layout_height="wrap_content" android:visibility="gone"/>
+        </RelativeLayout>
+
+
 
         <EditText
-                android:id="@+id/et_email_join"
+                android:id="@+id/et_signup_act_pw1"
                 android:layout_width="268dp"
                 android:layout_height="44dp"
-                android:background="#5effffff"
-                android:layout_marginTop="22dp"
-                android:textColorHint="#909090"
-                android:hint="아이디"
-                android:textSize="14sp"
-                android:paddingLeft="17dp"/>
-
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-                android:background="#000000"></View>
-
-        <EditText
-                android:id="@+id/et_pw_join"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
-                android:background="#5effffff"
+                android:background="@drawable/login_edit_border_off"
                 android:layout_marginTop="19dp"
                 android:textColorHint="#909090"
                 android:hint="비밀번호"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
-
-
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="#000000"></View>
+                android:paddingLeft="17dp"
+                 android:inputType="textPassword"/>
 
         <EditText
-                android:id="@+id/et_name_join"
+                android:id="@+id/et_signup_act_pw2"
                 android:layout_width="268dp"
                 android:layout_height="44dp"
-                android:background="#5effffff"
-                android:layout_marginTop="19dp"
+                android:background="@drawable/login_edit_border_off"
                 android:textColorHint="#909090"
-                android:hint="사용자이름"
+                android:hint="비밀번호확인"
                 android:textSize="14sp"
-                android:paddingLeft="17dp"/>
+                android:paddingLeft="17dp"
+                android:inputType="textPassword"/>
 
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="#000000"></View>
-
-        <EditText
-                android:id="@+id/et_part_join"
-                android:layout_width="268dp"
-                android:layout_height="44dp"
-                android:background="#5effffff"
-                android:layout_marginTop="19dp"
-                android:textColorHint="#909090"
-                android:hint="닉네임"
-                android:textSize="14sp"
-                android:paddingLeft="17dp"/>
-
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="#000000"></View>
+        <TextView android:layout_width="wrap_content"
+                  android:lineSpacingExtra="2sp"
+                  android:textColor="#006fff"
+                  android:id="@+id/tv_signup_act_canusepw"
+                  android:paddingLeft="10dp"
+                  android:text="비밀번호가 일치합니다"
+                  android:layout_below="@id/et_signup_act_id"
+                  android:layout_height="wrap_content" android:visibility="gone"/>
 
     </LinearLayout>
 
+
+    <!--<ImageButton-->
+            <!--android:id="@+id/btn_signup_act_next"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/next_off"-->
+            <!--android:background="@color/transparent"-->
+            <!--android:layout_alignParentBottom="true"/>-->
+
     <TextView
-            android:id="@+id/btn_join_join"
+            android:id="@+id/btn_signup_act_next"
             android:layout_width="match_parent"
             android:layout_height="59dp"
             android:background="#e2e2e2"
-            android:text="@string/signup"
+            android:text="@string/next"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="#909090"
