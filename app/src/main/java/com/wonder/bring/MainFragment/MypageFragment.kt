@@ -88,6 +88,8 @@ class MypageFragment : Fragment() {
 
             (activity as MainActivity).callLoginAct()
         }
+
+        tv_mypage_act_nickname.text = (activity as MainActivity).nick
     }
 
     fun viewToggle(isLogin: Boolean) {
