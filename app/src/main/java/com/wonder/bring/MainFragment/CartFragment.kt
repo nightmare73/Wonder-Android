@@ -59,7 +59,7 @@ class CartFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setRecyclerView()
+//        setRecyclerView()
 
         btn_cart_frag_login.setOnClickListener {
 
@@ -102,9 +102,9 @@ class CartFragment : Fragment(){
 //
 
 
-        cartListRecyclerViewAdapter= CartListRecyclerViewAdapter(activity!!,listDataList)
-        rv_cart_frag_list.adapter=cartListRecyclerViewAdapter
-        rv_cart_frag_list.layoutManager=LinearLayoutManager(activity)
+//        cartListRecyclerViewAdapter= CartListRecyclerViewAdapter(activity!!,listDataList)
+//        rv_cart_frag_list.adapter=cartListRecyclerViewAdapter
+//        rv_cart_frag_list.layoutManager=LinearLayoutManager(activity)
 
     }
     fun viewToggle(isLogin: Boolean) {
