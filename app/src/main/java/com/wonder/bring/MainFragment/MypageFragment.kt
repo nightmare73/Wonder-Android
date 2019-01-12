@@ -107,31 +107,34 @@ class MypageFragment : Fragment() {
     fun getResponse() {
 
         //토큰 받아와서
+
         var token = SharedPreferenceController.getAuthorization(activity!!)
-
-        //통신 시작
-        val getMypageResponse: Call<GetMypageResponse> = networkService.getMypageResponse(token)
-
-
-        getMypageResponse.enqueue(object : Callback<GetMypageResponse> {
-            override fun onResponse(call: Call<GetMypageResponse>, response: Response<GetMypageResponse>) {
-                var body = response!!.body()
-                tv_mypage_act_nickname.text=body!!.data.nick
+        if(!token.equals("")){
+            //통신 시작
+            val getMypageResponse: Call<GetMypageResponse> = networkService.getMypageResponse(token)
 
 
-                val requestOptions = RequestOptions()
-                Glide.with(activity!!)
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(body!!.data.photoUrl)
-                    .thumbnail(0.5f)
-                    .into(iv_mypage_frag_user_image)
-            }
+            getMypageResponse.enqueue(object : Callback<GetMypageResponse> {
+                override fun onResponse(call: Call<GetMypageResponse>, response: Response<GetMypageResponse>) {
+                    var body = response!!.body()
+                    tv_mypage_act_nickname.text=body!!.data.nick
 
 
-        override fun onFailure(call: Call<GetMypageResponse>, t: Throwable) { // 통신 실패
-            Log.d("서버연결 실패", t.toString())
+                    val requestOptions = RequestOptions()
+                    Glide.with(activity!!)
+                        .setDefaultRequestOptions(requestOptions)
+                        .load(body!!.data.photoUrl)
+                        .thumbnail(0.5f)
+                        .into(iv_mypage_frag_user_image)
+                }
+
+
+                override fun onFailure(call: Call<GetMypageResponse>, t: Throwable) { // 통신 실패
+                    Log.d("서버연결 실패", t.toString())
+                }
+            })
+
         }
-    })
 
     }
 
