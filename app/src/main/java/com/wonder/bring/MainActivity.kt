@@ -30,7 +30,13 @@ import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        var nick = ""
+
+    }
+
     var isLogin = false
+    var nick = ""
 
     lateinit var pa: MyFragmentStatePagerAdapter
 
@@ -194,6 +200,8 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
+
 
 
 }
