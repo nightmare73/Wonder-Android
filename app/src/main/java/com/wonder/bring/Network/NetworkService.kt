@@ -117,4 +117,10 @@ interface NetworkService {
         @Header("Authorization") authorization: String
     ): Call<GetTokenValidationResponseData>
 
+    //마이페이지
+    @GET("/users")
+    fun getMypageResponse(
+        @Header("Authorization") authorization: String
+    ): Call<GetMypageResponse>
+
 }

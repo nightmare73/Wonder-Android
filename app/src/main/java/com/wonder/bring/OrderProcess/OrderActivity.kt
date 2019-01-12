@@ -20,6 +20,7 @@ import com.wonder.bring.Network.Post.PostOrderRequest
 import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.R
 import com.wonder.bring.SizeConvertor
+import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_order.*
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
@@ -158,8 +159,6 @@ class OrderActivity : AppCompatActivity() {
 
                     }
 
-
-
                     404 -> {
                         //메뉴와 매장은 존재하지만, 해당 menu가 해당 store에 없는 경우에도 이렇게 뜸
                         //메뉴에 사이즈와 가격 정보가 없을 때
@@ -227,14 +226,14 @@ class OrderActivity : AppCompatActivity() {
 
     fun postOrderRequest(){
         var memo=et_order_act_request.text.toString()
-//        var token=SharedPreferenceController.getAuthorization(applicationContext)
-        var tmp_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
+        var token=SharedPreferenceController.getAuthorization(applicationContext)
+//        var tmp_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
 
         OrderMenuListdata.add(OrderList(menuIdx,menusize,quantity, memo ,totalPrice))
         var body=PostOrderRequest(storeIdx,OrderMenuListdata )
 
 
-        var postOrderResponse = networkService.postOrderResponse(tmp_token,body)
+        var postOrderResponse = networkService.postOrderResponse(token,body)
 
         Log.d(TAG,postOrderResponse.toString())
         postOrderResponse.enqueue(object : Callback<PostOrderResponse>{
@@ -251,6 +250,7 @@ class OrderActivity : AppCompatActivity() {
 
                         // paymentActivity 로 이동
                         startActivity<PaymentActivity>("totalPrice" to totalPrice)
+
 
                     }else if(response.body()!!.status==400){        // 주문하기 실패
                         var message = response.body()
@@ -280,7 +280,7 @@ class OrderActivity : AppCompatActivity() {
         when(size){
             1->{// 디저트나 옵션일경우
                 if(flag==0){
-                    spinner_order_act_size.isClickable=false
+                    spinner_order_act_size.isEnabled=false
                 }else if(flag==1){
                     val menu_list = arrayOf("regular")
 
