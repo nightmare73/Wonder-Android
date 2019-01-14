@@ -44,6 +44,7 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
                         //putSerializable("data", data)
                     }
                 }
+                Log.v("Malibin Debug", "OrderhistoryFragment 인스턴스가 생성됨")
             }
             return instance!!
         }
@@ -67,25 +68,7 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_orderhistory, container, false)
 
-
-//        // case1 :  로그인 앙대어 있으면
-//        if(!SharedPreferenceController.getAuthorization(activity!!).isNotEmpty()){
-//
-//            view=inflater.inflate(R.layout.fragment_login_no,container,false)
-//            view.btn_login_no_frag_goto_login.setOnClickListener {
-//                startActivity<LoginActivity>()
-////                activity!!.overridePendingTransition(R.anim.slide_in_up,0)
-//            }
-//
-//        //case2 : 로그인 되어있는 경우
-//
-//        }else{
-//
-//
-//
-//        }
-
-
+        Log.v("Malibin Debug", "OrderhistoryFragment  onCreateView 실행")
         return view
     }
 
@@ -97,6 +80,7 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         setBtnClickListener()
         setRecyclerView()
+        Log.v("Malibin Debug", "OrderhistoryFragment  onActivityCreated 실행")
 
     }
 
@@ -120,19 +104,13 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
 
     private fun getResponse() {
 
-        // todo: 통신을 위해서 잠깐 tmp_token사용한것
-        // todo: sharedpreference에서 내 토큰 꺼내와서 다시 통신 해보야함.
-        //val tmp_token =
-        //     "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
-        // val getOrderListResponse = networkService.getOrderListResponse(tmp_token)
-
         val token = SharedPreferenceController.getAuthorization(activity!!.applicationContext)
         val getOrderListResponse = networkService.getOrderListResponse(token)
 
         getOrderListResponse.enqueue(object : Callback<GetOrderListResponse> {
 
             override fun onResponse(call: Call<GetOrderListResponse>, response: Response<GetOrderListResponse>) {
-                Log.v("Malibin Debug","orderHistory 응답바디 : "+response.body().toString())
+                Log.v("Malibin Debug", "orderHistory 응답바디 : " + response.body().toString())
 
                 if (response.isSuccessful) {
 
@@ -154,6 +132,10 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
                             (activity as MainActivity).nick = body.data.nick
 
                             if (temp.size > 0) {
+                                //메인액티비티가 종료되고 다시 실행되면 프래그먼트들의 인스턴스들은 그대로 남아있지만 이 통신하는 함수는 메인액티비티 로그인 검사에 의해 실행이 됨.
+                                //그래서 주문목록이 누적되는 현상이 발생. 그렇기때문에 데이터리스트를 한번 비워낸다.
+                                orderRecyclerViewAdapter.dataList.clear()
+
                                 val position = orderRecyclerViewAdapter.itemCount
                                 orderRecyclerViewAdapter.dataList.addAll(temp)
                                 orderRecyclerViewAdapter.notifyItemInserted(position)

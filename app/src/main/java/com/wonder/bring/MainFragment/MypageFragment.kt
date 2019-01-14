@@ -37,10 +37,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-// 통신을 위한 변수
-val networkService: NetworkService by lazy {
-    ApplicationController.instance.networkService
-}
 
 class MypageFragment : Fragment() {
 
@@ -59,42 +55,40 @@ class MypageFragment : Fragment() {
         }
     }
 
+    // 통신을 위한 변수
+    val networkService: NetworkService by lazy {
+        ApplicationController.instance.networkService
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_mypage, container, false)
-
-
-
 
         return view
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        getResponse()
-
 
         btn_mypage_frag_logout.setOnClickListener {
             Log.v("Malibin Debug", "로그아웃버튼 눌림")
-            SharedPreferenceController.setAuthorization(activity!!.applicationContext,"")
+            SharedPreferenceController.setAuthorization(activity!!.applicationContext, "")
 
             (activity as MainActivity).settingView(false)
         }
-
-
 
         btn_mypage_frag_login.setOnClickListener {
 
             (activity as MainActivity).callLoginAct()
         }
 
-        tv_mypage_act_nickname.text = (activity as MainActivity).nick
+        //tv_mypage_act_nickname.text = (activity as MainActivity).nick
     }
 
     fun viewToggle(isLogin: Boolean) {
 
         if (isLogin) {
+            getResponse()
             rl_mypage_frag_login.visibility = View.VISIBLE
             rl_mypage_frag_logout.visibility = View.GONE
         } else {
@@ -109,23 +103,30 @@ class MypageFragment : Fragment() {
         //토큰 받아와서
 
         var token = SharedPreferenceController.getAuthorization(activity!!)
-        if(!token.equals("")){
+        if (!token.equals("")) {
             //통신 시작
             val getMypageResponse: Call<GetMypageResponse> = networkService.getMypageResponse(token)
 
 
             getMypageResponse.enqueue(object : Callback<GetMypageResponse> {
                 override fun onResponse(call: Call<GetMypageResponse>, response: Response<GetMypageResponse>) {
+
+                    Log.v("Malibin Debug", "MyPageFragment getResponse 함수 응답바디 : " + response.body().toString())
+
                     var body = response!!.body()
-                    tv_mypage_act_nickname.text=body!!.data.nick
+                    tv_mypage_act_nickname.text = body!!.data.nick
 
+                    if(!(response.body()!!.data.photoUrl == null)) {
 
-                    val requestOptions = RequestOptions()
-                    Glide.with(activity!!)
-                        .setDefaultRequestOptions(requestOptions)
-                        .load(body!!.data.photoUrl)
-                        .thumbnail(0.5f)
-                        .into(iv_mypage_frag_user_image)
+                        Log.v("Malibin Debug", "MyPageFragment 이미지뷰 바뀌는부분 ")
+                        val requestOptions = RequestOptions()
+                        Glide.with(activity!!)
+                            .setDefaultRequestOptions(requestOptions)
+                            .load(body!!.data.photoUrl)
+                            .thumbnail(0.5f)
+                            .into(iv_mypage_frag_user_image)
+                    }
+
                 }
 
 
