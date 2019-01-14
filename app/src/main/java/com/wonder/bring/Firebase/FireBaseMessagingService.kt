@@ -38,11 +38,17 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         val notification = remoteMessage!!.notification
         val data=remoteMessage!!.data
+
+
+
         Log.d(TAG, "From: ${remoteMessage?.from}")
 
         // Check if message contains a data payload.
         remoteMessage?.data?.isNotEmpty()?.let {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
+
+            val notificationBuilder = NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.customer_bring_icon)
 
             if (/* Check if data needs to be processed by long running job */ true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
@@ -83,6 +89,11 @@ class FireBaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG,title)
             var body = notification!!.body
             Log.d(TAG,body)
+
+
+            val notificationBuilder = NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.customer_bring_icon)
+
 
             try {
                 if (!TextUtils.isEmpty(title)) title = URLDecoder.decode(title, "UTF-8")  // 한글깨짐으로 서버에서 URLEncoding해서 보냄..
@@ -130,7 +141,7 @@ class FireBaseMessagingService : FirebaseMessagingService() {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.customer_bring_icon)
             .setContentTitle(title)
             .setContentText(body)
             .setAutoCancel(true)

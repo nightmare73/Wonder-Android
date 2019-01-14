@@ -132,6 +132,8 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
         getOrderListResponse.enqueue(object : Callback<GetOrderListResponse> {
 
             override fun onResponse(call: Call<GetOrderListResponse>, response: Response<GetOrderListResponse>) {
+                Log.v("Malibin Debug","orderHistory 응답바디 : "+response.body().toString())
+
                 if (response.isSuccessful) {
 
                     var body = response!!.body()
@@ -148,6 +150,8 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
                         "주문내역 조회 성공" -> {
                             Log.d(TAG, "OrderList Success")
                             tv_orderhistory_frag_nickname.text = body.data.nick
+
+                            (activity as MainActivity).nick = body.data.nick
 
                             if (temp.size > 0) {
                                 val position = orderRecyclerViewAdapter.itemCount
