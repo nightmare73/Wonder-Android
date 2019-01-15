@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.wonder.bring.R
 import com.wonder.bring.SizeConvertor
 import com.wonder.bring.db.CartData
@@ -25,6 +27,12 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         holder.tv_menu_quantity.text = dataList[position].quantity.toString()
         holder.tv_menu_size.text = SizeConvertor.parseSizeString(dataList[position].size)
         holder.tv_menu_request.text=dataList[position].request
+
+        try{
+            Glide.with(ctx).load(dataList[position].imageUrl).into(holder.iv_image)
+        }catch (e: Exception){
+
+        }
 
         holder.btn_delete.setOnClickListener {
             // 한개 삭제
@@ -64,6 +72,8 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         var tv_menu_price: TextView = itemView.findViewById(R.id.tv_cart_item_menu_price)
         var tv_menu_quantity: TextView = itemView.findViewById(R.id.tv_cart_item_menu_quantity)
         var tv_menu_request:TextView=itemView.findViewById(R.id.tv_cart_item_menu_request)
+
+        var iv_image : ImageView = itemView.findViewById(R.id.iv_cart_item_menu_image)
 
         var btn_delete: Button = itemView.findViewById(R.id.btn_cart_item_delete)
     }
