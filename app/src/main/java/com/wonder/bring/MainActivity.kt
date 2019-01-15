@@ -60,12 +60,14 @@ class MainActivity : AppCompatActivity() {
         cartlist.add(cartdata)
         cartlist.add(cartdata)
         Log.v("Malibin Debug", "cart 객체 json : " + gson.toJson(cartlist))
+
+
         var db = SharedPreferenceController
         db.setCartData(applicationContext, "mome", gson.toJson(cartlist))
         Log.v("Malibin Debug", "cart 객체 json 저장됫던거 불러오면 : " + db.getCartData(applicationContext, "mome"))
+
+
         var outputCartList: ArrayList<CartData>? = ArrayList()
-
-
         var type: Type = object : TypeToken<ArrayList<CartData>>() {}.type
         outputCartList = gson.fromJson(db.getCartData(applicationContext, "mome"), type)
         //outputCartList = gson.fromJson<ArrayList<CartData>>(db.getCartData(applicationContext,"mome"),CartData::class.java)

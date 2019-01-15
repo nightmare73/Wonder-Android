@@ -39,6 +39,6 @@ object SharedPreferenceController {
 
     fun getCartData(context: Context, userId: String): String {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
-        return pref.getString(userId+"Cart", "nothing")
+        return pref.getString(userId+"Cart", "")
     }
 }

@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.wonder.bring.R
-import com.wonder.bring.SizeConvertor
+import com.wonder.bring.Util.SizeConvertor
 import com.wonder.bring.db.CartData
 import java.lang.IndexOutOfBoundsException
 

@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.BringTypeDialog
+import com.wonder.bring.Util.BringTypeDialog
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMenuDetailsResponseData
 import com.wonder.bring.Network.Get.OtherDataClasses.MenuSize
@@ -19,7 +19,7 @@ import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.Network.Post.PostOrderRequest
 import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.R
-import com.wonder.bring.SizeConvertor
+import com.wonder.bring.Util.SizeConvertor
 import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_order.*
 import org.jetbrains.anko.startActivity
@@ -188,7 +188,8 @@ class OrderActivity : AppCompatActivity() {
 
         // 장바구니로 이동
         btn_order_act_move_to_cart.setOnClickListener {
-            val moveToCartDialog = BringTypeDialog(this, BringTypeDialog.CART_TYPE)
+            val moveToCartDialog =
+                BringTypeDialog(this, BringTypeDialog.CART_TYPE)
             moveToCartDialog.show()
         }
 
@@ -329,7 +330,7 @@ class OrderActivity : AppCompatActivity() {
                         when(position){
                             0->{// regular
 
-                                menusize=SizeConvertor.parseSizeInt("regular")
+                                menusize= SizeConvertor.parseSizeInt("regular")
                                 menuPrice = menuSize.get(0).price
 
 
@@ -338,7 +339,7 @@ class OrderActivity : AppCompatActivity() {
 
                             }
                             1->{//large
-                                menusize=SizeConvertor.parseSizeInt("large")
+                                menusize= SizeConvertor.parseSizeInt("large")
                                 menuPrice = menuSize.get(1).price
 
 
@@ -376,7 +377,7 @@ class OrderActivity : AppCompatActivity() {
                         // 누를때마다 가격변동이 일어나게끔~
                        when(position){
                            0->{// small
-                               menusize=SizeConvertor.parseSizeInt("small")
+                               menusize= SizeConvertor.parseSizeInt("small")
                                menuPrice = menuSize.get(0).price
 
 
@@ -385,7 +386,7 @@ class OrderActivity : AppCompatActivity() {
 
                            }
                            1->{//regular
-                               menusize=SizeConvertor.parseSizeInt("regular")
+                               menusize= SizeConvertor.parseSizeInt("regular")
                                menuPrice = menuSize.get(1).price
 
 
@@ -393,7 +394,7 @@ class OrderActivity : AppCompatActivity() {
                                tv_order_act_total_price.text = totalPrice.toString() + "원"
                            }
                            2->{//large
-                               menusize=SizeConvertor.parseSizeInt("large")
+                               menusize= SizeConvertor.parseSizeInt("large")
                                menuPrice = menuSize.get(2).price
 
 

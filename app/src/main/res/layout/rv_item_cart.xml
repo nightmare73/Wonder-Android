@@ -20,6 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="커피나무"
+                android:fontFamily="@font/nanumsquareroundotfr"
                 android:textColor="@color/textcolor"
                 android:textSize="15sp"
                 android:layout_centerInParent="true"/>
@@ -61,6 +62,7 @@
                 android:layout_marginRight="26dp">
 
             <TextView
+                    android:fontFamily="@font/nanumsquareroundotfr"
                     android:id="@+id/tv_cart_item_menu_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,6 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Regular"
+                        android:fontFamily="@font/nanumsquareroundotfr"
                         android:textSize="15sp"
                         android:textColor="@color/textcolor"/>
                 <TextView
@@ -117,6 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="요청사항"
+                        android:fontFamily="@font/nanumsquareroundotfr"
                         android:textSize="12sp"
                         android:textColor="@color/warm_gray"
                         android:layout_marginTop="3dp"/>
@@ -139,6 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1"
+                            android:fontFamily="@font/nanumsquareroundotfr"
                             android:layout_toRightOf="@+id/btn_cart_item_minor_icon"
                             android:layout_marginLeft="12dp"
                             android:layout_marginRight="12dp"
@@ -158,6 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text="5000원"
+                            android:fontFamily="@font/nanumsquareroundotfr"
                             android:textSize="15sp"
                             android:textColor="@color/textcolor"
                             android:layout_centerVertical="true"/>
