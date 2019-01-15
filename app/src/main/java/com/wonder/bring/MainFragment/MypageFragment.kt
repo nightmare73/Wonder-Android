@@ -73,6 +73,7 @@ class MypageFragment : Fragment() {
         btn_mypage_frag_logout.setOnClickListener {
             Log.v("Malibin Debug", "로그아웃버튼 눌림")
             SharedPreferenceController.setAuthorization(activity!!.applicationContext, "")
+            SharedPreferenceController.setId(activity!!.applicationContext, "")
 
             (activity as MainActivity).settingView(false)
         }

@@ -18,7 +18,9 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     //-1이면 서버통신 동작 못하게 막아놓기 -1서버로 가면 안된다!!
     private var storeIdx: Int = -1
-    private var bundle = Bundle(1)
+    private var storeName: String = ""
+
+    private var bundle = Bundle(2)
 
     private val FRAGMENT1 = 1
     private val FRAGMENT2 = 2
@@ -41,19 +43,22 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
         btn_store_act_menu!!.setOnClickListener(this)
         btn_store_act_info.setOnClickListener(this)
 
+        storeName = intent.getStringExtra("storeName")
+        val storeAdress: String = intent.getStringExtra("storeAdress")
+
+        tv_store_act_store_name.text = storeName
+        tv_store_act_store_address.text = storeAdress
+
         //storeIdx에 홈프래그먼트에서 보내준 값을 저장한다.
         storeIdx = intent.getIntExtra("storeIdx", -1)
 
         //다른 프래그먼트들에게 전달해줄 storeIdx값을 번들에다가 집어넣는다
         bundle.putInt("storeIdx", storeIdx)
+        bundle.putString("storeName", storeName)
 
         callFragment(FRAGMENT1)
 
-        val storeName: String = intent.getStringExtra("storeName")
-        val storeAdress: String = intent.getStringExtra("storeAdress")
 
-        tv_store_act_store_name.text = storeName
-        tv_store_act_store_address.text = storeAdress
 
         btn_store_act_back.setOnClickListener {
             finish()

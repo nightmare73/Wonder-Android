@@ -11,9 +11,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/rl_mypage_frag_login" app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="24dp" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
         <RelativeLayout
                 android:id="@+id/rl_mypage_frag_title_bar"
@@ -203,7 +203,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="1.0" app:layout_constraintVertical_bias="1.0"
-            android:visibility="gone">
+            android:visibility="visible">
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="210dp"

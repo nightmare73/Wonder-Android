@@ -16,12 +16,19 @@ class Cart(var ctx: Context) {
 
     fun loadCartData(userId: String): ArrayList<CartData> {
 
-        val result: ArrayList<CartData>
+        var result: ArrayList<CartData>
         val type: Type = object : TypeToken<ArrayList<CartData>>() {}.type
 
         val loadedCartData = loadCartDataString(userId)
 
-        result = gson.fromJson(loadedCartData, type)
+        try {
+
+            result = gson.fromJson(loadedCartData, type)
+
+        } catch (e: Exception) {
+
+            result = ArrayList()
+        }
 
         return result
     }
@@ -31,21 +38,24 @@ class Cart(var ctx: Context) {
 
     fun addCartList(userId: String, data: CartData) {
 
-        var currentCartData: ArrayList<CartData> = loadCartData(userId)
+        var currentCartData: ArrayList<CartData> = ArrayList()
+        currentCartData = loadCartData(userId)
         currentCartData.add(data)
         saveCartData(userId, currentCartData)
     }
 
     fun deleteCartData(userId: String, position: Int) {
 
-        var currentCartData: ArrayList<CartData> = loadCartData(userId)
+        var currentCartData: ArrayList<CartData> = ArrayList()
+        currentCartData = loadCartData(userId)
         currentCartData.removeAt(position)
         saveCartData(userId, currentCartData)
     }
 
-    fun modifyCartData(userId: String, position: Int, quantity: Int){
+    fun modifyCartData(userId: String, position: Int, quantity: Int) {
 
-        var currentCartData: ArrayList<CartData> = loadCartData(userId)
+        var currentCartData: ArrayList<CartData> = ArrayList()
+        currentCartData = loadCartData(userId)
         currentCartData[position].quantity = quantity
         saveCartData(userId, currentCartData)
     }

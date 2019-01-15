@@ -59,7 +59,8 @@ class CartFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        setRecyclerView()
+
+        //setTempRecyclerView()
 
         btn_cart_frag_login.setOnClickListener {
 
@@ -67,7 +68,7 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun setRecyclerView() {
+    private fun setTempRecyclerView() {
 
         // 임시데이터
         listDataList.add(
