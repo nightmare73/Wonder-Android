@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.wonder.bring.Network.Get.OtherDataClasses.OrderDetail
 import com.wonder.bring.R
-import com.wonder.bring.SizeConvertor
+import com.wonder.bring.Util.SizeConvertor
 
 class OrderHistoryDetailRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<OrderDetail>) :
     RecyclerView.Adapter<OrderHistoryDetailRecyclerViewAdapter.Holder>() {

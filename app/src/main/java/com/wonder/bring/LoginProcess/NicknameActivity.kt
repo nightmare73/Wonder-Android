@@ -54,6 +54,13 @@ class NicknameActivity : AppCompatActivity() {
 
 
     private fun setOnBtnClickListner() {
+        iv_nickname_act_pictureupload.setOnClickListener {
+
+
+
+
+        }
+
 
         btn_nickname_act_next.isEnabled = false
 

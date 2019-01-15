@@ -1,6 +1,8 @@
 package com.wonder.bring.MainFragment
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.location.Location
@@ -19,6 +21,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.kakao.util.maps.helper.Utility
+import com.wonder.bring.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.DaumService
 import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
@@ -36,6 +39,7 @@ import net.daum.android.map.MapViewTouchEventListener
 import net.daum.mf.map.api.*
 import org.jetbrains.anko.MAXDPI
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -181,7 +185,8 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                         .into(cl_home_fragment_summary.iv_home_fragment_menu3)
 
                     cl_home_fragment_summary.btn_home_fragment_store_detail.setOnClickListener {
-                        startActivity<StoreActivity>(
+                        startActivityForResult<StoreActivity>(
+                            1000,
                             "storeIdx" to userObject.storeIdx,
                             "storeName" to response.body()!!.data.name,
                             "storeAdress" to response.body()!!.data.address
@@ -305,7 +310,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
             DEBUG_MODE = false
 
-            if(!isGPSReceiving){
+            if (!isGPSReceiving) {
                 getMyGPS()
             }
             //GPS가 켜져잇을때만 동작시킨다. 만약 false인경우 버튼을 눌러도 아무런 동작을 하지않게 만듬.
@@ -573,6 +578,18 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     private fun setCameraPosition(latitude: Double, longitude: Double) {
         var destinationPoint: MapPoint = MapPoint.mapPointWithGeoCoord(latitude, longitude)
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(destinationPoint))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //이 프래그먼트에서 storeActivity를 실행시킨후 돌아올때
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK){
+                //카트 아이콘을 누르고 돌아온경우 카트탭으로 이동시켜준다 메인탭바를
+                (activity as MainActivity).moveToTab(2)
+            }
+        }
     }
 
     private var mLocationListener: LocationListener = object : LocationListener {

@@ -133,6 +133,8 @@
                     android:hint="@string/login_act_edit_pw"
                     android:textSize="14sp"
                     android:paddingLeft="24dp"
+                    android:inputType="textPassword"
+
                     android:fontFamily="@font/nanumsquareroundotfr"/>
 
         </RelativeLayout>

@@ -33,7 +33,7 @@ interface NetworkService {
         @Part profile: MultipartBody.Part?
     ): Call<PostSignupResponseData>
 
-
+    //유저 반경 1km 내 가게 찾기
     @GET("/maps")
     fun getStoreLocationAroundUserRequest(
         @Header("Content-Type") content_type: String,
@@ -41,7 +41,7 @@ interface NetworkService {
         @Query("longitude") longitude: String
     ): Call<GetStoreLocationAroundUserResponseData>
 
-
+    //ID 중복확인
     @GET("/users/check")
     fun getCheckDuplicateIdRequest(
         @Header("Content-Type") content_type: String,
@@ -49,13 +49,13 @@ interface NetworkService {
 
     ): Call<GetCheckDuplicateIdResponseData>
 
+    //Nick 중복확인
     @GET("/users/check")
     fun getCheckDuplicateNickRequest(
         @Header("Content-Type") content_type: String,
         @Query("nick") id: String
 
     ): Call<GetCheckDuplicateNickResponseData>
-
 
     // 가게Activity / 매장 메뉴 리스트
     @GET("/stores/{storeIdx}/menu")
@@ -71,7 +71,6 @@ interface NetworkService {
         @Path("storeIdx") store_idx: Int
     ): Call<GetStoreInfoResponse>
 
-
     // 주문리스트 조회
     @GET("/orders")
     fun getOrderListResponse(
@@ -84,7 +83,6 @@ interface NetworkService {
         @Header("Content-Type") content_type: String,
         @Path("storeIdx") storeIdx: Int
     ): Call<GetSelectedStoreSummaryResponseData>
-
 
     //메뉴 상세 정보 조회
     @GET("/stores/{storeIdx}/menu/{menuIdx}")
@@ -109,12 +107,16 @@ interface NetworkService {
         @Body() body: PostOrderRequest
     ): Call<PostOrderResponse>
 
-
-
     //토큰 유효성 검사
     @GET("/login")
     fun getTokenValidationRequest(
         @Header("Authorization") authorization: String
     ): Call<GetTokenValidationResponseData>
+
+    //마이페이지
+    @GET("/users")
+    fun getMypageResponse(
+        @Header("Authorization") authorization: String
+    ): Call<GetMypageResponse>
 
 }

@@ -1,31 +1,26 @@
 package com.wonder.bring.StoreProcess
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.Network.Get.GetMenuListResponse
-import com.wonder.bring.Network.ApplicationController
-import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_store.*
-import org.jetbrains.anko.toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import android.graphics.drawable.Drawable
-import android.widget.ImageView
+import com.wonder.bring.MainActivity
 
 
 class StoreActivity : AppCompatActivity(), View.OnClickListener {
 
     //-1이면 서버통신 동작 못하게 막아놓기 -1서버로 가면 안된다!!
     private var storeIdx: Int = -1
-    private var bundle = Bundle(1)
+    private var storeName: String = ""
+
+    private var bundle = Bundle(2)
 
     private val FRAGMENT1 = 1
     private val FRAGMENT2 = 2
@@ -48,21 +43,31 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
         btn_store_act_menu!!.setOnClickListener(this)
         btn_store_act_info.setOnClickListener(this)
 
-        //storeIdx에 홈프래그먼트에서 보내준 값을 저장한다.
-        storeIdx = intent.getIntExtra("storeIdx", -1)
-
-        //다른 프래그먼트들에게 전달해줄 storeIdx값을 번들에다가 집어넣는다
-        bundle.putInt("storeIdx", storeIdx)
-
-        callFragment(FRAGMENT1)
-
-        val storeName: String = intent.getStringExtra("storeName")
+        storeName = intent.getStringExtra("storeName")
         val storeAdress: String = intent.getStringExtra("storeAdress")
 
         tv_store_act_store_name.text = storeName
         tv_store_act_store_address.text = storeAdress
 
+        //storeIdx에 홈프래그먼트에서 보내준 값을 저장한다.
+        storeIdx = intent.getIntExtra("storeIdx", -1)
+
+        //다른 프래그먼트들에게 전달해줄 storeIdx값을 번들에다가 집어넣는다
+        bundle.putInt("storeIdx", storeIdx)
+        bundle.putString("storeName", storeName)
+
+        callFragment(FRAGMENT1)
+
+
+
         btn_store_act_back.setOnClickListener {
+            finish()
+        }
+
+        btn_store_act_cart.setOnClickListener {
+            
+            var intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }

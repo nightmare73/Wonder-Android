@@ -1,8 +1,9 @@
-package com.wonder.bring
+package com.wonder.bring.Util
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import com.wonder.bring.R
 import kotlinx.android.synthetic.main.dialog_bring_type.*
 import org.jetbrains.anko.imageResource
 

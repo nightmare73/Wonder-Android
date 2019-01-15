@@ -18,7 +18,8 @@ import org.jetbrains.anko.startActivity
 class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<MenuListData>) :
     RecyclerView.Adapter<MenuRecyclerViewAdapter.Holder>() {
 
-    var storeIdx:Int=-1
+    var storeIdx: Int = -1
+    var storeName: String = ""
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 //        requestManager.load(listDataList[position].photoUrl).into(holder.menu_photo)
@@ -30,6 +31,7 @@ class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<Menu
             ctx.startActivity<OrderActivity>(
                 "menuIdx" to listDataList[position].menuIdx,
                 "storeIdx" to storeIdx,
+                "storeName" to storeName,
                 "menuName" to listDataList[position].name,
                 "photoUrl" to listDataList[position].photoUrl
             )
