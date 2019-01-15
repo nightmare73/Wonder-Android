@@ -182,6 +182,10 @@ class OrderActivity : AppCompatActivity() {
 
     private fun setOnBtnClickListner() {
 
+        btn_order_act_back.setOnClickListener {
+            finish()
+        }
+
         // 장바구니로 이동
         btn_order_act_move_to_cart.setOnClickListener {
             val moveToCartDialog = BringTypeDialog(this, BringTypeDialog.CART_TYPE)

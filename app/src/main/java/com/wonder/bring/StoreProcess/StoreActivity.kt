@@ -1,24 +1,17 @@
 package com.wonder.bring.StoreProcess
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.Network.Get.GetMenuListResponse
-import com.wonder.bring.Network.ApplicationController
-import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_store.*
-import org.jetbrains.anko.toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import android.graphics.drawable.Drawable
-import android.widget.ImageView
+import com.wonder.bring.MainActivity
 
 
 class StoreActivity : AppCompatActivity(), View.OnClickListener {
@@ -63,6 +56,13 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
         tv_store_act_store_address.text = storeAdress
 
         btn_store_act_back.setOnClickListener {
+            finish()
+        }
+
+        btn_store_act_cart.setOnClickListener {
+            
+            var intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
     }

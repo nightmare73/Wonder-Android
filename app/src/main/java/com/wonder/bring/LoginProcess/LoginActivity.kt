@@ -49,12 +49,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
         viewInit()
-
-        //intent.getSerializableExtra("ctx") as Context
-
-
     }
 
     private fun viewInit() {
