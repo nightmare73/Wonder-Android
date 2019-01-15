@@ -30,15 +30,31 @@ object SharedPreferenceController {
         editor.commit()
     }
 
+    fun setId(context: Context, userId: String) {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putString("userId", userId)
+        editor.commit()
+    }
+
+    fun getId(context: Context): String {
+        val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
+        return pref.getString("userId", "")
+    }
+
     fun setCartData(context: Context, userId: String, cartData: String) {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
         val editor = pref.edit()
-        editor.putString(userId+"Cart", cartData)
+        editor.putString(userId + "Cart", cartData)
         editor.commit()
     }
 
     fun getCartData(context: Context, userId: String): String {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
-        return pref.getString(userId+"Cart", "nothing")
+        return pref.getString(userId + "Cart", "")
+    }
+
+    fun deleteCartData(context: Context, userId: String){
+
     }
 }

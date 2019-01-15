@@ -49,12 +49,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-
         viewInit()
-
-        //intent.getSerializableExtra("ctx") as Context
-
-
     }
 
     private fun viewInit() {
@@ -100,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
 
         btn_login_act_login.setOnClickListener {
             getLoginResponse()
-            Log.v("malibin debug","로그인버튼눌림")
+            Log.v("malibin debug", "로그인버튼눌림")
         }
 
     }
@@ -142,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<PostLogInResponse>, response: Response<PostLogInResponse>) {
                     var body = response!!.body()
 
-                    Log.v("Malibin Debug","응답 : " + response.body().toString())
+                    Log.v("Malibin Debug", "응답 : " + response.body().toString())
                     if (response!!.isSuccessful) {  // 1. 로그인 성공
 
                         if (body!!.message.equals("로그인 성공")) {
@@ -150,6 +145,7 @@ class LoginActivity : AppCompatActivity() {
 
                             // 그 token값을 SharedPreference에 저장.
                             SharedPreferenceController.setAuthorization(this@LoginActivity, token)
+                            SharedPreferenceController.setId(this@LoginActivity, input_id)
 
                             // todo : 이부분 어찌 인텐트 전환해줘야 할지 다시 한번 생각할 필요 있음.
                             // todo: main -> Login -> 다시 main으로 가는데 아예 새롭게 main을 호출해줘야해
@@ -158,10 +154,10 @@ class LoginActivity : AppCompatActivity() {
                             //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
                             var intent = Intent()
-                            intent.putExtra("isLogin",true)
+                            intent.putExtra("isLogin", true)
                             setResult(Activity.RESULT_OK, intent)
 
-                            Log.v("Malibin Debug","로그인 성공후 finish 직전")
+                            Log.v("Malibin Debug", "로그인 성공후 finish 직전")
 
                             finish()
 
@@ -186,8 +182,8 @@ class LoginActivity : AppCompatActivity() {
 //    }
 
 
-    fun callMainAct(){
-        if(ctx is MainActivity)
+    fun callMainAct() {
+        if (ctx is MainActivity)
             (ctx as MainActivity).settingView(true)
     }
 }

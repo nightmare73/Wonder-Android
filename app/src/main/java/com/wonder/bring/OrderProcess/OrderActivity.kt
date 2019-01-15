@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.BringTypeDialog
+import com.wonder.bring.Util.BringTypeDialog
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMenuDetailsResponseData
 import com.wonder.bring.Network.Get.OtherDataClasses.MenuSize
@@ -19,7 +19,9 @@ import com.wonder.bring.Network.NetworkService
 import com.wonder.bring.Network.Post.PostOrderRequest
 import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.R
-import com.wonder.bring.SizeConvertor
+import com.wonder.bring.Util.AddCartDialog
+import com.wonder.bring.Util.SizeConvertor
+import com.wonder.bring.db.CartData
 import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_order.*
 import org.jetbrains.anko.startActivity
@@ -35,16 +37,17 @@ class OrderActivity : AppCompatActivity() {
     //이 변수들은 이전 액티비티와 프래그먼트들로 부터 꾸역꾸역 가지고온 데이터들임.
     //이 변수는 따로 variableInit()에서 초기화.
     var storeIdx: Int = -1
+    var storeName: String = ""
     var menuIdx: Int = -1
     var photoUrl: String = ""
     var menuName: String = ""
-    var menusize=-1;
-    var menuPrice=0;
+    var menusize = -1;
+    var menuPrice = 0;
     var menuSize: ArrayList<MenuSize> = ArrayList()
-    var selItem:String=""
+    var selItem: String = ""
 
-    lateinit var requestManager : RequestManager
-    var OrderMenuListdata : ArrayList<OrderList> = ArrayList()
+    lateinit var requestManager: RequestManager
+    var OrderMenuListdata: ArrayList<OrderList> = ArrayList()
 
     private val TAG = OrderActivity::class.java!!.getSimpleName()
 
@@ -67,21 +70,23 @@ class OrderActivity : AppCompatActivity() {
     private fun variableInit() {
         //-1이 안넘어가게 꼭 예외처리 해야함 -1이 그대로 서버로 넘어가면 터짐
         storeIdx = intent.getIntExtra("storeIdx", -1)
-        Log.d(TAG,storeIdx.toString())
+        storeName = intent.getStringExtra("storeName")
         menuIdx = intent.getIntExtra("menuIdx", -1)
-        Log.d(TAG,menuIdx.toString())
         photoUrl = intent.getStringExtra("photoUrl")
-        requestManager.load(photoUrl).into(iv_order_act_menu_image)
         menuName = intent.getStringExtra("menuName")
+
+        requestManager.load(photoUrl).into(iv_order_act_menu_image)
+
         tv_order_act_menu_name.text = menuName
 
         networkService.getMenuDetailsRequest("application/json", storeIdx, menuIdx).enqueue(object :
             Callback<GetMenuDetailsResponseData> {
             override fun onFailure(call: Call<GetMenuDetailsResponseData>, t: Throwable) {
-                Log.d(TAG,"서버실패")
+                Log.d(TAG, "서버실패")
             }
 
-            override fun onResponse(call: Call<GetMenuDetailsResponseData>, response: Response<GetMenuDetailsResponseData>
+            override fun onResponse(
+                call: Call<GetMenuDetailsResponseData>, response: Response<GetMenuDetailsResponseData>
             ) {
 
                 var status = response.body()!!.status
@@ -90,18 +95,18 @@ class OrderActivity : AppCompatActivity() {
                 when (status) {
                     200 -> {
                         menuSize = response.body()!!.data
-                        Log.d(TAG,menuSize.toString())
+                        Log.d(TAG, menuSize.toString())
 
 
-                        when(menuSize.size){
+                        when (menuSize.size) {
                             // 1개 일때 : 4이거나 5인경우만 해당
-                            1 ->{
+                            1 -> {
                                 // regular인경우..
-                                if(menuSize.get(0).size==1){
-                                    menusize=1
-                                    menusizeSpinner(1,1)
-                                }else{
-                                    menusize=menuSize.get(0).size
+                                if (menuSize.get(0).size == 1) {
+                                    menusize = 1
+                                    menusizeSpinner(1, 1)
+                                } else {
+                                    menusize = menuSize.get(0).size
                                     menuPrice = menuSize.get(0).price // 4일때는 무조건 0번째일테니까
                                     tv_order_act_menu_price.text = menuPrice.toString() // 가격 그대로 적어주어야 하고
 
@@ -109,23 +114,23 @@ class OrderActivity : AppCompatActivity() {
                                     tv_order_act_total_price.text = totalPrice.toString() + "원"
 
                                     // spinner 아예 막아주자
-                                    menusizeSpinner(1,0)
+                                    menusizeSpinner(1, 0)
                                 }
 
 
                             }
 
                             // 2일때 : 1,2 일때 / 0,1일때
-                            2 ->{
+                            2 -> {
                                 //regular인 경우
 
                                 //서버한테 오는 첫번째가 [regular,large]
-                                if(menuSize.get(0).size==1){
+                                if (menuSize.get(0).size == 1) {
                                     menuPrice = menuSize.get(0).price
                                     tv_order_act_menu_price.text = menuPrice.toString()
 
                                     //서버한테 오는 첫번째가 [small, regular]
-                                }else{
+                                } else {
                                     menuPrice = menuSize.get(1).price
                                     tv_order_act_menu_price.text = menuPrice.toString()
                                 }
@@ -135,10 +140,10 @@ class OrderActivity : AppCompatActivity() {
                                 tv_order_act_total_price.text = totalPrice.toString() + "원"
 
 
-                                menusizeSpinner(2,1)
+                                menusizeSpinner(2, 1)
                             }
                             //3일때
-                            3-> {
+                            3 -> {
                                 // spinner 3개 기본 생성
                                 // regular일때
 
@@ -151,7 +156,7 @@ class OrderActivity : AppCompatActivity() {
                                 tv_order_act_total_price.text = totalPrice.toString() + "원"
 
 
-                                menusizeSpinner(3,1)
+                                menusizeSpinner(3, 1)
                             }
 
                         }
@@ -163,10 +168,10 @@ class OrderActivity : AppCompatActivity() {
                         //메뉴와 매장은 존재하지만, 해당 menu가 해당 store에 없는 경우에도 이렇게 뜸
                         //메뉴에 사이즈와 가격 정보가 없을 때
                         //뭘 넣어줘야하지??
-                        if(response.body()!!.message.equals("메뉴 상세 정보를 찾을 수 없습니다."))
-                            Log.d(TAG,"메뉴 상세 정보를 찾을 수 없습니다")
-                        else if(response.body()!!.message.equals("사이즈와 가격 정보가 없습니다."))
-                            Log.d(TAG,"사이즈와 가격 정보가 없습니다")
+                        if (response.body()!!.message.equals("메뉴 상세 정보를 찾을 수 없습니다."))
+                            Log.d(TAG, "메뉴 상세 정보를 찾을 수 없습니다")
+                        else if (response.body()!!.message.equals("사이즈와 가격 정보가 없습니다."))
+                            Log.d(TAG, "사이즈와 가격 정보가 없습니다")
                     }
                 }
             }
@@ -182,9 +187,24 @@ class OrderActivity : AppCompatActivity() {
 
     private fun setOnBtnClickListner() {
 
+        btn_order_act_back.setOnClickListener {
+            finish()
+        }
+
         // 장바구니로 이동
         btn_order_act_move_to_cart.setOnClickListener {
-            val moveToCartDialog = BringTypeDialog(this, BringTypeDialog.CART_TYPE)
+
+            val request = et_order_act_request.text.toString()
+
+            val moveToCartDialog =
+                AddCartDialog(
+                    this,
+                    CartData(
+                        storeIdx, menuIdx, photoUrl, storeName, menuName, request, quantity, menusize, totalPrice
+                    ),
+                    SharedPreferenceController.getId(applicationContext)
+
+                )
             moveToCartDialog.show()
         }
 
@@ -199,9 +219,9 @@ class OrderActivity : AppCompatActivity() {
             //             toast(tv_order_act_menu_quantity.text.toString())
 
 
-            if(quantity>0){
-                quantity=quantity-1 // 0밑으로 가는것을 막기 위해서
-                tv_order_act_menu_quantity.text=quantity.toString()
+            if (quantity > 0) {
+                quantity = quantity - 1 // 0밑으로 가는것을 막기 위해서
+                tv_order_act_menu_quantity.text = quantity.toString()
 
                 totalPrice = menuPrice * quantity           // 총 주문 금액 넣기 위해서
                 tv_order_act_total_price.text = totalPrice.toString() + "원"
@@ -214,8 +234,8 @@ class OrderActivity : AppCompatActivity() {
 
             //todo: 수량 제한을?
             // 수량 하나씩 증가
-            quantity=quantity+1
-            tv_order_act_menu_quantity.text=quantity.toString()
+            quantity = quantity + 1
+            tv_order_act_menu_quantity.text = quantity.toString()
 
             totalPrice = menuPrice * quantity           // 총 주문 금액 넣기 위해서
             tv_order_act_total_price.text = totalPrice.toString() + "원"
@@ -224,64 +244,61 @@ class OrderActivity : AppCompatActivity() {
 
     }
 
-    fun postOrderRequest(){
-        var memo=et_order_act_request.text.toString()
-        var token=SharedPreferenceController.getAuthorization(applicationContext)
+    fun postOrderRequest() {
+        var memo = et_order_act_request.text.toString()
+        var token = SharedPreferenceController.getAuthorization(applicationContext)
 //        var tmp_token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJEb0lUU09QVCIsInVzZXJfaWR4IjoxfQ.xmbvRqaMuYnGvtPaV_Lw7HorI5blZHlpT7WQgo5ybvM"
 
-        OrderMenuListdata.add(OrderList(menuIdx,menusize,quantity, memo ,totalPrice))
-        var body=PostOrderRequest(storeIdx,OrderMenuListdata )
+        OrderMenuListdata.add(OrderList(menuIdx, menusize, quantity, memo, totalPrice))
+        var body = PostOrderRequest(storeIdx, OrderMenuListdata)
 
 
-        var postOrderResponse = networkService.postOrderResponse(token,body)
+        var postOrderResponse = networkService.postOrderResponse(token, body)
 
-        Log.d(TAG,postOrderResponse.toString())
-        postOrderResponse.enqueue(object : Callback<PostOrderResponse>{
+        Log.d(TAG, postOrderResponse.toString())
+        postOrderResponse.enqueue(object : Callback<PostOrderResponse> {
             override fun onFailure(call: Call<PostOrderResponse>?, t: Throwable?) {
-                Toast.makeText(applicationContext,"서버 연결 실패", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "서버 연결 실패", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<PostOrderResponse>?, response: Response<PostOrderResponse>?) {
-                if(response!!.isSuccessful)
-                {
-                    if(response.body()!!.status==201){      //1. 주문하기 성공
+                if (response!!.isSuccessful) {
+                    if (response.body()!!.status == 201) {      //1. 주문하기 성공
                         var message = response.body()
-                        Log.d(TAG,message.toString())
+                        Log.d(TAG, message.toString())
 
                         // paymentActivity 로 이동
                         startActivity<PaymentActivity>("totalPrice" to totalPrice)
 
 
-                    }else if(response.body()!!.status==400){        // 주문하기 실패
+                    } else if (response.body()!!.status == 400) {        // 주문하기 실패
                         var message = response.body()
-                        Log.d(TAG,message.toString())
-                    }else if(response.body()!!.status==401){            // 인증실패
+                        Log.d(TAG, message.toString())
+                    } else if (response.body()!!.status == 401) {            // 인증실패
                         var message = response.body()
-                        Log.d(TAG,message.toString())
-                    }else if(response.body()!!.status==600){
+                        Log.d(TAG, message.toString())
+                    } else if (response.body()!!.status == 600) {
                         var message = response.body()
-                        Log.d(TAG,message.toString())
+                        Log.d(TAG, message.toString())
                     }
 
 
-
-                }
-                else Log.d(TAG,"OrderActivity 통신 실패 ")
+                } else Log.d(TAG, "OrderActivity 통신 실패 ")
             }
         })
     }
 
     // 메뉴 스피너
-    fun menusizeSpinner(size:Int,flag:Int) {
+    fun menusizeSpinner(size: Int, flag: Int) {
 
         var spnMenuSize = findViewById<View>(R.id.spinner_order_act_size) as Spinner
 
 
-        when(size){
-            1->{// 디저트나 옵션일경우
-                if(flag==0){
-                    spinner_order_act_size.isEnabled=false
-                }else if(flag==1){
+        when (size) {
+            1 -> {// 디저트나 옵션일경우
+                if (flag == 0) {
+                    spinner_order_act_size.isEnabled = false
+                } else if (flag == 1) {
                     val menu_list = arrayOf("regular")
 
                     val adapter = ArrayAdapter(applicationContext, R.layout.item_spinner_menu_size, menu_list)
@@ -294,9 +311,9 @@ class OrderActivity : AppCompatActivity() {
                         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
                             menuPrice = menuSize.get(0).price
-                            tv_order_act_menu_price.text=menuPrice.toString()
+                            tv_order_act_menu_price.text = menuPrice.toString()
 
-                            totalPrice=menuPrice*quantity
+                            totalPrice = menuPrice * quantity
                             tv_order_act_total_price.text = totalPrice.toString() + "원"
 
                         }
@@ -310,8 +327,8 @@ class OrderActivity : AppCompatActivity() {
 
             }
 
-            2->{
-                val menu_list = arrayOf("regular","large")
+            2 -> {
+                val menu_list = arrayOf("regular", "large")
 
                 val adapter = ArrayAdapter(applicationContext, R.layout.item_spinner_menu_size, menu_list)
                 adapter.setDropDownViewResource(R.layout.item_spinner_menu_size_dropdown)
@@ -322,29 +339,27 @@ class OrderActivity : AppCompatActivity() {
 
                     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
 
-                        when(position){
-                            0->{// regular
+                        when (position) {
+                            0 -> {// regular
 
-                                menusize=SizeConvertor.parseSizeInt("regular")
+                                menusize = SizeConvertor.parseSizeInt("regular")
                                 menuPrice = menuSize.get(0).price
 
 
-                                totalPrice=menuPrice*quantity
+                                totalPrice = menuPrice * quantity
                                 tv_order_act_total_price.text = totalPrice.toString() + "원"
 
                             }
-                            1->{//large
-                                menusize=SizeConvertor.parseSizeInt("large")
+                            1 -> {//large
+                                menusize = SizeConvertor.parseSizeInt("large")
                                 menuPrice = menuSize.get(1).price
 
 
-                                totalPrice=menuPrice*quantity
+                                totalPrice = menuPrice * quantity
                                 tv_order_act_total_price.text = totalPrice.toString() + "원"
 
                             }
                         }
-
-
 
 
                     }
@@ -357,8 +372,9 @@ class OrderActivity : AppCompatActivity() {
 
             }
 
-            3->{
-                var adapter = ArrayAdapter.createFromResource(this, R.array.spinner_menu_size, R.layout.item_spinner_menu_size)
+            3 -> {
+                var adapter =
+                    ArrayAdapter.createFromResource(this, R.array.spinner_menu_size, R.layout.item_spinner_menu_size)
 
                 adapter.setDropDownViewResource(R.layout.item_spinner_menu_size_dropdown)
                 spnMenuSize.setAdapter(adapter)
@@ -370,33 +386,33 @@ class OrderActivity : AppCompatActivity() {
 
 
                         // 누를때마다 가격변동이 일어나게끔~
-                       when(position){
-                           0->{// small
-                               menusize=SizeConvertor.parseSizeInt("small")
-                               menuPrice = menuSize.get(0).price
+                        when (position) {
+                            0 -> {// small
+                                menusize = SizeConvertor.parseSizeInt("small")
+                                menuPrice = menuSize.get(0).price
 
 
-                               totalPrice=menuPrice*quantity
-                               tv_order_act_total_price.text = totalPrice.toString() + "원"
+                                totalPrice = menuPrice * quantity
+                                tv_order_act_total_price.text = totalPrice.toString() + "원"
 
-                           }
-                           1->{//regular
-                               menusize=SizeConvertor.parseSizeInt("regular")
-                               menuPrice = menuSize.get(1).price
-
-
-                               totalPrice=menuPrice*quantity
-                               tv_order_act_total_price.text = totalPrice.toString() + "원"
-                           }
-                           2->{//large
-                               menusize=SizeConvertor.parseSizeInt("large")
-                               menuPrice = menuSize.get(2).price
+                            }
+                            1 -> {//regular
+                                menusize = SizeConvertor.parseSizeInt("regular")
+                                menuPrice = menuSize.get(1).price
 
 
-                               totalPrice=menuPrice*quantity
-                               tv_order_act_total_price.text = totalPrice.toString() + "원"
-                           }
-                       }
+                                totalPrice = menuPrice * quantity
+                                tv_order_act_total_price.text = totalPrice.toString() + "원"
+                            }
+                            2 -> {//large
+                                menusize = SizeConvertor.parseSizeInt("large")
+                                menuPrice = menuSize.get(2).price
+
+
+                                totalPrice = menuPrice * quantity
+                                tv_order_act_total_price.text = totalPrice.toString() + "원"
+                            }
+                        }
 
                     }
 

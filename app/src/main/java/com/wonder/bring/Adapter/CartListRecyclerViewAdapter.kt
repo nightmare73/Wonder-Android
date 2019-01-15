@@ -7,23 +7,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.wonder.bring.R
-import com.wonder.bring.data.CartListData
+import com.wonder.bring.Util.SizeConvertor
+import com.wonder.bring.db.CartData
 import java.lang.IndexOutOfBoundsException
 
 
-class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<CartListData>) :
+class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<CartData>) :
     RecyclerView.Adapter<CartListRecyclerViewAdapter.Holder>(){
 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.tv_store_name.text = dataList[position].store_name
-        holder.tv_menu_name.text = dataList[position].menu_name
-        holder.tv_menu_price.text = dataList[position].menu_price.toString()+"원"
-        holder.tv_menu_quantity.text = dataList[position].menu_quantity.toString()
-        holder.tv_menu_size.text = dataList[position].menu_size
-        holder.tv_menu_request.text=dataList[position].menu_request
+        holder.tv_store_name.text = dataList[position].storeName
+        holder.tv_menu_name.text = dataList[position].menuName
+        holder.tv_menu_price.text = (dataList[position].cost.toString()+"원")
+        holder.tv_menu_quantity.text = dataList[position].quantity.toString()
+        holder.tv_menu_size.text = SizeConvertor.parseSizeString(dataList[position].size)
+        holder.tv_menu_request.text=dataList[position].request
+
+        try{
+            Glide.with(ctx).load(dataList[position].imageUrl).into(holder.iv_image)
+        }catch (e: Exception){
+
+        }
 
         holder.btn_delete.setOnClickListener {
             // 한개 삭제
@@ -42,7 +51,7 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         return dataList.size
     }
 
-    fun addNewItem(cartListData: CartListData){     //추가하는거 여기 adapter쪽에서도 붙여도 된다.
+    fun addNewItem(cartListData: CartData){     //추가하는거 여기 adapter쪽에서도 붙여도 된다.
         val positon : Int = dataList.size
         dataList.add(cartListData)
         notifyItemInserted(positon)
@@ -51,7 +60,7 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
     // 들어갈 item에 뷰를 붙이는것
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_cart,parent,false)
-        return Holder(view);
+        return Holder(view)
     }
 
 
@@ -64,10 +73,9 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         var tv_menu_quantity: TextView = itemView.findViewById(R.id.tv_cart_item_menu_quantity)
         var tv_menu_request:TextView=itemView.findViewById(R.id.tv_cart_item_menu_request)
 
+        var iv_image : ImageView = itemView.findViewById(R.id.iv_cart_item_menu_image)
+
         var btn_delete: Button = itemView.findViewById(R.id.btn_cart_item_delete)
-//        var btn_checkbox: CheckBox = itemView.findViewById(R.id.btn_cart_item_checkbox)
-//        var btn_minor : Button = itemView.findViewById(R.id.btn_cart_item_minor_icon)
-//        var btn_plus : Button = itemView.findViewById(R.id.btn_cart_item_plus_icon)
     }
 
 

@@ -1,6 +1,6 @@
-package com.wonder.bring
+package com.wonder.bring.Util
 
-class SizeConvertor() {
+class SizeConvertor {
 
     companion object {
         final val SAMLL = 0
@@ -31,7 +31,7 @@ class SizeConvertor() {
         //Int -> String
         fun parseSizeString(sizeInt: Int): String {
 
-            var returnString: String = "ERROR"
+            var returnString: String = "OTHER"
 
             when (sizeInt) {
                 0 -> returnString = "Small"
