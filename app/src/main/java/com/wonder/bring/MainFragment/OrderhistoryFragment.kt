@@ -99,6 +99,7 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
         rv_order_frag_list.adapter = orderRecyclerViewAdapter
         rv_order_frag_list.layoutManager = LinearLayoutManager(activity)
 
+
     }
 
 

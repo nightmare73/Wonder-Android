@@ -31,7 +31,7 @@
                 android:background="#afafaf"
                 android:layout_alignParentBottom="true" android:id="@+id/view2"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="13dp" app:layout_constraintTop_toBottomOf="@+id/textView13"></View>
+                android:layout_marginTop="13dp" app:layout_constraintTop_toBottomOf="@+id/textView13"/>
         <android.support.v4.widget.NestedScrollView
                 android:layout_width="0dp"
                 android:layout_height="0dp" android:fillViewport="true"
@@ -46,7 +46,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:id="@+id/rv_cart_frag_list"/>
+                        android:id="@+id/rv_cart_frag_list"
+                        android:nestedScrollingEnabled="false"/>
 
 
                 <android.support.constraint.ConstraintLayout

@@ -3,6 +3,7 @@ package com.wonder.bring.MainFragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,9 @@ import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
+import com.wonder.bring.Util.Cart
 import com.wonder.bring.db.CartData
+import com.wonder.bring.db.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_cart.*
 
 
@@ -38,10 +41,7 @@ class CartFragment : Fragment() {
 
     lateinit var cartListRecyclerViewAdapter: CartListRecyclerViewAdapter
 
-
-    val listDataList: ArrayList<CartData> by lazy {
-        ArrayList<CartData>()
-    }
+    var cartList: ArrayList<CartData> = ArrayList()
 
     val networkService: NetworkService by lazy {
         ApplicationController.instance.networkService
@@ -61,6 +61,7 @@ class CartFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         //setTempRecyclerView()
+        //setRecyclerView()
 
         btn_cart_frag_login.setOnClickListener {
 
@@ -68,10 +69,32 @@ class CartFragment : Fragment() {
         }
     }
 
+    private fun setRecyclerView() {
+
+        cartList.clear()
+
+        val userId: String = SharedPreferenceController.getId(activity!!.applicationContext)
+
+        if (userId.equals("")) {
+            //로그인이 안되어있는 경우
+
+        } else {
+            //로그인 되어있는경우
+            cartList = Cart(activity!!.applicationContext).loadCartData(userId)
+
+            Log.v("Malibin Debug", "장바구니 정보 불러온거 : " + cartList.toString())
+
+            cartListRecyclerViewAdapter = CartListRecyclerViewAdapter(activity!!, cartList)
+            rv_cart_frag_list.adapter = cartListRecyclerViewAdapter
+            rv_cart_frag_list.layoutManager = LinearLayoutManager(activity)
+        }
+
+    }
+
     private fun setTempRecyclerView() {
 
         // 임시데이터
-        listDataList.add(
+        cartList.add(
             CartData
                 (
                 6,
@@ -86,7 +109,7 @@ class CartFragment : Fragment() {
             )
         )
 
-        listDataList.add(
+        cartList.add(
             CartData
                 (
                 6,
@@ -101,7 +124,7 @@ class CartFragment : Fragment() {
             )
         )
 
-        listDataList.add(
+        cartList.add(
             CartData
                 (
                 6,
@@ -115,17 +138,16 @@ class CartFragment : Fragment() {
                 7300
             )
         )
-
-
-        cartListRecyclerViewAdapter= CartListRecyclerViewAdapter(activity!!,listDataList)
-        rv_cart_frag_list.adapter=cartListRecyclerViewAdapter
-        rv_cart_frag_list.layoutManager= LinearLayoutManager(activity)
+        cartListRecyclerViewAdapter = CartListRecyclerViewAdapter(activity!!, cartList)
+        rv_cart_frag_list.adapter = cartListRecyclerViewAdapter
+        rv_cart_frag_list.layoutManager = LinearLayoutManager(activity)
 
     }
 
     fun viewToggle(isLogin: Boolean) {
 
         if (isLogin) {
+            setRecyclerView()
             rl_cart_frag_login.visibility = View.VISIBLE
             rl_cart_frag_logout.visibility = View.GONE
         } else {

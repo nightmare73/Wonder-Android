@@ -53,4 +53,8 @@ object SharedPreferenceController {
         val pref = context.getSharedPreferences(USER_NAME, Context.MODE_PRIVATE)
         return pref.getString(userId + "Cart", "")
     }
+
+    fun deleteCartData(context: Context, userId: String){
+
+    }
 }

@@ -51,29 +51,29 @@ class MainActivity : AppCompatActivity() {
         loginCheck()
 
 
-        var gson: Gson = GsonBuilder().create()
-        var cartdata = CartData(
-            100, 200, "유알엘데스네", "가게이름",
-            "메뉴이름", "요청사항데스네", 3, 1, 7000
-        )
-        var cartlist: ArrayList<CartData> = ArrayList()
-        cartlist.add(cartdata)
-        cartlist.add(cartdata)
-        Log.v("Malibin Debug", "cart 객체 json : " + gson.toJson(cartlist))
-
-
-        var db = SharedPreferenceController
-        db.setCartData(applicationContext, "mome", gson.toJson(cartlist))
-        Log.v("Malibin Debug", "cart 객체 json 저장됫던거 불러오면 : " + db.getCartData(applicationContext, "mome"))
-
-
-        var outputCartList: ArrayList<CartData>? = ArrayList()
-        var type: Type = object : TypeToken<ArrayList<CartData>>() {}.type
-        outputCartList = gson.fromJson(db.getCartData(applicationContext, "mome"), type)
-        //outputCartList = gson.fromJson<ArrayList<CartData>>(db.getCartData(applicationContext,"mome"),CartData::class.java)
-        //(db.getCartData(applicationContext,"mome"), object : ArrayList<CartData>(){}.javaClass) as? ArrayList<CartData>
-        Log.v("Malibin Debug", "꺼낸걸 바꾼거:" + outputCartList.toString())
-        Log.v("Malibin Debug", outputCartList!![0].storeName + "  " + outputCartList[1].cost)
+//        var gson: Gson = GsonBuilder().create()
+//        var cartdata = CartData(
+//            100, 200, "유알엘데스네", "가게이름",
+//            "메뉴이름", "요청사항데스네", 3, 1, 7000
+//        )
+//        var cartlist: ArrayList<CartData> = ArrayList()
+//        cartlist.add(cartdata)
+//        cartlist.add(cartdata)
+//        Log.v("Malibin Debug", "cart 객체 json : " + gson.toJson(cartlist))
+//
+//
+//        var db = SharedPreferenceController
+//        db.setCartData(applicationContext, "mome", gson.toJson(cartlist))
+//        Log.v("Malibin Debug", "cart 객체 json 저장됫던거 불러오면 : " + db.getCartData(applicationContext, "mome"))
+//
+//
+//        var outputCartList: ArrayList<CartData>? = ArrayList()
+//        var type: Type = object : TypeToken<ArrayList<CartData>>() {}.type
+//        outputCartList = gson.fromJson(db.getCartData(applicationContext, "mome"), type)
+//        //outputCartList = gson.fromJson<ArrayList<CartData>>(db.getCartData(applicationContext,"mome"),CartData::class.java)
+//        //(db.getCartData(applicationContext,"mome"), object : ArrayList<CartData>(){}.javaClass) as? ArrayList<CartData>
+//        Log.v("Malibin Debug", "꺼낸걸 바꾼거:" + outputCartList.toString())
+//        Log.v("Malibin Debug", outputCartList!![0].storeName + "  " + outputCartList[1].cost)
 
 
     }
