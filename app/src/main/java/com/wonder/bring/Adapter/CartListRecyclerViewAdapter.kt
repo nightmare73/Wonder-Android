@@ -21,6 +21,9 @@ import java.lang.IndexOutOfBoundsException
 class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<CartData>) :
     RecyclerView.Adapter<CartListRecyclerViewAdapter.Holder>() {
 
+    private val userId = SharedPreferenceController.getId(ctx)
+    private val cart = Cart(ctx)
+
     var totalPrice: Int = 0
 
 
@@ -44,16 +47,57 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, dataList.size)
 
-            val userid = SharedPreferenceController.getId(ctx)
-            var tempCart = Cart(ctx).loadCartData(userid)
+            var tempCart = cart.loadCartData(userId)
 
             Log.v("Malibin Debug", "장바구니 삭제직전 불러온 카트데이터 : " + tempCart.toString())
 
             tempCart.removeAt(position)
 
-            Cart(ctx).saveCartData(userid, tempCart)
+            cart.saveCartData(userId, tempCart)
 
-            Log.v("Malibin Debug", "장바구니 삭제직후 불러온 카트데이터 : " + Cart(ctx).loadCartDataString(userid))
+            Log.v("Malibin Debug", "장바구니 삭제직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
+        }
+
+        holder.btn_plus.setOnClickListener {
+
+            var quantity: Int = dataList[position].quantity
+            var originalCost: Int = dataList[position].cost / quantity
+            var tempCart = cart.loadCartData(userId)
+
+            Log.v("Malibin Debug", "장바구니 수량 수정 직전 불러온 카트데이터 : " + tempCart.toString())
+
+            tempCart[position].quantity = quantity + 1
+            tempCart[position].cost = (originalCost * (quantity + 1))
+
+            dataList[position].quantity = quantity + 1
+            dataList[position].cost = (originalCost * (quantity + 1))
+
+            cart.saveCartData(userId, tempCart)
+
+            notifyItemChanged(position)
+
+            Log.v("Malibin Debug", "장바구니 수량 수정 직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
+        }
+
+        holder.btn_minus.setOnClickListener {
+
+            var quantity: Int = dataList[position].quantity
+            var originalCost: Int = dataList[position].cost / quantity
+            var tempCart = cart.loadCartData(userId)
+
+            Log.v("Malibin Debug", "장바구니 수량 수정 직전 불러온 카트데이터 : " + tempCart.toString())
+
+            tempCart[position].quantity = quantity - 1
+            tempCart[position].cost = (originalCost * (quantity - 1))
+
+            dataList[position].quantity = quantity - 1
+            dataList[position].cost = (originalCost * (quantity - 1))
+
+            cart.saveCartData(userId, tempCart)
+
+            notifyItemChanged(position)
+
+            Log.v("Malibin Debug", "장바구니 수량 수정 직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
         }
 
     }
@@ -76,10 +120,11 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         var tv_menu_price: TextView = itemView.findViewById(R.id.tv_cart_item_menu_price)
         var tv_menu_quantity: TextView = itemView.findViewById(R.id.tv_cart_item_menu_quantity)
         var tv_menu_request: TextView = itemView.findViewById(R.id.tv_cart_item_menu_request)
-
         var iv_image: ImageView = itemView.findViewById(R.id.iv_cart_item_menu_image)
 
         var btn_delete: Button = itemView.findViewById(R.id.btn_cart_item_delete)
+        var btn_plus: ImageView = itemView.findViewById(R.id.btn_cart_item_plus_icon)
+        var btn_minus: ImageView = itemView.findViewById(R.id.btn_cart_item_minor_icon)
     }
 
 
