@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.airbnb.lottie.parser.IntegerParser
 import com.bumptech.glide.Glide
+import com.wonder.bring.MainActivity
+import com.wonder.bring.MainFragment.CartFragment
 import com.wonder.bring.R
 import com.wonder.bring.Util.Cart
 import com.wonder.bring.Util.SizeConvertor
 import com.wonder.bring.db.CartData
 import com.wonder.bring.db.SharedPreferenceController
+import org.jetbrains.anko.db.INTEGER
 import java.lang.IndexOutOfBoundsException
 
 
@@ -24,10 +28,13 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
     private val userId = SharedPreferenceController.getId(ctx)
     private val cart = Cart(ctx)
 
-    var totalPrice: Int = 0
-
+    //var totalPrice: Int = 0
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
+        //아 이런 캐스팅 개오반데
+        (((ctx as MainActivity).pa.getItem(2)) as CartFragment).refreshTotalPrice(getTotalPrice())
+
         holder.tv_store_name.text = dataList[position].storeName
         holder.tv_menu_name.text = dataList[position].menuName
         holder.tv_menu_price.text = (dataList[position].cost.toString() + "원")
@@ -69,6 +76,7 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
             tempCart[position].quantity = quantity + 1
             tempCart[position].cost = (originalCost * (quantity + 1))
 
+            //그냥 밑에잇는걸 저장하면 되는거아님??? 혼자잇을때 더 생각해보자.
             dataList[position].quantity = quantity + 1
             dataList[position].cost = (originalCost * (quantity + 1))
 
@@ -77,11 +85,16 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
             notifyItemChanged(position)
 
             Log.v("Malibin Debug", "장바구니 수량 수정 직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
+
+            //아 이런 캐스팅 개오반데
+            (((ctx as MainActivity).pa.getItem(2)) as CartFragment).refreshTotalPrice(getTotalPrice())
         }
 
         holder.btn_minus.setOnClickListener {
 
             var quantity: Int = dataList[position].quantity
+            if (quantity == 1) return@setOnClickListener
+
             var originalCost: Int = dataList[position].cost / quantity
             var tempCart = cart.loadCartData(userId)
 
@@ -98,21 +111,30 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
             notifyItemChanged(position)
 
             Log.v("Malibin Debug", "장바구니 수량 수정 직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
+
+            //아 이런 캐스팅 개오반데
+            (((ctx as MainActivity).pa.getItem(2)) as CartFragment).refreshTotalPrice(getTotalPrice())
         }
 
     }
 
     override fun getItemCount(): Int = dataList.size
 
-
-    // 들어갈 item에 뷰를 붙이는것
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view: View = LayoutInflater.from(ctx).inflate(R.layout.rv_item_cart, parent, false)
         return Holder(view)
     }
 
+    fun getTotalPrice(): Int {
 
-    // inner class : 어차피 이 클래스에서는 쓰는 거이기 때문에..
+        var totalPrice = 0
+
+        for (cost in dataList)
+            totalPrice += cost.cost
+
+        return totalPrice
+    }
+
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tv_store_name: TextView = itemView.findViewById(R.id.tv_cart_item_store_name)
         var tv_menu_name: TextView = itemView.findViewById(R.id.tv_cart_item_menu_name)

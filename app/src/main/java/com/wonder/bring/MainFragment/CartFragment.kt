@@ -36,9 +36,6 @@ class CartFragment : Fragment() {
         }
     }
 
-
-    private val TAG = CartFragment::class.java!!.getSimpleName()
-
     lateinit var cartListRecyclerViewAdapter: CartListRecyclerViewAdapter
 
     var cartList: ArrayList<CartData> = ArrayList()
@@ -60,8 +57,6 @@ class CartFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //setTempRecyclerView()
-        //setRecyclerView()
 
         btn_cart_frag_login.setOnClickListener {
 
@@ -87,60 +82,8 @@ class CartFragment : Fragment() {
             cartListRecyclerViewAdapter = CartListRecyclerViewAdapter(activity!!, cartList)
             rv_cart_frag_list.adapter = cartListRecyclerViewAdapter
             rv_cart_frag_list.layoutManager = LinearLayoutManager(activity)
+
         }
-
-    }
-
-    private fun setTempRecyclerView() {
-
-        // 임시데이터
-        cartList.add(
-            CartData
-                (
-                6,
-                50,
-                "https://s3.ap-northeast-2.amazonaws.com/project-bring/d3ae3b9f0f174a2d988fc25b0f4f90d0.jpg",
-                "탐앤탐스커피 역삼2호점",
-                "카페라떼HOT",
-                "위에 생크림 올려주세요",
-                2,
-                1,
-                4700
-            )
-        )
-
-        cartList.add(
-            CartData
-                (
-                6,
-                53,
-                "https://s3.ap-northeast-2.amazonaws.com/project-bring/e2b436458b1e43faa4e9345a8e5967d2.jpg",
-                "탐앤탐스커피 역삼2호점",
-                "캬라멜마끼아또HOT",
-                "해고니가 좋아하는 캬마",
-                3,
-                2,
-                5600
-            )
-        )
-
-        cartList.add(
-            CartData
-                (
-                6,
-                46,
-                "https://s3.ap-northeast-2.amazonaws.com/project-bring/34f56cd7156848f4aedfba20a197d528.jpg",
-                "탐앤탐스커피 역삼2호점",
-                "소이도그프레즐",
-                "간식쓰",
-                1,
-                4,
-                7300
-            )
-        )
-        cartListRecyclerViewAdapter = CartListRecyclerViewAdapter(activity!!, cartList)
-        rv_cart_frag_list.adapter = cartListRecyclerViewAdapter
-        rv_cart_frag_list.layoutManager = LinearLayoutManager(activity)
 
     }
 
@@ -155,6 +98,11 @@ class CartFragment : Fragment() {
             rl_cart_frag_logout.visibility = View.VISIBLE
         }
 
+    }
+
+    fun refreshTotalPrice(cost: Int){
+
+        tv_cart_frag_total_price.text = (cost.toString() + "원")
     }
 
 }
