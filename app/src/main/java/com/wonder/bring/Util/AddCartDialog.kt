@@ -1,9 +1,12 @@
 package com.wonder.bring.Util
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.wonder.bring.MainActivity
 import com.wonder.bring.OrderProcess.OrderActivity
 import com.wonder.bring.R
 import com.wonder.bring.db.CartData
@@ -24,10 +27,15 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
 
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        dismiss()
+        (ctx as OrderActivity).finish()
+    }
+
     private fun putCartItem(data: CartData) {
 
-        //쳐넣기전 id 검사
-        Log.v("Malibin Debug","addCart 하기 직전 id는 뭘까요 : $userId")
         Cart(ctx).addCartList(userId, data)
     }
 
@@ -39,6 +47,12 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
         tv_bring_dialog_bottom.text = "계속 쇼핑"
 
         btn_bring_dialog_top.setOnClickListener {
+
+            var intent = Intent(ctx, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            (ctx as OrderActivity).setResult(MFlags.RESULT_CART_ITEM_ADDED, intent)
+            ctx.finish()
+            ctx.startActivity(intent)
 
         }
 
