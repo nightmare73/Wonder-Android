@@ -36,15 +36,9 @@ class SignupActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
-    companion object {
-        public final lateinit var SA : AppCompatActivity
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
-        SA = this
 
         variableInit()
         viewInit()
@@ -182,8 +176,5 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    fun finishSignupActivity(){
-        finish()
-    }
 }
 

@@ -1,5 +1,6 @@
 package com.wonder.bring.LoginProcess
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_agreement.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.textColor
 import org.jetbrains.anko.toast
 import retrofit2.Call
@@ -124,11 +126,13 @@ class AgreementActivity : AppCompatActivity() {
 
                     when(branch){
                         201->{
+
+
+                            var intent = Intent(applicationContext, LoginActivity::class.java)
+                                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
                             toast("회원 가입이 완료되었습니다!")
 
-                            NicknameActivity.NA.finish()
-                            SignupActivity.SA.finish()
-                            finish()
                         }
                         else ->{
                             toast("회원 가입에 실패하였습니다.")
