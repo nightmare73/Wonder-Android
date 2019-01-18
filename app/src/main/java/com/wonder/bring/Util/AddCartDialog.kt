@@ -2,8 +2,10 @@ package com.wonder.bring.Util
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.wonder.bring.MainActivity
 import com.wonder.bring.OrderProcess.OrderActivity
 import com.wonder.bring.R
 import com.wonder.bring.db.CartData
@@ -27,7 +29,7 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
     private fun putCartItem(data: CartData) {
 
         //쳐넣기전 id 검사
-        Log.v("Malibin Debug","addCart 하기 직전 id는 뭘까요 : $userId")
+        Log.v("Malibin Debug", "addCart 하기 직전 id는 뭘까요 : $userId")
         Cart(ctx).addCartList(userId, data)
     }
 
@@ -40,6 +42,9 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
 
         btn_bring_dialog_top.setOnClickListener {
 
+            var intent = Intent(ctx, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            ctx.startActivity(intent)
         }
 
         btn_bring_dialog_bottom.setOnClickListener {

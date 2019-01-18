@@ -28,8 +28,6 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
     private val userId = SharedPreferenceController.getId(ctx)
     private val cart = Cart(ctx)
 
-    //var totalPrice: Int = 0
-
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         //아 이런 캐스팅 개오반데
