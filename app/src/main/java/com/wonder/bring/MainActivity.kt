@@ -14,6 +14,7 @@ import android.util.Log
 import com.wonder.bring.LoginProcess.LoginActivity
 import com.wonder.bring.MainFragment.*
 import com.wonder.bring.Network.Get.GetTokenValidationResponseData
+import com.wonder.bring.Util.Cart
 import com.wonder.bring.db.SharedPreferenceController
 import org.jetbrains.anko.startActivityForResult
 import retrofit2.Call
@@ -72,8 +73,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 해당 탭으로 이동
-    public fun moveToTab(position: Int) {
+    fun moveToTab(position: Int) {
         vp_bottom_main_act_frag_pager.setCurrentItem(position)
+    }
+
+    fun refreshCartFragment(){
+
+        //(pa.getItem(2) as CartFragment).
     }
 
     override fun onBackPressed() {

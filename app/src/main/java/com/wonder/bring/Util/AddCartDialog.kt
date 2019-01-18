@@ -1,5 +1,6 @@
 package com.wonder.bring.Util
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -44,7 +45,10 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
 
             var intent = Intent(ctx, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            (ctx as OrderActivity).setResult(MFlags.RESULT_TO_CART, intent)
+            ctx.finish()
             ctx.startActivity(intent)
+
         }
 
         btn_bring_dialog_bottom.setOnClickListener {

@@ -61,6 +61,9 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
             cart.saveCartData(userId, tempCart)
 
             Log.v("Malibin Debug", "장바구니 삭제직후 불러온 카트데이터 : " + cart.loadCartDataString(userId))
+
+            //아 이런 캐스팅 개오반데
+            (((ctx as MainActivity).pa.getItem(2)) as CartFragment).refreshTotalPrice(getTotalPrice())
         }
 
         holder.btn_plus.setOnClickListener {

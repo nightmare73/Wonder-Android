@@ -1,5 +1,6 @@
 package com.wonder.bring.OrderProcess
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.wonder.bring.MainActivity
 import com.wonder.bring.Util.BringTypeDialog
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMenuDetailsResponseData
@@ -20,6 +22,7 @@ import com.wonder.bring.Network.Post.PostOrderRequest
 import com.wonder.bring.Network.Post.PostOrderResponse
 import com.wonder.bring.R
 import com.wonder.bring.Util.AddCartDialog
+import com.wonder.bring.Util.MFlags
 import com.wonder.bring.Util.SizeConvertor
 import com.wonder.bring.db.CartData
 import com.wonder.bring.db.SharedPreferenceController
@@ -191,7 +194,19 @@ class OrderActivity : AppCompatActivity() {
             finish()
         }
 
-        // 장바구니로 이동
+        //위의 장바구니 아이콘
+        btn_order_act_gocart.setOnClickListener {
+
+            var intent = Intent(this, MainActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            setResult(MFlags.RESULT_TO_CART, intent)
+
+            finish()
+            startActivity(intent)
+
+        }
+
+        // 장바구니 담기
         btn_order_act_move_to_cart.setOnClickListener {
 
             val request = et_order_act_request.text.toString()

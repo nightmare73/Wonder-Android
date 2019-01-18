@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestManager
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_store.*
 import com.wonder.bring.MainActivity
+import com.wonder.bring.Util.MFlags
 
 
 class StoreActivity : AppCompatActivity(), View.OnClickListener {
@@ -67,7 +68,7 @@ class StoreActivity : AppCompatActivity(), View.OnClickListener {
         btn_store_act_cart.setOnClickListener {
             
             var intent = Intent()
-            setResult(Activity.RESULT_OK, intent)
+            setResult(MFlags.RESULT_TO_CART, intent)
             finish()
         }
     }

@@ -1,6 +1,5 @@
 package com.wonder.bring.MainFragment
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -28,17 +27,14 @@ import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData
 import com.wonder.bring.Network.Get.GetSelectedStoreSummaryResponseData
 import com.wonder.bring.Network.Get.GetStoreLocationAroundUserResponseData
 import com.wonder.bring.Network.Get.OtherDataClasses.StoreLocation
-import com.wonder.bring.Network.Get.OtherDataClasses.StoreSummary
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import com.wonder.bring.StoreProcess.StoreActivity
+import com.wonder.bring.Util.MFlags
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import net.daum.android.map.MapViewTouchEventListener
 import net.daum.mf.map.api.*
-import org.jetbrains.anko.MAXDPI
-import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
@@ -186,7 +182,7 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
 
                     cl_home_fragment_summary.btn_home_fragment_store_detail.setOnClickListener {
                         startActivityForResult<StoreActivity>(
-                            1000,
+                            MFlags.REQUEST_HOMEFRAG_TO_STOREACT,
                             "storeIdx" to userObject.storeIdx,
                             "storeName" to response.body()!!.data.name,
                             "storeAdress" to response.body()!!.data.address
@@ -583,12 +579,17 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+
         //이 프래그먼트에서 storeActivity를 실행시킨후 돌아올때
-        if (requestCode == 1000) {
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == MFlags.REQUEST_HOMEFRAG_TO_STOREACT) {
+
+            Log.v("Malibin Debug","어쨋든 requestCode == 1000로 들어옴 갖고온 resultCode = $resultCode")
+
+            if (resultCode == MFlags.RESULT_TO_CART){
                 //카트 아이콘을 누르고 돌아온경우 카트탭으로 이동시켜준다 메인탭바를
                 (activity as MainActivity).moveToTab(2)
             }
+
         }
     }
 
