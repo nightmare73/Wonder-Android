@@ -590,6 +590,14 @@ class HomeFragment : Fragment(), MapView.POIItemEventListener, MapView.MapViewEv
                 (activity as MainActivity).moveToTab(2)
             }
 
+            if(resultCode == MFlags.RESULT_CART_ITEM_ADDED){
+                (activity as MainActivity).moveToTab(2)
+                (activity as MainActivity).refreshCartFragment()
+            }
+
+            //우선은 그냥 돌아오기만 하면 걍 장바구니를 갱신시키게끔 만들어놓자..
+            (activity as MainActivity).refreshCartFragment()
+
         }
     }
 

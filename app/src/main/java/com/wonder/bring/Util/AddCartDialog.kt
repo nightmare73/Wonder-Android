@@ -27,10 +27,15 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
 
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        dismiss()
+        (ctx as OrderActivity).finish()
+    }
+
     private fun putCartItem(data: CartData) {
 
-        //쳐넣기전 id 검사
-        Log.v("Malibin Debug", "addCart 하기 직전 id는 뭘까요 : $userId")
         Cart(ctx).addCartList(userId, data)
     }
 
@@ -45,7 +50,7 @@ class AddCartDialog(private val ctx: Context, val data: CartData, val userId: St
 
             var intent = Intent(ctx, MainActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            (ctx as OrderActivity).setResult(MFlags.RESULT_TO_CART, intent)
+            (ctx as OrderActivity).setResult(MFlags.RESULT_CART_ITEM_ADDED, intent)
             ctx.finish()
             ctx.startActivity(intent)
 

@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     fun refreshCartFragment(){
 
-        //(pa.getItem(2) as CartFragment).
+        (pa.getItem(2) as CartFragment).refreshRecyclerView()
     }
 
     override fun onBackPressed() {

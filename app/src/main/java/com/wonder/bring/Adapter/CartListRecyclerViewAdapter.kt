@@ -136,6 +136,29 @@ class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<Cart
         return totalPrice
     }
 
+    fun itemRangeInsert() {
+
+        Log.v("Malibin Debug","실행이되긴하니?")
+
+        val userId = SharedPreferenceController.getId(ctx)
+
+        var currentCartItem = Cart(ctx).loadCartData(userId)
+
+        val previousItemCount = itemCount
+        val currentItemCount = currentCartItem.size
+
+        if (currentItemCount - previousItemCount <= 0) return
+
+        for (i in 1..previousItemCount)
+            currentCartItem.removeAt(0)
+
+        for (data in currentCartItem) {
+            dataList.add(data)
+        }
+        notifyItemRangeInserted(previousItemCount, itemCount)
+
+    }
+
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tv_store_name: TextView = itemView.findViewById(R.id.tv_cart_item_store_name)
         var tv_menu_name: TextView = itemView.findViewById(R.id.tv_cart_item_menu_name)

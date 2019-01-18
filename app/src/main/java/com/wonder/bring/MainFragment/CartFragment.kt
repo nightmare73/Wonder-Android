@@ -105,5 +105,9 @@ class CartFragment : Fragment() {
         tv_cart_frag_total_price.text = (cost.toString() + "원")
     }
 
+    fun refreshRecyclerView(){
+        cartListRecyclerViewAdapter.itemRangeInsert()
+    }
+
 }
 
