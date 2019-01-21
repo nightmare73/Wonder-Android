@@ -5,7 +5,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".MainFragment.HomeFragment"
+                                             tools:context=".MainProcess.Home.HomeFragment"
                                              android:layout_marginTop="24dp"
                                              android:animateLayoutChanges="true"
                                              android:id="@+id/cl_home_fragment_root_layout"

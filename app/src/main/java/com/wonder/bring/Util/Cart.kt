@@ -4,8 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.wonder.bring.db.CartData
-import com.wonder.bring.db.SharedPreferenceController
+import com.wonder.bring.Network.Get.OtherDataClasses.CartData
 import java.lang.reflect.Type
 
 class Cart(var ctx: Context) {

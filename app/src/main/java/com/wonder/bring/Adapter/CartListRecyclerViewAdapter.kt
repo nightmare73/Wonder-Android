@@ -9,17 +9,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.airbnb.lottie.parser.IntegerParser
 import com.bumptech.glide.Glide
-import com.wonder.bring.MainActivity
-import com.wonder.bring.MainFragment.CartFragment
+import com.wonder.bring.MainProcess.MainActivity
+import com.wonder.bring.MainProcess.Cart.CartFragment
 import com.wonder.bring.R
 import com.wonder.bring.Util.Cart
 import com.wonder.bring.Util.SizeConvertor
-import com.wonder.bring.db.CartData
-import com.wonder.bring.db.SharedPreferenceController
-import org.jetbrains.anko.db.INTEGER
-import java.lang.IndexOutOfBoundsException
+import com.wonder.bring.Network.Get.OtherDataClasses.CartData
+import com.wonder.bring.Util.SharedPreferenceController
 
 
 class CartListRecyclerViewAdapter(val ctx: Context, val dataList: ArrayList<CartData>) :

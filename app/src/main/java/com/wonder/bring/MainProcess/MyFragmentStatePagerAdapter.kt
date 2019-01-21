@@ -1,9 +1,11 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess
 
-import android.app.Activity
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import com.wonder.bring.db.SharedPreferenceController
+import com.wonder.bring.MainProcess.Cart.CartFragment
+import com.wonder.bring.MainProcess.Home.HomeFragment
+import com.wonder.bring.MainProcess.MyPage.MypageFragment
+import com.wonder.bring.MainProcess.OrderHistory.OrderhistoryFragment
 
 
 /**

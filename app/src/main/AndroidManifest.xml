@@ -14,11 +14,9 @@
     <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="238345100979e74d743629c451b3d561"/>
-
-     <meta-data
-     android:name="com.google.firebase.messaging.default_notification_icon"
-     android:resource="@drawable/customer_bring_icon" />
-
+    <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/customer_bring_icon"/>
     <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent"/>
@@ -32,7 +30,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MainActivity"
+                android:name=".MainProcess.MainActivity"
                 android:launchMode="singleTask">
         </activity>
         <activity android:name=".LoginProcess.LoginActivity">
@@ -54,7 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".OrderHistoryDetailActivity">
+        <activity android:name=".MainProcess.OrderHistory.OrderHistoryDetailActivity">
         </activity>
 
         <service android:name=".Firebase.FireBaseMessagingService">
@@ -63,7 +61,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".OrderProcess.PaymentActivity">
+        <activity android:name=".OrderProcess.PayCheckActivity">
+        </activity>
+        <activity android:name=".MainProcess.Home.SearchActivity">
         </activity>
     </application>
 

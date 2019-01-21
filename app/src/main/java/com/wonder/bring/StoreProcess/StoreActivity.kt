@@ -1,7 +1,5 @@
 package com.wonder.bring.StoreProcess
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -11,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_store.*
-import com.wonder.bring.MainActivity
 import com.wonder.bring.Util.MFlags
 
 

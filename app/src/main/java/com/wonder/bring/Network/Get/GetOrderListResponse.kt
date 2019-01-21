@@ -1,7 +1,6 @@
 package com.wonder.bring.Network.Get
 
-import com.wonder.bring.data.MenuListData
-import com.wonder.bring.data.OrderListData
+import com.wonder.bring.Network.Get.OtherDataClasses.OrderListData
 
 data class GetOrderListResponse (
     val status : Int,
