@@ -11,8 +11,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.wonder.bring.MainActivity
-import com.wonder.bring.Util.BringTypeDialog
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMenuDetailsResponseData
 import com.wonder.bring.Network.Get.OtherDataClasses.MenuSize
@@ -24,8 +23,8 @@ import com.wonder.bring.R
 import com.wonder.bring.Util.AddCartDialog
 import com.wonder.bring.Util.MFlags
 import com.wonder.bring.Util.SizeConvertor
-import com.wonder.bring.db.CartData
-import com.wonder.bring.db.SharedPreferenceController
+import com.wonder.bring.Network.Get.OtherDataClasses.CartData
+import com.wonder.bring.Util.SharedPreferenceController
 import kotlinx.android.synthetic.main.activity_order.*
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
@@ -283,7 +282,7 @@ class OrderActivity : AppCompatActivity() {
                         Log.d(TAG, message.toString())
 
                         // paymentActivity 로 이동
-                        startActivity<PaymentActivity>("totalPrice" to totalPrice)
+                        startActivity<PayCheckActivity>("totalPrice" to totalPrice)
 
 
                     } else if (response.body()!!.status == 400) {        // 주문하기 실패

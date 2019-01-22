@@ -1,4 +1,4 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess.Cart
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,14 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wonder.bring.Adapter.CartListRecyclerViewAdapter
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
 import com.wonder.bring.Util.Cart
-import com.wonder.bring.db.CartData
-import com.wonder.bring.db.SharedPreferenceController
+import com.wonder.bring.Network.Get.OtherDataClasses.CartData
+import com.wonder.bring.Util.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_cart.*
 
 
@@ -26,7 +26,8 @@ class CartFragment : Fragment() {
         @Synchronized
         fun getInstance(): CartFragment {
             if (instance == null) {
-                instance = CartFragment().apply {
+                instance = CartFragment()
+                    .apply {
                     arguments = Bundle().apply {
                         //putSerializable("data", data)
                     }

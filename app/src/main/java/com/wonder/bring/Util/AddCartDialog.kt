@@ -1,15 +1,14 @@
 package com.wonder.bring.Util
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.OrderProcess.OrderActivity
 import com.wonder.bring.R
-import com.wonder.bring.db.CartData
+import com.wonder.bring.Network.Get.OtherDataClasses.CartData
 import kotlinx.android.synthetic.main.dialog_bring_type.*
 import org.jetbrains.anko.imageResource
 

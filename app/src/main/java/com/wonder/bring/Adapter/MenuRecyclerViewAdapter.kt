@@ -13,8 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.wonder.bring.OrderProcess.OrderActivity
 import com.wonder.bring.R
-import com.wonder.bring.data.MenuListData
-import org.jetbrains.anko.startActivity
+import com.wonder.bring.Network.Get.OtherDataClasses.MenuListData
 
 class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<MenuListData>) :
     RecyclerView.Adapter<MenuRecyclerViewAdapter.Holder>() {

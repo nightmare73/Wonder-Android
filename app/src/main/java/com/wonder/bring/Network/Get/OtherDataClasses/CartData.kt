@@ -1,4 +1,4 @@
-package com.wonder.bring.db
+package com.wonder.bring.Network.Get.OtherDataClasses
 
 data class CartData(
     val storeIdx: Int,

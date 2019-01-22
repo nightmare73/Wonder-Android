@@ -1,21 +1,18 @@
 package com.wonder.bring.Adapter
 
 import android.content.Context
-import org.jetbrains.anko.support.v4.startActivity
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.wonder.bring.OrderHistoryDetailActivity
+import com.wonder.bring.MainProcess.OrderHistory.OrderHistoryDetailActivity
 import com.wonder.bring.R
-import com.wonder.bring.data.OrderListData
+import com.wonder.bring.Network.Get.OtherDataClasses.OrderListData
 import org.jetbrains.anko.startActivity
 
 

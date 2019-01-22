@@ -1,6 +1,5 @@
-package com.wonder.bring
+package com.wonder.bring.MainProcess.OrderHistory
 
-import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +8,7 @@ import com.wonder.bring.Adapter.OrderHistoryDetailRecyclerViewAdapter
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetOrderDetailListResponseData
 import com.wonder.bring.Network.NetworkService
+import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_order_history_detail.*
 import org.jetbrains.anko.toast
 import retrofit2.Call

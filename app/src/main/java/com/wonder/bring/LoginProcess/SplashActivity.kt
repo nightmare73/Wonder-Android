@@ -1,12 +1,10 @@
 package com.wonder.bring.LoginProcess
 
 import android.animation.Animator
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import com.airbnb.lottie.LottieAnimationView
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.R
 import org.jetbrains.anko.startActivity
 

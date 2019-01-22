@@ -1,4 +1,4 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess
 
 import android.content.Context
 import android.support.v4.view.ViewPager

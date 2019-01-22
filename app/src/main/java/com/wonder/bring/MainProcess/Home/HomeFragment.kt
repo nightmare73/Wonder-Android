@@ -1,4 +1,4 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess.Home
 
 import android.content.Context
 import android.content.Intent
@@ -20,7 +20,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.kakao.util.maps.helper.Utility
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.DaumService
 import com.wonder.bring.Network.Get.GetDaumKeywordAddressResponseData

@@ -1,4 +1,4 @@
-package com.wonder.bring
+package com.wonder.bring.MainProcess
 
 import android.app.Activity
 import android.content.Intent
@@ -12,10 +12,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 import android.util.Log
 import com.wonder.bring.LoginProcess.LoginActivity
-import com.wonder.bring.MainFragment.*
+import com.wonder.bring.MainProcess.Cart.CartFragment
+import com.wonder.bring.MainProcess.MyPage.MypageFragment
+import com.wonder.bring.MainProcess.OrderHistory.OrderhistoryFragment
 import com.wonder.bring.Network.Get.GetTokenValidationResponseData
-import com.wonder.bring.Util.Cart
-import com.wonder.bring.db.SharedPreferenceController
+import com.wonder.bring.R
+import com.wonder.bring.Util.SharedPreferenceController
 import org.jetbrains.anko.startActivityForResult
 import retrofit2.Call
 import retrofit2.Callback

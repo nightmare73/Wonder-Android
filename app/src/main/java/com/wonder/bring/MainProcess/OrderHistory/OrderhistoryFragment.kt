@@ -1,8 +1,5 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess.OrderHistory
 
-import android.content.Intent
-import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -11,22 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wonder.bring.Adapter.OrderListRecyclerViewAdapter
-import com.wonder.bring.LoginProcess.LoginActivity
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.Network.ApplicationController
-import com.wonder.bring.Network.Get.GetMenuListResponse
 import com.wonder.bring.Network.Get.GetOrderListResponse
 import com.wonder.bring.Network.NetworkService
 
 import com.wonder.bring.R
-import com.wonder.bring.data.MenuListData
-import com.wonder.bring.data.OrderListData
-import com.wonder.bring.db.SharedPreferenceController
-import kotlinx.android.synthetic.main.activity_store.*
+import com.wonder.bring.Network.Get.OtherDataClasses.OrderListData
+import com.wonder.bring.Util.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_orderhistory.*
-import kotlinx.android.synthetic.main.rv_item_orderlist.*
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +29,8 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
         @Synchronized
         fun getInstance(): OrderhistoryFragment {
             if (instance == null) {
-                instance = OrderhistoryFragment().apply {
+                instance = OrderhistoryFragment()
+                    .apply {
                     arguments = Bundle().apply {
                         //putSerializable("data", data)
                     }
@@ -103,6 +94,7 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
     }
 
 
+
     private fun getResponse() {
 
         val token = SharedPreferenceController.getAuthorization(activity!!.applicationContext)
@@ -145,6 +137,8 @@ class OrderhistoryFragment : Fragment(), View.OnClickListener {
                         }
                         // case 2
                         "주문내역이 존재하지 않습니다." -> {
+                            tv_orderhistory_frag_nickname.text = body.data.nick
+                            //애초에 바디가 널로옴
                             Log.d(TAG, "OrderList S")
                         }
                         // case 3

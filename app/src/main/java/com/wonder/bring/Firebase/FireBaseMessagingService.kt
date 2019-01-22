@@ -1,6 +1,5 @@
 package com.wonder.bring.Firebase
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.NotificationManager
 import android.content.Context
@@ -12,16 +11,11 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import android.app.PendingIntent
 import android.graphics.Color
-import android.nfc.Tag
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.R
-import android.os.PowerManager
 import android.text.TextUtils
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
-import android.R.attr.data
-
-
 
 
 class FireBaseMessagingService : FirebaseMessagingService() {
