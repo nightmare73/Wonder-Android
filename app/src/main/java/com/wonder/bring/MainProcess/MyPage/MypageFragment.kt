@@ -1,38 +1,21 @@
-package com.wonder.bring.MainFragment
+package com.wonder.bring.MainProcess.MyPage
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import com.wonder.bring.LoginProcess.LoginActivity
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.Network.ApplicationController
 import com.wonder.bring.Network.Get.GetMypageResponse
 import com.wonder.bring.Network.NetworkService
-import com.wonder.bring.Network.Post.PostLogInResponse
 
 import com.wonder.bring.R
-import com.wonder.bring.db.SharedPreferenceController
-import kotlinx.android.synthetic.main.fragment_login_no.view.*
+import com.wonder.bring.Util.SharedPreferenceController
 import kotlinx.android.synthetic.main.fragment_mypage.*
-import kotlinx.android.synthetic.main.fragment_mypage.view.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
-import org.jetbrains.anko.toast
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +28,8 @@ class MypageFragment : Fragment() {
         @Synchronized
         fun getInstance(): MypageFragment {
             if (instance == null) {
-                instance = MypageFragment().apply {
+                instance = MypageFragment()
+                    .apply {
                     arguments = Bundle().apply {
                         //putSerializable("data", data)
                     }

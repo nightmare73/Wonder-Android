@@ -1,7 +1,6 @@
-package com.wonder.bring.db
+package com.wonder.bring.Util
 
 import android.content.Context
-import com.wonder.bring.MainFragment.MyFragmentStatePagerAdapter
 
 
 object SharedPreferenceController {

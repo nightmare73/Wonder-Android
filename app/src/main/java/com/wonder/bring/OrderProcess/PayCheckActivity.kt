@@ -4,14 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.Toast
-import com.wonder.bring.MainActivity
+import com.wonder.bring.MainProcess.MainActivity
 import com.wonder.bring.R
 import kotlinx.android.synthetic.main.activity_payment.*
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
-class PaymentActivity : AppCompatActivity() {
+class PayCheckActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +24,7 @@ class PaymentActivity : AppCompatActivity() {
             toast("결제가 완료되었습니다.").setGravity(Gravity.CENTER_VERTICAL, 0, 0)
 
             // todo: 결제가 완료되면, 주문내역화면으로
-            val intent : Intent= Intent(applicationContext,MainActivity::class.java)
+            val intent : Intent= Intent(applicationContext, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             finish()

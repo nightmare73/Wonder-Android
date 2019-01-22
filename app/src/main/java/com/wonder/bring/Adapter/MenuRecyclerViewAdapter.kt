@@ -1,6 +1,7 @@
 package com.wonder.bring.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.wonder.bring.OrderProcess.OrderActivity
 import com.wonder.bring.R
-import com.wonder.bring.data.MenuListData
-import org.jetbrains.anko.startActivity
+import com.wonder.bring.Network.Get.OtherDataClasses.MenuListData
 
 class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<MenuListData>) :
     RecyclerView.Adapter<MenuRecyclerViewAdapter.Holder>() {
@@ -27,14 +27,16 @@ class MenuRecyclerViewAdapter(val ctx: Context, val listDataList: ArrayList<Menu
         holder.menu_name.text = listDataList[position].name
         holder.menu_price.text = listDataList[position].price.toString() + "원"
 
+        var intent = Intent(ctx, OrderActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+            .putExtra("menuIdx", listDataList[position].menuIdx)
+            .putExtra("storeIdx", storeIdx)
+            .putExtra("storeName", storeName)
+            .putExtra("menuName", listDataList[position].name)
+            .putExtra("photoUrl", listDataList[position].photoUrl)
+
         holder.whole_btn.setOnClickListener {
-            ctx.startActivity<OrderActivity>(
-                "menuIdx" to listDataList[position].menuIdx,
-                "storeIdx" to storeIdx,
-                "storeName" to storeName,
-                "menuName" to listDataList[position].name,
-                "photoUrl" to listDataList[position].photoUrl
-            )
+            ctx.startActivity(intent)
         }
 
         val requestOptions = RequestOptions()

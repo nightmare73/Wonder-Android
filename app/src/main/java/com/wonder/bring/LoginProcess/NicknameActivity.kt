@@ -31,16 +31,9 @@ class NicknameActivity : AppCompatActivity() {
         ApplicationController.instance.networkService
     }
 
-    companion object {
-        public final lateinit var NA :AppCompatActivity
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nickname)
-
-        NA = this
 
         variableInit()
         setOnBtnClickListner()
@@ -56,11 +49,7 @@ class NicknameActivity : AppCompatActivity() {
     private fun setOnBtnClickListner() {
         iv_nickname_act_pictureupload.setOnClickListener {
 
-
-
-
         }
-
 
         btn_nickname_act_next.isEnabled = false
 
