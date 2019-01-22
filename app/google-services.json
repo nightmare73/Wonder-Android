@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "159514162103",
-    "firebase_url": "https://bring-wonder-sopt.firebaseio.com",
-    "project_id": "bring-wonder-sopt",
-    "storage_bucket": "bring-wonder-sopt.appspot.com"
+    "project_number": "810214669538",
+    "firebase_url": "https://wonder-bring.firebaseio.com",
+    "project_id": "wonder-bring",
+    "storage_bucket": "wonder-bring.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:159514162103:android:ae7fc1cb17b30645",
+        "mobilesdk_app_id": "1:810214669538:android:ae7fc1cb17b30645",
         "android_client_info": {
           "package_name": "com.wonder.bring"
         }
       },
       "oauth_client": [
         {
-          "client_id": "159514162103-u4op7f0vqqppbq4ttlrf8ndsqp1f08gi.apps.googleusercontent.com",
+          "client_id": "810214669538-ldgoclchgq3oncm9vpf04j7ece96amb6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBD1GAIYOyW9kugrucm3BD2uflydjCKkug"
+          "current_key": "AIzaSyBt8MJswtmTlCAxHP5Xusd_XD-b0AgXIMY"
         }
       ],
       "services": {
